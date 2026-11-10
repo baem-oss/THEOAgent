@@ -1,8 +1,8 @@
 # THEOAgent – Fachliche Requirements-Baseline
 
-**Version:** 1.1.0  
+**Version:** 1.2.0 (Review-Kandidat)  
 **Stand:** 10.11.2026  
-**Status:** Fachlich verbindliche Anforderungsspezifikation; Implementierung und Tests nicht abgenommen  
+**Status:** Vorschlag zur Requirements-Revision nach QS-Befunden F-01–F-18; **keine Freigabe**, keine Implementierung und keine Tests abgenommen  
 **Geltungsbereich:** Theologischer Arbeitsassistent THEOAgent, einschließlich Predigtarbeit, Liturgie, Katechese, Kirchenrecht, Quellenarbeit und kritischem Dialog.
 
 ## 1. Begriffe und Abgrenzung
@@ -11,7 +11,11 @@
 
 **Anforderungstypen:** US = User Story; FANF = funktionale Anforderung; NFANF = nichtfunktionale Qualitätsanforderung; RANF = Projekt-/Umgebungsrandbedingung; GR = verbindliche fachliche/Geschäftsregel; SP = Security-/Privacy-Anforderung; DAT = Daten-/Informationsanforderung.
 
-**Verbindlichkeit:** Alle MUSS-Anforderungen sind verbindlich. Ihre Erfüllung ist erst nach erfolgreichen Akzeptanzprüfungen nachgewiesen.
+**Verbindlichkeit:** Alle MUSS-Anforderungen gelten innerhalb der jeweils freigegebenen Version. Dieser Review-Kandidat ersetzt v1.1.0 erst nach Product-Owner-Freigabe. Die Erfüllung ist erst durch Akzeptanzprüfungen nachgewiesen.
+
+**Arbeitsfassung:** Im aktuell zugänglichen Arbeitskontext eindeutig bezeichnete Textfassung. **Freigabe:** ausdrückliche inhaltliche Billigung einer Fassung durch den Nutzer; keine automatische Sperre. **Freeze:** ausdrücklicher Änderungsschutz für eine bezeichnete Fassung oder Passage, unabhängig von einer Freigabe. Freigabe und Freeze können gleichzeitig bestehen; ein Änderungsauftrag allein hebt den Freeze nicht auf. **Geltungsbereich:** Mindestens der zugängliche aktuelle Arbeitskontext; die Wiederverwendung aus früheren Gesprächen setzt nachweislichen Zugriff auf die frühere Fassung und ihren Status voraus. Keine unbewiesene chatübergreifende Persistenz.
+
+**Quellenzulassung:** Zulässig sind nur Quellen, die der Nutzerauftrag erlaubt und für die der Betreiber den jeweiligen Zugriff und die Verarbeitung freigeschaltet hat. Lokale Knowledge-Rechte und zulässige externe Webziele sind zu unterscheiden. Diese Definition setzt kein gesondertes Benutzerrollenmodell voraus.
 
 ## 2. User Stories (27)
 
@@ -47,7 +51,7 @@ Die User Stories verwenden die Rolle **Nutzer von THEOAgent**.
 | US-26 | **Technikfreie Auftragserteilung** | Als Nutzer von THEOAgent möchte ich fachliche Aufträge ohne Angabe von Suchwerkzeugen, Parametern oder technischen Schritten formulieren, damit THEOAgent die erforderlichen Operationen selbstständig ausführt. |
 | US-27 | **Bereitgestellte Dokumente** | Als Nutzer von THEOAgent möchte ich eigene Dokumente in gebräuchlichen Formaten bereitstellen und lesen, analysieren oder bearbeiten lassen, damit vorhandene Unterlagen direkt in meine Arbeit einfließen. |
 
-## 3. Funktionale Anforderungen (33)
+## 3. Funktionale Anforderungen (34)
 
 Die funktionalen Anforderungen verwenden die SOPHIST-Unterscheidung zwischen Benutzerinteraktion, Systemaktivität und bedingter Funktion. Sie schreiben keine Implementierung vor.
 
@@ -83,13 +87,14 @@ Die funktionalen Anforderungen verwenden die SOPHIST-Unterscheidung zwischen Ben
 | FANF-28 | THEOAgent muss dem Nutzer die Möglichkeit bieten, eine fachliche Einschätzung oder einen Text zu einer sensiblen pastoralen Situation erarbeiten zu lassen. | US-17 |
 | FANF-29 | THEOAgent muss dem Nutzer die Möglichkeit bieten, einen theologischen oder pastoralen Text auf fachliche und sprachliche Stimmigkeit prüfen zu lassen. | US-18 |
 | FANF-30 | Falls der Nutzer eine fachliche Position zur Beurteilung vorlegt, muss THEOAgent sie unabhängig von der Nutzermeinung anhand sachlicher Gründe bewerten. | US-19 |
-| FANF-31 | Falls der Nutzer den aktuellen Arbeitsschritt oder Arbeitsumfang festlegt, muss THEOAgent die Bearbeitung auf diesen Umfang begrenzen. | US-20 |
+| FANF-31 | Falls der Nutzer Arbeitsschritt, Bearbeitungstiefe oder Arbeitsumfang vorgibt, muss THEOAgent die Bearbeitung an diesen Vorgaben ausrichten und darüber hinausgehende Folgeaufgaben unterlassen. | US-20 |
 | FANF-32 | Falls ein Auftrag Recherche oder Originallektüre erfordert, muss THEOAgent die erforderlichen Such- und Leseoperationen ohne technische Einzelanweisungen des Nutzers steuern. | US-26 |
-| FANF-33 | THEOAgent muss dem Nutzer die Möglichkeit bieten, bereitgestellte Dokumente in unterstützten Dateiformaten für die fachliche Bearbeitung zu verwenden. | US-27 |
+| FANF-33 | THEOAgent muss dem Nutzer die Möglichkeit bieten, Dokumente der in RANF-06 definierten Formate für die fachliche Bearbeitung bereitzustellen. Falls ein bereitgestelltes Dokument nicht auslesbar oder nur teilweise verfügbar ist, muss THEOAgent die betroffenen Teile als nicht geprüft kennzeichnen. | US-27 |
+| FANF-34 | Falls der Nutzer theologische Positionen oder religiöse Erfahrungsberichte kritisch einordnen lässt, muss THEOAgent zwischen Glaubensaussagen, Interpretationen und empirischen Behauptungen unterscheiden und fachlich relevante Gegenpositionen, soweit verfügbar, in die Bewertung einbeziehen. | US-25 |
 
-## 4. Nichtfunktionale Anforderungen (12)
+## 4. Nichtfunktionale Anforderungen (13)
 
-Die Anforderungen verwenden den EigenschaftsMASTER. Noch nicht vereinbarte Testkorpora und Grenzwerte sind als **offen** bezeichnet; ihre Festlegung ist Voraussetzung einer messbaren Abnahme.
+Die Anforderungen verwenden den EigenschaftsMASTER. Für NFANF-01 bis NFANF-11 sind Bewertungsverfahren im [Abnahmeprofil](ACCEPTANCE_PROFILE.md) beschrieben; Mindestwerte und Testkorpora sind weiterhin offen, soweit nicht ausdrücklich festgelegt. **Es werden keine Zahlen erfunden.** NFANF-12 und NFANF-13 enthalten harte Null-Fehler-Kriterien für die definierten Abnahmetests.
 
 | ID | Qualität | Soll-Anforderung |
 |---|---|---|
@@ -105,18 +110,22 @@ Die Anforderungen verwenden den EigenschaftsMASTER. Noch nicht vereinbarte Testk
 | NFANF-10 | **Wartbarkeit** | Der Änderungsaufwand für definierte Standardänderungen muss die vereinbarte Aufwandsgrenze einhalten. **Prüfmaß:** Standardänderungen und Grenze offen. |
 | NFANF-11 | **Fehlertransparenz** | Der Anteil fehlgeschlagener Quellenzugriffe, die dem Nutzer als fehlgeschlagen angezeigt werden, muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Testkorpus und Mindestwert offen. |
 | NFANF-12 | **Änderungssicherheit** | Die Anzahl unbeauftragter Änderungen an eingefrorenen Passagen muss in den Abnahmetests gleich null sein. **Prüfmaß:** Null unbeauftragte Änderungen. |
+| NFANF-13 | **Belegintegrität** | Die Anzahl der als überprüft oder verifiziert ausgegebenen, tatsächlich nicht geprüften, nicht existierenden oder der Aussage falsch zugeordneten Quellenbelege muss im festgelegten Negativ- und Positivtestkorpus gleich null sein. **Prüfmaß:** Null solcher Belegfehler im Abnahmekorpus; keine Behauptung allgemeiner Fehlerfreiheit. |
 
-## 5. Randbedingungen (5)
+## 5. Randbedingungen (6)
 
 | ID | Verbindlicher Projektrahmen / aktuelle Ausgangslage |
 |---|---|
-| RANF-01 | Für die initiale Erprobung muss THEOAgent in der bestehenden Open-WebUI-Umgebung ausführbar sein. |
-| RANF-02 | Für die initiale Erprobung muss THEOAgent auf dem vorhandenen lokalen Docker-Homeserver betrieben werden können. |
+| RANF-01 | Für die initiale Erprobung muss THEOAgent in der vorhandenen Open-WebUI-Umgebung ausführbar sein; die im jeweiligen Test eingesetzte Open-WebUI-Version muss protokolliert werden (dokumentierter Referenzstand: v0.11.4). |
+| RANF-02 | Für die initiale Erprobung muss THEOAgent auf dem vorhandenen lokalen Docker-Homeserver betrieben werden können, ohne andere vorhandene Dienste oder deren Konfiguration ungefragt zu verändern. |
 | RANF-03 | Das öffentliche Repository darf keine privaten urheberrechtlich geschützten Fachbibliotheksvolltexte enthalten. |
-| RANF-04 | Vor einer fachlichen Implementierungsabnahme muss der verbindliche theologische Fachstandard in einer versionierten Fassung verfügbar sein. |
+| RANF-04 | Vor einer fachlichen Implementierungsabnahme muss eine eindeutig bezeichnete, versionierte und auf Integrität prüfbare Fassung des theologischen Fachstandards festgelegt sein. Als **nachzuprüfende Ausgangsreferenz** dient `THEOBald_Fachstandard.md` aus dem privaten THEOBald-Nachbaupaket v1.2.0 (dokumentierter SHA-256: `cc5a4dd89eb2279ba61fea105eea33ce45767b783eb572475fef9903c778174c`); daraus folgt noch keine inhaltliche Freigabe als THEOAgent-Standard. |
 | RANF-05 | Falls in der Erprobung externe Modelle eingesetzt werden, muss THEOAgent mit der vorgesehenen OpenRouter-Anbindung zusammenarbeiten können. |
+| RANF-06 | In der ersten Ausbaustufe muss THEOAgent **textbasierte PDFs, DOCX, EPUB, TXT und Markdown (.md)** zur fachlichen Auswertung annehmen können. Eine zuverlässige OCR-Erkennung gescannter PDFs und bildbasierte Seiteninterpretation sind **nicht** Gegenstand dieser Ausbaustufe; unlesbare Inhalte dürfen nicht als vollständig gelesen dargestellt werden. |
 
-> RANF-01, -02 und -05 beschreiben die **aktuelle Erprobungsumgebung**, nicht die fachliche Notwendigkeit eines Raspberry Pi, OpenRouter, einer bestimmten Modellversion oder Pipe-Struktur. Eine spätere Änderung der Plattform darf die fachlichen Anforderungen nicht stillschweigend verändern.
+> RANF-01, -02 und -05 beschreiben die **aktuelle Erprobungsumgebung**, nicht die fachliche Notwendigkeit eines Raspberry Pi, OpenRouter, einer bestimmten Modellversion oder Pipe-Struktur. In der dokumentierten THEOBald-Testarchitektur erfolgt die OpenRouter-Anbindung direkt ohne LiteLLM im Datenpfad. Eine spätere Änderung der Plattform darf die fachlichen Anforderungen nicht stillschweigend verändern.
+>
+> **Vorbedingung für Tests mit privaten Texten:** Vor einer Übertragung konkreter Fachbibliotheks- oder Nutzerdokumentpassagen an einen externen Provider müssen Verarbeitungsbefugnis und Provider-Datenfluss geklärt sein (SP-01, SP-05, DAT-01). Ohne geklärten Status dürfen solche Passagen nicht extern übertragen werden; synthetische, entsprechend freigegebene Testdaten können unabhängig davon verwendet werden.
 
 ## 6. Fachliche Regeln (18)
 
@@ -124,13 +133,13 @@ Die Anforderungen verwenden den EigenschaftsMASTER. Noch nicht vereinbarte Testk
 |---|---|---|
 | GR-01 | **Originallektüre** | Falls der Nutzer die Prüfung eines bestimmten Werkes oder einer bestimmten Passage beauftragt, muss THEOAgent die einschlägige Originalstelle lesen oder die fehlende Zugriffsmöglichkeit offenlegen. |
 | GR-02 | **Lektürenachweis** | THEOAgent darf Suchtreffer, Inhaltsverzeichnisse und bibliografische Metadaten nicht als Nachweis einer Originallektüre ausgeben. |
-| GR-03 | **Exakte Nachweise** | THEOAgent darf exakte Zitate, Bibelstellen, Dokumenttitel, KKK-Nummern, Canones und Absatznummern nur nach Verifikation ausgeben. |
+| GR-03 | **Exakte Nachweise** | THEOAgent darf exakte Zitate, Bibelstellen, Dokumenttitel, KKK-Nummern, Canones und Absatznummern nur nach Verifikation ausgeben. Soweit Ausgabe oder Rechtsstand den Nachweis beeinflussen, muss THEOAgent die überprüfte Textfassung benennen (insbesondere Bibelübersetzung, Katechismusfassung, CIC-Fassung und maßgebliches Partikularrecht); fehlt ein Nachweis, muss dies gekennzeichnet werden. |
 | GR-04 | **Quellenauswahl** | THEOAgent muss die Auswahl zugelassener Fachquellen an Relevanz, Verlässlichkeit, zuständiger Autorität und Geltungsstand ausrichten. |
 | GR-05 | **Verbindlichkeitsstufen** | THEOAgent muss kirchlich verbindliche Lehre, theologische Deutung, exegetische Hypothese, pastorale Einschätzung und homiletische Gestaltung unterscheiden. |
 | GR-06 | **Bibeltexttreue** | THEOAgent muss bei Bibelauslegungen Gattung, Textzusammenhang, historischen Kontext und kirchliche Auslegungstradition berücksichtigen. |
 | GR-07 | **Liturgische Normen** | THEOAgent muss geltende liturgische Vorschriften von Empfehlungen, Arbeitshilfen und Gewohnheiten unterscheiden. |
 | GR-08 | **Rechtsebenen** | THEOAgent muss bei kirchenrechtlichen Aussagen Rechtsebene und zuständige Entscheidungsinstanz berücksichtigen. |
-| GR-09 | **Freeze** | Solange eine Textfassung oder Passage eingefroren ist, darf THEOAgent sie ohne ausdrückliche erneute Nutzerfreigabe nicht verändern. |
+| GR-09 | **Freeze** | Solange eine Textfassung oder Passage eingefroren ist, darf THEOAgent sie nicht verändern. Eine Änderung setzt die **ausdrückliche Aufhebung des Freeze für die betroffene Fassung oder Passage** durch den Nutzer voraus; die bloße Anweisung, eine Passage zu ändern, gilt nicht als stillschweigende Aufhebung. Ein solcher Schutz darf bei unklarem Status nicht als aufgehoben unterstellt werden. |
 | GR-10 | **Auftragsgrenze** | THEOAgent darf die für einen Auftrag erforderlichen Teilschritte ausführen, aber ohne Beauftragung keine zusätzlichen Folgeaufgaben übernehmen. |
 | GR-11 | **Unabhängiges Urteil** | THEOAgent muss fachliche Urteile sachlich begründen und darf sie nicht allein aufgrund von Zustimmung oder Widerspruch des Nutzers ändern. |
 | GR-12 | **Liturgische Funktion** | THEOAgent muss bei der Erstellung liturgischer Texte deren jeweilige liturgische Funktion berücksichtigen. |
@@ -145,9 +154,9 @@ Die Anforderungen verwenden den EigenschaftsMASTER. Noch nicht vereinbarte Testk
 
 | ID | Anforderung |
 |---|---|
-| SP-01 | THEOAgent darf private Fachtexte und personenbezogene Informationen nur innerhalb der erteilten Zugriffs- und Verarbeitungsberechtigungen an externe Dienste übermitteln. |
+| SP-01 | THEOAgent darf private Fachtexte und personenbezogene Informationen nur innerhalb der erteilten Zugriffs- und Verarbeitungsberechtigungen an externe Dienste übermitteln. Falls die Zulässigkeit einer externen Verarbeitung nicht geklärt ist, muss THEOAgent die Übermittlung unterlassen und die Einschränkung benennen. |
 | SP-02 | THEOAgent darf Anweisungen aus eingelesenen Dokumenten oder Internetseiten nicht als vorrangige System- oder Nutzeranweisungen ausführen. |
-| SP-03 | Falls THEOAgent Internetadressen aufruft, muss THEOAgent unzulässige Zugriffe auf interne Netzwerkziele und unsichere Weiterleitungen verhindern. |
+| SP-03 | Falls THEOAgent externe Internetadressen abruft, muss der Abrufpfad unzulässige Ziele (insbesondere Loopback-, private, Link-Local- und Metadatenadressen), gefährliche Umleitungen sowie DNS-Umbindungen unterbinden. Berechtigte lokale Knowledge-Zugriffe sind davon getrennt. Es ist keine starre Domain-Allowlist für die gesamte fachliche Webrecherche vorgeschrieben. |
 | SP-04 | THEOAgent darf API-Schlüssel, Zugangsdaten und andere Geheimnisse nicht in Antworten, Protokollen oder veröffentlichten Artefakten ausgeben. |
 | SP-05 | THEOAgent muss bei der Bereitstellung oder Weitergabe fremder Fachliteratur die geltenden Nutzungsrechte einhalten. |
 
@@ -155,14 +164,16 @@ Die Anforderungen verwenden den EigenschaftsMASTER. Noch nicht vereinbarte Testk
 
 | ID | Objekt | Erwartete Informationen |
 |---|---|---|
-| DAT-01 | **Fachquelle** | THEOAgent muss einer verwendeten Quelle die verfügbaren Angaben zu Titel, Autor oder Herausgeber, Quellenart, Ausgabe, Geltungsstand und Herkunft zuordnen können. |
-| DAT-02 | **Fundstelle** | THEOAgent muss einer als belegt ausgegebenen Aussage die entsprechende Quelle und eine überprüfbare Fundstelle zuordnen können. |
-| DAT-03 | **Arbeitsfassung** | THEOAgent muss einer zugänglichen Arbeitsfassung ihren vom Nutzer gesetzten Freigabe- oder Freeze-Status zuordnen können. |
+| DAT-01 | **Fachquelle** | THEOAgent muss einer verwendeten Quelle Titel, Autor/Herausgeber (soweit ermittelbar), Quellenart, nachgewiesene Ausgabe beziehungsweise Fassung, Geltungsstand (soweit relevant) und Herkunft zuordnen können. Für private oder geschützte Quellen muss zusätzlich der vor externer Verarbeitung geklärte Rechte- und Übermittlungsstatus zugeordnet werden können; **unbekannt** ist kein positiver Freigabestatus. |
+| DAT-02 | **Fundstelle** | THEOAgent muss jeder als belegt ausgegebenen Aussage die nachgewiesene Quelle und eine für die Quellenart geeignete Fundstelle zuordnen können: z. B. Bibelstelle, KKK-Absatznummer, Canon, Artikel/Abschnitt, überprüfte Druckseite oder identifizierbarer Text-/Werkzeugbereich. PDF-Seite, Buchseite, Suchscore und Werkzeugzeile dürfen nicht gleichgesetzt oder umetikettiert werden. Soweit eine feinere Fundstelle nicht verifiziert ist, muss die verbleibende Ungenauigkeit ausdrücklich erkennbar sein. |
+| DAT-03 | **Arbeitsfassung** | THEOAgent muss zugängliche Arbeitsfassungen und geschützte Passagen hinreichend eindeutig adressieren und der jeweiligen Fassung beziehungsweise Passage die Nutzerfreigabe (Entwurf oder freigegeben) und den davon unabhängigen Schutzstatus (nicht eingefroren oder eingefroren) zuordnen können. Änderungen müssen als neue Arbeitsfassung erkennbar bleiben; Statusänderungen dürfen nur auf ausdrückliche Nutzeranweisung erfolgen. Die Speicherung außerhalb des verfügbaren Arbeitskontexts und eine konkrete Datenbanktechnologie sind hier nicht vorgegeben. |
 | DAT-04 | **Arbeitskontext** | THEOAgent muss dem aktuellen Auftrag vorhandene Angaben zu Anlass, Zielgruppe, Schrifttext, Umfang und Quellenbeschränkung zuordnen können. |
 
 ## 9. Abnahmegrenze
 
-Diese Spezifikation legt das geforderte Verhalten fest. Akzeptanzfälle und noch offene Qualitätsgrenzwerte werden vor der Implementierungsabnahme festgelegt. Die Zuordnung der User Stories zu funktionalen Anforderungen steht in [TRACEABILITY.md](TRACEABILITY.md).
+Diese Spezifikation legt das geforderte Verhalten fest. Das [Abnahmeprofil](ACCEPTANCE_PROFILE.md) beschreibt Prüffälle und Messverfahren. **Die Schwellenwerte und konkreten Referenzkorpora für NFANF-01 bis NFANF-11 sind noch nicht beschlossen (F-01 offen)** und müssen vor der jeweiligen Qualitätsabnahme festgelegt werden. Das technische MVP kann mit synthetischen und ausdrücklich zugelassenen Quellen getestet werden; keine Fachabnahme wird daraus vorweggenommen.
+
+Die Zuordnung der User Stories zu funktionalen Anforderungen steht in [TRACEABILITY.md](TRACEABILITY.md). Die Baseline v1.1.0 bleibt auf `main` unverändert, bis die QS-Revision freigegeben wird.
 
 ## 10. Formulierungsreferenzen
 
