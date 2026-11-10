@@ -1,10 +1,10 @@
 # Reviews – Verzeichnis
 
-**Zweck:** Ablage abgeschlossener Reviewberichte des unabhängigen Reviewers, damit Reviews reproduzierbar und überprüfbar bleiben (Arbeitsregel 8 des Auftragsdokuments).
+**Zweck:** Ablage unabhängiger Prüfberichte als reproduzierbare **Review-Evidenz**. **Verbindliche Single Source of Truth ist das GitHub-Repository**, nicht der Reviewerbericht oder eine externe QE-Notiz. Die Projektregeln stehen in [WORKFLOW.md](../WORKFLOW.md).
 
 **Ablageort:** `docs/reviews/` im jeweils zugehörigen Repository.
-**Benennung:** `YYYY-MM-DD-review-<gegenstand>-<version>-<sha7>.md`
-**Ablegeweg:** Der Bericht wird vom Product Owner entschieden und vom Software Engineer committet; der Reviewer legt keine Dateien selbst ab.
+**Benennung:** `YYYY-MM-DD-review-<gegenstand>-<version>-<sha7>.md` (der Suffix bezeichnet den **tatsächlich geprüften Commit**, keine vom QE vorgegebene SHA).
+**Ablegeweg:** Der Product Owner entscheidet über die Aufnahme und fachliche Freigabe; der Software Engineer committet. Der Reviewer hat keine Schreib-, Merge-, Hash- oder Freigabehoheit.
 
 ## Berichte
 
@@ -26,12 +26,12 @@
 | F-16 | OPEN – MINOR | Formulierung der Datenanforderungen „zuordnen können“ |
 | F-17 | OPEN – MINOR | Abgrenzung Fachregel / Qualitätsanforderung nicht explizit erläutert |
 
-**Dateiintegrität des Nachreviews:** Der archivierte Upload ist 17.024 Byte groß und hat SHA-256 `28b8a9072f25227639addba3380c7829d4dc53a8c5ae2367295fa16676e0b2b8` (Git-Blob `4da57bb00cc479d1e9835dabe273a0ffc1c6b5be`). Im Bericht selbst wird abweichend 16.219 Byte und SHA-256 `04484ea4809ba6b39ed5d281cef0d34a6cf36675bb8d70b3c201874c1e465320` genannt. Der hochgeladene vollständige Bericht wurde **ohne Änderung** archiviert; die Übereinstimmung mit der vom Reviewer angekündigten Ausgangsdatei ist nicht nachgewiesen.
+**Historische Übergabeabweichung (Nachreview):** Eine vom QE mitgeteilte externe SHA-256-Prüfsumme stimmte nicht mit dem empfangenen Bericht überein. Der Bericht wurde als empfangene Fassung archiviert; sein Git-Blob lautet `4da57bb00cc479d1e9835dabe273a0ffc1c6b5be`. **Das ist keine offene Freigabesperre und keine Autorität des QE über den Repositoryinhalt.** Maßgeblich ist die tatsächlich in GitHub abgelegte Fassung. Der Widerspruch bleibt als Transport-/Provenienznotiz dokumentiert, nicht als Anforderung zur nachträglichen Veränderung des Berichts.
 
 ## Regeln für Einträge
 
-- Berichte werden **nicht** nachträglich inhaltlich verändert. Korrekturen und Nachtragungen erfolgen als eigener Abschnitt im Bericht oder als Folgebericht mit neuem Datum.
-- Jeder Bericht muss den geprüften Commit-SHA und die Git-Blob-Kennungen der geprüften Dateien nennen.
+- Archivierte Berichte werden **nicht** nachträglich inhaltlich verändert. Korrekturen werden in einem gesonderten, datierten Folgedokument festgehalten; nur das Verzeichnis wird fortgeschrieben.
+- Jeder Bericht nennt, **soweit ermittelbar**, den tatsächlich geprüften Commit und die Git-Blob-Kennungen der Prüfobjekte als reine Herkunftsangaben. Der QE darf keine SHA-Werte vorgeben und keine außerhalb des Repos errechnete Prüfsumme zur maßgeblichen Projektversion erklären.
 - Jeder Bericht kennzeichnet ausdrücklich, welche Tests **tatsächlich** ausgeführt wurden und welche PASS-Angaben nur berichtet sind.
-- Ein grüner CI-Lauf ist keine fachliche Abnahme.
+- Ein grüner CI-Lauf und ein positives QE-Urteil sind keine fachliche Abnahme. Die Freigabe trifft ausschließlich der Product Owner und wird im Repository nachvollziehbar dokumentiert.
 - Berichte enthalten keine Geheimnisse, keine personenbezogenen Daten und keine urheberrechtlich geschützten Volltexte.
