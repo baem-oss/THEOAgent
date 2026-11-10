@@ -15,7 +15,7 @@
 
 ## 2. User Stories (27)
 
-Für jede Story gilt dieselbe Rolle. Die Kennungen US-01 bis US-26 bleiben erhalten; die Dokumentenarbeit ist US-27.
+Die User Stories verwenden die Rolle **Nutzer von THEOAgent**.
 
 | ID | Schwerpunkt | User Story |
 |---|---|---|
@@ -93,28 +93,28 @@ Die Anforderungen verwenden den EigenschaftsMASTER. Noch nicht vereinbarte Testk
 
 | ID | Qualität | Soll-Anforderung |
 |---|---|---|
-| NFANF-01 | Der Anteil fachlich korrekter Antworten im festzulegenden Testkorpus muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Mindestwert und Korpus offen. | Ergebnisse sollen dem jeweils einschlägigen theologischen und wissenschaftlichen Erkenntnisstand sachgerecht entsprechen. |
-| NFANF-02 | Der Anteil belegpflichtiger Aussagen mit überprüfbarer Fundstelle muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Mindestwert und Prüfkorpus offen. | Quellenbezug und fachliche Begründung sollen für den Nutzer prüfbar und verständlich sein. |
-| NFANF-03 | Die Erfolgsquote bei definierten technisch beherrschbaren Werkzeug- und Formatfehlern muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Fehlerklassen und Mindestwert offen. | Beherrschbare Werkzeug- und Formatfehler sollen innerhalb sicherer Grenzen aufgefangen werden, statt den gesamten Auftrag unnötig scheitern zu lassen. |
-| NFANF-04 | Der Rechercheaufwand für Aufgaben ohne fachlichen Recherchebedarf muss die vereinbarte Aufwandgrenze einhalten. **Prüfmaß:** Aufwandmaß und Grenze offen. | Recherche- und Prüfaufwand sollen zur Aufgabe und zum Aussage- beziehungsweise Fehlerrisiko passen. |
-| NFANF-05 | Der Anteil der von der Zielgruppe als verständlich bewerteten Texte muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Bewertungsverfahren und Mindestwert offen. | Antworten sollen klar, präzise und dem Vorwissen der Adressaten angemessen sein. |
-| NFANF-06 | Der Anteil der bei mündlichen Proben als sprechbar bewerteten Predigt- und Liturgietexte muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Prüfverfahren und Mindestwert offen. | Predigten und liturgische Texte sollen für den mündlichen Vortrag geeignet sein. |
-| NFANF-07 | Der Anteil der Texte, die das fachlich vereinbarte Verfahren zur Prüfung pastoraler Sensibilität bestehen, muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Prüfverfahren und Mindestwert offen. | Wortwahl und Darstellung sollen die Situation und Verletzlichkeit betroffener Menschen respektieren. |
-| NFANF-08 | Die Bearbeitungsdauer definierter Standardaufträge muss die vereinbarte Zeitgrenze einhalten. **Prüfmaß:** Auftragsklassen und Zeitgrenzen offen. | Unnötige Modellrunden, Suchschritte, Wiederholungen und Rückfragen sollen vermieden werden. |
-| NFANF-09 | Der Anteil der Standardaufträge, die ohne Kenntnis interner Werkzeuge erteilt werden können, muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Standardaufträge und Mindestwert offen. | Für die fachliche Nutzung sollen keine Kenntnisse interner Werkzeuge oder technischer Parameter erforderlich sein. |
-| NFANF-10 | Der Änderungsaufwand für definierte Standardänderungen muss die vereinbarte Aufwandsgrenze einhalten. **Prüfmaß:** Standardänderungen und Grenze offen. | Die Umsetzung soll einfach, nachvollziehbar, automatisiert testbar und möglichst frei von duplizierter Fachlogik sein. |
-| NFANF-11 | Der Anteil fehlgeschlagener Quellenzugriffe, die dem Nutzer als fehlgeschlagen angezeigt werden, muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Testkorpus und Mindestwert offen. | Bei fehlendem Zugriff oder Teilergebnissen soll das System kontrolliert reagieren und Grenzen sichtbar machen. |
-| NFANF-12 | Die Anzahl unbeauftragter Änderungen an eingefrorenen Passagen muss in den Abnahmetests gleich null sein. **Prüfmaß:** Null unbeauftragte Änderungen. | Freigegebene Inhalte sollen bei gezielten Revisionen zuverlässig unverändert bleiben. |
+| NFANF-01 | **Fachliche Korrektheit** | Der Anteil fachlich korrekter Antworten im festzulegenden Testkorpus muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Mindestwert und Korpus offen. |
+| NFANF-02 | **Nachvollziehbarkeit** | Der Anteil belegpflichtiger Aussagen mit überprüfbarer Fundstelle muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Mindestwert und Prüfkorpus offen. |
+| NFANF-03 | **Robustheit** | Die Erfolgsquote bei definierten technisch beherrschbaren Werkzeug- und Formatfehlern muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Fehlerklassen und Mindestwert offen. |
+| NFANF-04 | **Verhältnismäßigkeit** | Der Rechercheaufwand für Aufgaben ohne fachlichen Recherchebedarf muss die vereinbarte Aufwandgrenze einhalten. **Prüfmaß:** Aufwandmaß und Grenze offen. |
+| NFANF-05 | **Verständlichkeit** | Der Anteil der von der Zielgruppe als verständlich bewerteten Texte muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Bewertungsverfahren und Mindestwert offen. |
+| NFANF-06 | **Sprechbarkeit** | Der Anteil der bei mündlichen Proben als sprechbar bewerteten Predigt- und Liturgietexte muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Prüfverfahren und Mindestwert offen. |
+| NFANF-07 | **Pastorale Sensibilität** | Der Anteil der Texte, die das fachlich vereinbarte Verfahren zur Prüfung pastoraler Sensibilität bestehen, muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Prüfverfahren und Mindestwert offen. |
+| NFANF-08 | **Effizienz** | Die Bearbeitungsdauer definierter Standardaufträge muss die vereinbarte Zeitgrenze einhalten. **Prüfmaß:** Auftragsklassen und Zeitgrenzen offen. |
+| NFANF-09 | **Benutzbarkeit** | Der Anteil der Standardaufträge, die ohne Kenntnis interner Werkzeuge erteilt werden können, muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Standardaufträge und Mindestwert offen. |
+| NFANF-10 | **Wartbarkeit** | Der Änderungsaufwand für definierte Standardänderungen muss die vereinbarte Aufwandsgrenze einhalten. **Prüfmaß:** Standardänderungen und Grenze offen. |
+| NFANF-11 | **Fehlertransparenz** | Der Anteil fehlgeschlagener Quellenzugriffe, die dem Nutzer als fehlgeschlagen angezeigt werden, muss den vereinbarten Mindestwert erreichen. **Prüfmaß:** Testkorpus und Mindestwert offen. |
+| NFANF-12 | **Änderungssicherheit** | Die Anzahl unbeauftragter Änderungen an eingefrorenen Passagen muss in den Abnahmetests gleich null sein. **Prüfmaß:** Null unbeauftragte Änderungen. |
 
 ## 5. Randbedingungen (5)
 
 | ID | Verbindlicher Projektrahmen / aktuelle Ausgangslage |
 |---|---|
-| RANF-01 | Für die initiale Erprobung muss THEOAgent in der bestehenden Open-WebUI-Umgebung ausführbar sein.
-| RANF-02 | Für die initiale Erprobung muss THEOAgent auf dem vorhandenen lokalen Docker-Homeserver betrieben werden können.
-| RANF-03 | Das öffentliche Repository darf keine privaten urheberrechtlich geschützten Fachbibliotheksvolltexte enthalten.
-| RANF-04 | Vor einer fachlichen Implementierungsabnahme muss der verbindliche theologische Fachstandard in einer versionierten Fassung verfügbar sein.
-| RANF-05 | Falls in der Erprobung externe Modelle eingesetzt werden, muss THEOAgent mit der vorgesehenen OpenRouter-Anbindung zusammenarbeiten können.
+| RANF-01 | Für die initiale Erprobung muss THEOAgent in der bestehenden Open-WebUI-Umgebung ausführbar sein. |
+| RANF-02 | Für die initiale Erprobung muss THEOAgent auf dem vorhandenen lokalen Docker-Homeserver betrieben werden können. |
+| RANF-03 | Das öffentliche Repository darf keine privaten urheberrechtlich geschützten Fachbibliotheksvolltexte enthalten. |
+| RANF-04 | Vor einer fachlichen Implementierungsabnahme muss der verbindliche theologische Fachstandard in einer versionierten Fassung verfügbar sein. |
+| RANF-05 | Falls in der Erprobung externe Modelle eingesetzt werden, muss THEOAgent mit der vorgesehenen OpenRouter-Anbindung zusammenarbeiten können. |
 
 > RANF-01, -02 und -05 beschreiben die **aktuelle Erprobungsumgebung**, nicht die fachliche Notwendigkeit eines Raspberry Pi, OpenRouter, einer bestimmten Modellversion oder Pipe-Struktur. Eine spätere Änderung der Plattform darf die fachlichen Anforderungen nicht stillschweigend verändern.
 
@@ -122,43 +122,43 @@ Die Anforderungen verwenden den EigenschaftsMASTER. Noch nicht vereinbarte Testk
 
 | ID | Regel | Verbindliche Auslegung |
 |---|---|---|
-| GR-01 | **Originallektüre** | Falls der Nutzer die Prüfung eines bestimmten Werkes oder einer bestimmten Passage beauftragt, muss THEOAgent die einschlägige Originalstelle lesen oder die fehlende Zugriffsmöglichkeit offenlegen.
-| GR-02 | **Lektürenachweis** | THEOAgent darf Suchtreffer, Inhaltsverzeichnisse und bibliografische Metadaten nicht als Nachweis einer Originallektüre ausgeben.
-| GR-03 | **Exakte Nachweise** | THEOAgent darf exakte Zitate, Bibelstellen, Dokumenttitel, KKK-Nummern, Canones und Absatznummern nur nach Verifikation ausgeben.
-| GR-04 | **Quellenauswahl** | THEOAgent muss die Auswahl zugelassener Fachquellen an Relevanz, Verlässlichkeit, zuständiger Autorität und Geltungsstand ausrichten.
-| GR-05 | **Verbindlichkeitsstufen** | THEOAgent muss kirchlich verbindliche Lehre, theologische Deutung, exegetische Hypothese, pastorale Einschätzung und homiletische Gestaltung unterscheiden.
-| GR-06 | **Bibeltexttreue** | THEOAgent muss bei Bibelauslegungen Gattung, Textzusammenhang, historischen Kontext und kirchliche Auslegungstradition berücksichtigen.
-| GR-07 | **Liturgische Normen** | THEOAgent muss geltende liturgische Vorschriften von Empfehlungen, Arbeitshilfen und Gewohnheiten unterscheiden.
-| GR-08 | **Rechtsebenen** | THEOAgent muss bei kirchenrechtlichen Aussagen Rechtsebene und zuständige Entscheidungsinstanz berücksichtigen.
-| GR-09 | **Freeze** | Solange eine Textfassung oder Passage eingefroren ist, darf THEOAgent sie ohne ausdrückliche erneute Nutzerfreigabe nicht verändern.
-| GR-10 | **Auftragsgrenze** | THEOAgent darf die für einen Auftrag erforderlichen Teilschritte ausführen, aber ohne Beauftragung keine zusätzlichen Folgeaufgaben übernehmen.
-| GR-11 | **Unabhängiges Urteil** | THEOAgent muss fachliche Urteile sachlich begründen und darf sie nicht allein aufgrund von Zustimmung oder Widerspruch des Nutzers ändern.
-| GR-12 | **Liturgische Funktion** | THEOAgent muss bei der Erstellung liturgischer Texte deren jeweilige liturgische Funktion berücksichtigen.
-| GR-13 | **Pastorale Verantwortung** | THEOAgent darf leidvolle Ereignisse ohne tragfähige Grundlage nicht als Gottes konkrete Absicht, Strafe oder pädagogische Maßnahme darstellen.
-| GR-14 | **Keine Amtsautorität** | THEOAgent darf keine eigene kirchliche Lehr-, Rechts- oder Entscheidungsvollmacht behaupten.
-| GR-15 | **Quellenbeschränkung** | Falls der Nutzer bestimmte Werke oder Quellenräume verbindlich vorgibt, muss THEOAgent die Recherche darauf begrenzen.
-| GR-16 | **Unsicherheit** | Falls eine Aussage nicht verifiziert werden kann, muss THEOAgent die Unsicherheit kenntlich machen.
-| GR-17 | **Verhältnismäßigkeit** | THEOAgent muss den Prüfaufwand an den fachlichen Auftrag anpassen; eine reine Sprachrevision ohne zusätzliche Quellenbehauptung erfordert keine neue Fachrecherche.
-| GR-18 | **Teilergebnisse** | Falls die notwendige Quellenprüfung nicht vollständig möglich ist, muss THEOAgent verifizierte und nicht verifizierte Ergebnisse unterscheiden und den Gesamtauftrag als unvollständig kennzeichnen.
+| GR-01 | **Originallektüre** | Falls der Nutzer die Prüfung eines bestimmten Werkes oder einer bestimmten Passage beauftragt, muss THEOAgent die einschlägige Originalstelle lesen oder die fehlende Zugriffsmöglichkeit offenlegen. |
+| GR-02 | **Lektürenachweis** | THEOAgent darf Suchtreffer, Inhaltsverzeichnisse und bibliografische Metadaten nicht als Nachweis einer Originallektüre ausgeben. |
+| GR-03 | **Exakte Nachweise** | THEOAgent darf exakte Zitate, Bibelstellen, Dokumenttitel, KKK-Nummern, Canones und Absatznummern nur nach Verifikation ausgeben. |
+| GR-04 | **Quellenauswahl** | THEOAgent muss die Auswahl zugelassener Fachquellen an Relevanz, Verlässlichkeit, zuständiger Autorität und Geltungsstand ausrichten. |
+| GR-05 | **Verbindlichkeitsstufen** | THEOAgent muss kirchlich verbindliche Lehre, theologische Deutung, exegetische Hypothese, pastorale Einschätzung und homiletische Gestaltung unterscheiden. |
+| GR-06 | **Bibeltexttreue** | THEOAgent muss bei Bibelauslegungen Gattung, Textzusammenhang, historischen Kontext und kirchliche Auslegungstradition berücksichtigen. |
+| GR-07 | **Liturgische Normen** | THEOAgent muss geltende liturgische Vorschriften von Empfehlungen, Arbeitshilfen und Gewohnheiten unterscheiden. |
+| GR-08 | **Rechtsebenen** | THEOAgent muss bei kirchenrechtlichen Aussagen Rechtsebene und zuständige Entscheidungsinstanz berücksichtigen. |
+| GR-09 | **Freeze** | Solange eine Textfassung oder Passage eingefroren ist, darf THEOAgent sie ohne ausdrückliche erneute Nutzerfreigabe nicht verändern. |
+| GR-10 | **Auftragsgrenze** | THEOAgent darf die für einen Auftrag erforderlichen Teilschritte ausführen, aber ohne Beauftragung keine zusätzlichen Folgeaufgaben übernehmen. |
+| GR-11 | **Unabhängiges Urteil** | THEOAgent muss fachliche Urteile sachlich begründen und darf sie nicht allein aufgrund von Zustimmung oder Widerspruch des Nutzers ändern. |
+| GR-12 | **Liturgische Funktion** | THEOAgent muss bei der Erstellung liturgischer Texte deren jeweilige liturgische Funktion berücksichtigen. |
+| GR-13 | **Pastorale Verantwortung** | THEOAgent darf leidvolle Ereignisse ohne tragfähige Grundlage nicht als Gottes konkrete Absicht, Strafe oder pädagogische Maßnahme darstellen. |
+| GR-14 | **Keine Amtsautorität** | THEOAgent darf keine eigene kirchliche Lehr-, Rechts- oder Entscheidungsvollmacht behaupten. |
+| GR-15 | **Quellenbeschränkung** | Falls der Nutzer bestimmte Werke oder Quellenräume verbindlich vorgibt, muss THEOAgent die Recherche darauf begrenzen. |
+| GR-16 | **Unsicherheit** | Falls eine Aussage nicht verifiziert werden kann, muss THEOAgent die Unsicherheit kenntlich machen. |
+| GR-17 | **Verhältnismäßigkeit** | THEOAgent muss den Prüfaufwand an den fachlichen Auftrag anpassen; eine reine Sprachrevision ohne zusätzliche Quellenbehauptung erfordert keine neue Fachrecherche. |
+| GR-18 | **Teilergebnisse** | Falls die notwendige Quellenprüfung nicht vollständig möglich ist, muss THEOAgent verifizierte und nicht verifizierte Ergebnisse unterscheiden und den Gesamtauftrag als unvollständig kennzeichnen. |
 
 ## 7. Sicherheits- und Datenschutzanforderungen (5)
 
 | ID | Anforderung |
 |---|---|
-| SP-01 | THEOAgent darf private Fachtexte und personenbezogene Informationen nur innerhalb der erteilten Zugriffs- und Verarbeitungsberechtigungen an externe Dienste übermitteln.
-| SP-02 | THEOAgent darf Anweisungen aus eingelesenen Dokumenten oder Internetseiten nicht als vorrangige System- oder Nutzeranweisungen ausführen.
-| SP-03 | Falls THEOAgent Internetadressen aufruft, muss THEOAgent unzulässige Zugriffe auf interne Netzwerkziele und unsichere Weiterleitungen verhindern.
-| SP-04 | THEOAgent darf API-Schlüssel, Zugangsdaten und andere Geheimnisse nicht in Antworten, Protokollen oder veröffentlichten Artefakten ausgeben.
-| SP-05 | THEOAgent muss bei der Bereitstellung oder Weitergabe fremder Fachliteratur die geltenden Nutzungsrechte einhalten.
+| SP-01 | THEOAgent darf private Fachtexte und personenbezogene Informationen nur innerhalb der erteilten Zugriffs- und Verarbeitungsberechtigungen an externe Dienste übermitteln. |
+| SP-02 | THEOAgent darf Anweisungen aus eingelesenen Dokumenten oder Internetseiten nicht als vorrangige System- oder Nutzeranweisungen ausführen. |
+| SP-03 | Falls THEOAgent Internetadressen aufruft, muss THEOAgent unzulässige Zugriffe auf interne Netzwerkziele und unsichere Weiterleitungen verhindern. |
+| SP-04 | THEOAgent darf API-Schlüssel, Zugangsdaten und andere Geheimnisse nicht in Antworten, Protokollen oder veröffentlichten Artefakten ausgeben. |
+| SP-05 | THEOAgent muss bei der Bereitstellung oder Weitergabe fremder Fachliteratur die geltenden Nutzungsrechte einhalten. |
 
 ## 8. Daten- und Informationsanforderungen (4)
 
 | ID | Objekt | Erwartete Informationen |
 |---|---|---|
-| DAT-01 | **Fachquelle** | THEOAgent muss einer verwendeten Quelle die verfügbaren Angaben zu Titel, Autor oder Herausgeber, Quellenart, Ausgabe, Geltungsstand und Herkunft zuordnen können.
-| DAT-02 | **Fundstelle** | THEOAgent muss einer als belegt ausgegebenen Aussage die entsprechende Quelle und eine überprüfbare Fundstelle zuordnen können.
-| DAT-03 | **Arbeitsfassung** | THEOAgent muss einer zugänglichen Arbeitsfassung ihren vom Nutzer gesetzten Freigabe- oder Freeze-Status zuordnen können.
-| DAT-04 | **Arbeitskontext** | THEOAgent muss dem aktuellen Auftrag vorhandene Angaben zu Anlass, Zielgruppe, Schrifttext, Umfang und Quellenbeschränkung zuordnen können.
+| DAT-01 | **Fachquelle** | THEOAgent muss einer verwendeten Quelle die verfügbaren Angaben zu Titel, Autor oder Herausgeber, Quellenart, Ausgabe, Geltungsstand und Herkunft zuordnen können. |
+| DAT-02 | **Fundstelle** | THEOAgent muss einer als belegt ausgegebenen Aussage die entsprechende Quelle und eine überprüfbare Fundstelle zuordnen können. |
+| DAT-03 | **Arbeitsfassung** | THEOAgent muss einer zugänglichen Arbeitsfassung ihren vom Nutzer gesetzten Freigabe- oder Freeze-Status zuordnen können. |
+| DAT-04 | **Arbeitskontext** | THEOAgent muss dem aktuellen Auftrag vorhandene Angaben zu Anlass, Zielgruppe, Schrifttext, Umfang und Quellenbeschränkung zuordnen können. |
 
 ## 9. Abnahmegrenze
 
