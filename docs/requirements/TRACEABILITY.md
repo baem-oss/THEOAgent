@@ -1,6 +1,6 @@
 # THEOAgent – Traceability-Matrix
 
-**Version:** 1.0.0 · **Stand:** 10.11.2026  
+**Version:** 1.1.0 · **Stand:** 10.11.2026  
 **Quelle:** [Fachliche Requirements-Baseline](BASELINE.md)  
 **Zweck:** Jede US auf mindestens eine FANF zurückführen; Umsetzungs- und Testnachweise werden erst in einer weiteren Phase ergänzt.
 
@@ -34,19 +34,8 @@
 | US-26 | Technikfreie Auftragserteilung | FANF-01, FANF-32 |
 | US-27 | Bereitgestellte Dokumente | FANF-33 |
 
-## Prüfergebnis
+## Abdeckung
 
-- **27/27 User Stories** besitzen mindestens eine FANF-Zuordnung.
-- **33/33 FANF** sind mindestens einer User Story zugeordnet.
-- **US-27** zur Dokumentenarbeit ist ausdrücklich durch **FANF-33** abgedeckt.
-- NFANF, RANF, GR, SP und DAT wirken querschnittlich. Eine vollständige Regel→Test-Traceability wird erst mit den Akzeptanzkriterien erstellt; diese Datei behauptet keine Tests oder Abnahmen.
-
-## Hinweise zur späteren Testableitung
-
-Die folgenden drei Fälle eignen sich als **fachliche** Beispiele für spätere Abnahmetests, ohne hier bereits deren Testschritte festzulegen:
-
-1. „Prüfe diesen Predigtentwurf nach Klippert“ → angeordnete Originallektüre plus begründete Textprüfung (US-03, US-10, GR-01/02).
-2. „Erläutere Gemeinwohl, Subsidiarität und Solidarität aus dem Kompendium“ → selbstständige Recherche, tatsächlich nachvollziehbare Originalbelege und Synthese (US-01–07, GR-02/03/18).
-3. „Überarbeite nur die zweite Fürbitte; alle anderen bleiben eingefroren“ → gezielte Revision und Freeze (US-11/20/21, GR-09/10).
-
-Diese Szenarien sind **keine** Behauptung, dass eine bestehende SourceGuard-/Open-WebUI-Version sie bereits bestanden hätte.
+- 27 User Stories sind mindestens einer funktionalen Anforderung zugeordnet.
+- 33 funktionale Anforderungen sind mindestens einer User Story zugeordnet.
+- Anforderungen an Qualität, Randbedingungen, Fachregeln, Sicherheit und Daten gelten querschnittlich.
