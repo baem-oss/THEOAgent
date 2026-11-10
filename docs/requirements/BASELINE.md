@@ -13,7 +13,7 @@
 
 **Verbindlichkeit:** Alle MUSS-Anforderungen gelten innerhalb der jeweils freigegebenen Version. Dieser Review-Kandidat ersetzt v1.1.0 erst nach Product-Owner-Freigabe. Die Erfüllung ist erst durch Akzeptanzprüfungen nachgewiesen.
 
-**Arbeitsfassung:** Im aktuell zugänglichen Arbeitskontext eindeutig bezeichnete Textfassung. **Freigabe:** ausdrückliche inhaltliche Billigung einer Fassung durch den Nutzer; keine automatische Sperre. **Freeze:** ausdrücklicher Änderungsschutz für eine bezeichnete Fassung oder Passage, unabhängig von einer Freigabe. Freigabe und Freeze können gleichzeitig bestehen; ein Änderungsauftrag allein hebt den Freeze nicht auf. **Geltungsbereich:** Mindestens der zugängliche aktuelle Arbeitskontext; die Wiederverwendung aus früheren Gesprächen setzt nachweislichen Zugriff auf die frühere Fassung und ihren Status voraus. Keine unbewiesene chatübergreifende Persistenz.
+**Arbeitsfassung:** Im aktuell zugänglichen Arbeitskontext eindeutig bezeichnete Textfassung. **Freigabe:** ausdrückliche inhaltliche Billigung einer Fassung oder Passage durch den Nutzer; keine automatische Sperre. **Freeze:** ausdrücklicher Änderungsschutz für eine bezeichnete Fassung oder Passage, unabhängig von einer Freigabe. Freigabe und Freeze können gleichzeitig bestehen; ein Änderungsauftrag allein hebt den Freeze nicht auf. **Geltungsbereich:** Mindestens der zugängliche aktuelle Arbeitskontext; die Wiederverwendung aus früheren Gesprächen setzt nachweislichen Zugriff auf die frühere Fassung und ihren Status voraus. Keine unbewiesene chatübergreifende Persistenz.
 
 **Quellenzulassung:** Zulässig sind nur Quellen, die der Nutzerauftrag erlaubt und für die der Betreiber den jeweiligen Zugriff und die Verarbeitung freigeschaltet hat. Lokale Knowledge-Rechte und zulässige externe Webziele sind zu unterscheiden. Diese Definition setzt kein gesondertes Benutzerrollenmodell voraus.
 
@@ -61,7 +61,7 @@ Die funktionalen Anforderungen verwenden die SOPHIST-Unterscheidung zwischen Ben
 | FANF-02 | Falls die lokale Fachbibliothek für den Auftrag zugelassen und zugänglich ist, muss THEOAgent sie nach einschlägigen Fachquellen durchsuchen. | US-02 |
 | FANF-03 | Falls die Recherche Internetquellen zulässt, muss THEOAgent öffentlich zugängliche Internetquellen nach einschlägigen Fachquellen durchsuchen. | US-02, US-04 |
 | FANF-04 | Falls der Nutzer einen Autor, ein Werk oder ein Dokument benennt, muss THEOAgent gezielt nach dieser Quelle suchen. | US-03 |
-| FANF-05 | Falls der Nutzer eine Originallektüre verlangt oder eine konkrete Quellenbehauptung zu prüfen ist, muss THEOAgent die einschlägige Originalpassage in ausreichendem Kontext lesen. | US-03, US-04 |
+| FANF-05 | Falls der Nutzer eine Originallektüre verlangt oder eine konkrete Quellenbehauptung zu prüfen ist, muss THEOAgent die einschlägige Originalpassage einschließlich der für die jeweilige Aussage erheblichen Bedingungen, Einschränkungen und Gegenaussagen im Textzusammenhang lesen. | US-03, US-04 |
 | FANF-06 | Falls eine Suche keine einschlägigen Ergebnisse liefert und weitere zulässige Suchwege verfügbar sind, muss THEOAgent eine veränderte Suchanfrage ausführen. | US-06 |
 | FANF-07 | Falls THEOAgent eine Aussage auf eine konkrete Quelle stützt, muss THEOAgent die zugehörige überprüfbare Fundstelle in der Antwort ausweisen. | US-04, US-07 |
 | FANF-08 | Falls THEOAgent eine Fundstelle als Beleg verwendet, muss THEOAgent deren Inhalt auf Übereinstimmung mit der belegten Aussage prüfen. | US-04, US-07 |
@@ -74,7 +74,7 @@ Die funktionalen Anforderungen verwenden die SOPHIST-Unterscheidung zwischen Ben
 | FANF-15 | Falls der Nutzer für einen Entwurf Anlass, Zielgruppe, Dauer oder pastoralen Kontext vorgibt, muss THEOAgent diese Angaben bei der Textgestaltung berücksichtigen. | US-09, US-12, US-14 |
 | FANF-16 | Falls der Nutzer einen Predigtentwurf zur Prüfung vorlegt, muss THEOAgent diesen anhand theologischer, exegetischer, homiletischer, pastoraler und sprachlicher Kriterien beurteilen. | US-10 |
 | FANF-17 | Falls der Nutzer die Änderung bestimmter Textpassagen beauftragt, muss THEOAgent die benannten Passagen bearbeiten und die übrigen Passagen unverändert lassen. | US-11, US-18 |
-| FANF-18 | THEOAgent muss dem Nutzer die Möglichkeit bieten, eine Textfassung oder einzelne Textpassagen als eingefroren zu kennzeichnen. | US-21 |
+| FANF-18 | THEOAgent muss dem Nutzer die Möglichkeit bieten, eine Textfassung oder einzelne Textpassagen ausdrücklich freizugeben, einzufrieren und den jeweiligen Freigabe- oder Freeze-Status auf ausdrückliche Anweisung zu ändern. | US-21 |
 | FANF-19 | Falls eine frühere Arbeitsfassung zugänglich ist und der Nutzer ihre Wiederverwendung verlangt, muss THEOAgent diese als Arbeitsgrundlage verwenden. | US-23 |
 | FANF-20 | THEOAgent muss dem Nutzer die Möglichkeit bieten, liturgische Einführungen, Kyrie-Rufe, Fürbitten, Meditationen und Segensworte erstellen oder überarbeiten zu lassen. | US-12 |
 | FANF-21 | Falls der Nutzer einen liturgischen Text prüfen lässt, muss THEOAgent dessen Übereinstimmung mit der liturgischen Funktion beurteilen. | US-12, US-13 |
