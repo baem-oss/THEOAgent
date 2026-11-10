@@ -1,8 +1,8 @@
 # THEOAgent – Fachliche Requirements-Baseline
 
-**Version:** 1.2.0 (Review-Kandidat)  
+**Version:** 1.2.0  
 **Stand:** 10.11.2026  
-**Status:** Vorschlag zur Requirements-Revision nach QS-Befunden F-01–F-18; **keine Freigabe**, keine Implementierung und keine Tests abgenommen  
+**Status:** Vom Product Owner am 10.11.2026 als fachliche Requirements-Baseline freigegeben; Implementierung und Qualitätstests nicht abgenommen  
 **Geltungsbereich:** Theologischer Arbeitsassistent THEOAgent, einschließlich Predigtarbeit, Liturgie, Katechese, Kirchenrecht, Quellenarbeit und kritischem Dialog.
 
 ## 1. Begriffe und Abgrenzung
@@ -11,7 +11,7 @@
 
 **Anforderungstypen:** US = User Story; FANF = funktionale Anforderung; NFANF = nichtfunktionale Qualitätsanforderung; RANF = Projekt-/Umgebungsrandbedingung; GR = verbindliche fachliche/Geschäftsregel; SP = Security-/Privacy-Anforderung; DAT = Daten-/Informationsanforderung.
 
-**Verbindlichkeit:** Alle MUSS-Anforderungen gelten innerhalb der jeweils freigegebenen Version. Dieser Review-Kandidat ersetzt v1.1.0 erst nach Product-Owner-Freigabe. Die Erfüllung ist erst durch Akzeptanzprüfungen nachgewiesen.
+**Verbindlichkeit:** Alle MUSS-Anforderungen der vom Product Owner freigegebenen Requirements-Baseline v1.2.0 sind verbindlich. Die Erfüllung ist erst durch Akzeptanzprüfungen nachgewiesen.
 
 **Arbeitsfassung:** Im aktuell zugänglichen Arbeitskontext eindeutig bezeichnete Textfassung. **Freigabe:** ausdrückliche inhaltliche Billigung einer Fassung oder Passage durch den Nutzer; keine automatische Sperre. **Freeze:** ausdrücklicher Änderungsschutz für eine bezeichnete Fassung oder Passage, unabhängig von einer Freigabe. Freigabe und Freeze können gleichzeitig bestehen; ein Änderungsauftrag allein hebt den Freeze nicht auf. **Geltungsbereich:** Mindestens der zugängliche aktuelle Arbeitskontext; die Wiederverwendung aus früheren Gesprächen setzt nachweislichen Zugriff auf die frühere Fassung und ihren Status voraus. Keine unbewiesene chatübergreifende Persistenz.
 
@@ -173,7 +173,7 @@ Die Anforderungen verwenden den EigenschaftsMASTER. Für NFANF-01 bis NFANF-11 s
 
 Diese Spezifikation legt das geforderte Verhalten fest. Das [Abnahmeprofil](ACCEPTANCE_PROFILE.md) beschreibt Prüffälle und Messverfahren. **Die Schwellenwerte und konkreten Referenzkorpora für NFANF-01 bis NFANF-11 sind noch nicht beschlossen (F-01 offen)** und müssen vor der jeweiligen Qualitätsabnahme festgelegt werden. Das technische MVP kann mit synthetischen und ausdrücklich zugelassenen Quellen getestet werden; keine Fachabnahme wird daraus vorweggenommen.
 
-Die Zuordnung der User Stories zu funktionalen Anforderungen steht in [TRACEABILITY.md](TRACEABILITY.md). Die Baseline v1.1.0 bleibt auf `main` unverändert, bis die QS-Revision freigegeben wird.
+Die Zuordnung der User Stories zu funktionalen Anforderungen steht in [TRACEABILITY.md](TRACEABILITY.md). Die frühere Baseline v1.1.0 ist über den Git-Verlauf weiterhin reproduzierbar; v1.2.0 ist der freigegebene fachliche Requirements-Stand.
 
 ## 10. Formulierungsreferenzen
 
