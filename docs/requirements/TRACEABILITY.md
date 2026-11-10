@@ -1,6 +1,6 @@
 # THEOAgent – Traceability-Matrix
 
-**Version:** 1.2.0 (Review-Kandidat) · **Stand:** 10.11.2026  
+**Version:** 1.2.0 · **Stand:** 10.11.2026  
 **Quelle:** [Fachliche Requirements-Baseline](BASELINE.md)  
 **Zweck:** Jede US auf mindestens eine FANF zurückführen; Umsetzungs- und Testnachweise werden erst in einer weiteren Phase ergänzt.
 
