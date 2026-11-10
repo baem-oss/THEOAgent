@@ -1,6 +1,6 @@
 # THEOAgent – Traceability-Matrix
 
-**Version:** 1.1.0 · **Stand:** 10.11.2026  
+**Version:** 1.2.0 · **Stand:** 10.11.2026  
 **Quelle:** [Fachliche Requirements-Baseline](BASELINE.md)  
 **Zweck:** Jede US auf mindestens eine FANF zurückführen; Umsetzungs- und Testnachweise werden erst in einer weiteren Phase ergänzt.
 
@@ -30,12 +30,12 @@
 | US-22 | Liturgisches Gesamtkonzept | FANF-24 |
 | US-23 | Wiederverwendung | FANF-19 |
 | US-24 | Gottesdienstvorbereitung | FANF-23 |
-| US-25 | Positionen und Erfahrungsberichte | FANF-10, FANF-12 |
+| US-25 | Positionen und Erfahrungsberichte | FANF-10, FANF-12, FANF-34 |
 | US-26 | Technikfreie Auftragserteilung | FANF-01, FANF-32 |
 | US-27 | Bereitgestellte Dokumente | FANF-33 |
 
 ## Abdeckung
 
 - 27 User Stories sind mindestens einer funktionalen Anforderung zugeordnet.
-- 33 funktionale Anforderungen sind mindestens einer User Story zugeordnet.
-- Anforderungen an Qualität, Randbedingungen, Fachregeln, Sicherheit und Daten gelten querschnittlich.
+- 34 funktionale Anforderungen sind mindestens einer User Story zugeordnet.
+- Anforderungen an Qualität, Randbedingungen, Fachregeln, Sicherheit und Daten gelten querschnittlich. Für US-21 konkretisiert DAT-03 die vom Nutzer gesetzten Freigabe- und Freeze-Status; die Abnahme erfolgt über T-05 im [Abnahmeprofil](ACCEPTANCE_PROFILE.md).

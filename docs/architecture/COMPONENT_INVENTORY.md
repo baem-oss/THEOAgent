@@ -2,7 +2,7 @@
 
 **Stand:** 10.11.2026  
 **Status:** Bestandsaufnahme auf Grundlage öffentlich überprüfbarer Repository-Artefakte; **keine** neue Architekturentscheidung, Implementierungsabnahme oder Aussage über den heutigen Livezustand des Homeservers.  
-**Anforderungsbasis:** [THEOAgent v1.1.0](../requirements/BASELINE.md)  
+**Anforderungsbasis:** [THEOAgent v1.1.0 – geprüfter Stand b3d901c](https://github.com/baem-oss/THEOAgent/blob/b3d901c8252e1ac95c8cd0cfc2dda78ea7810ab6/docs/requirements/BASELINE.md)  
 **Referenzrepository:** [baem-oss/THEOBald](https://github.com/baem-oss/THEOBald)
 
 ## 1. Referenzstände und Betriebsumgebung
