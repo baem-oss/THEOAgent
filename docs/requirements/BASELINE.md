@@ -89,7 +89,7 @@ Die funktionalen Anforderungen verwenden die SOPHIST-Unterscheidung zwischen Ben
 | FANF-30 | Falls der Nutzer eine fachliche Position zur Beurteilung vorlegt, muss THEOAgent sie unabhängig von der Nutzermeinung anhand sachlicher Gründe bewerten. | US-19 |
 | FANF-31 | Falls der Nutzer Arbeitsschritt, Bearbeitungstiefe oder Arbeitsumfang vorgibt, muss THEOAgent die Bearbeitung an diesen Vorgaben ausrichten und darüber hinausgehende Folgeaufgaben unterlassen. | US-20 |
 | FANF-32 | Falls ein Auftrag Recherche oder Originallektüre erfordert, muss THEOAgent die erforderlichen Such- und Leseoperationen ohne technische Einzelanweisungen des Nutzers steuern. | US-26 |
-| FANF-33 | THEOAgent muss dem Nutzer die Möglichkeit bieten, Dokumente der in RANF-06 definierten Formate für die fachliche Bearbeitung bereitzustellen. Falls ein bereitgestelltes Dokument nicht auslesbar oder nur teilweise verfügbar ist, muss THEOAgent die betroffenen Teile als nicht geprüft kennzeichnen. | US-27 |
+| FANF-33 | THEOAgent muss dem Nutzer die Möglichkeit bieten, Dokumente der in RANF-06 definierten Formate für die fachliche Bearbeitung bereitzustellen und die lesbaren Inhalte verwenden zu lassen. | US-27 |
 | FANF-34 | Falls der Nutzer theologische Positionen oder religiöse Erfahrungsberichte kritisch einordnen lässt, muss THEOAgent zwischen Glaubensaussagen, Interpretationen und empirischen Behauptungen unterscheiden und fachlich relevante Gegenpositionen, soweit verfügbar, in die Bewertung einbeziehen. | US-25 |
 
 ## 4. Nichtfunktionale Anforderungen (13)
