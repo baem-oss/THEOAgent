@@ -38,4 +38,4 @@
 
 - 27 User Stories sind mindestens einer funktionalen Anforderung zugeordnet.
 - 34 funktionale Anforderungen sind mindestens einer User Story zugeordnet.
-- Anforderungen an Qualität, Randbedingungen, Fachregeln, Sicherheit und Daten gelten querschnittlich.
+- Anforderungen an Qualität, Randbedingungen, Fachregeln, Sicherheit und Daten gelten querschnittlich. Für US-21 konkretisiert DAT-03 die vom Nutzer gesetzten Freigabe- und Freeze-Status; die Abnahme erfolgt über T-05 im [Abnahmeprofil](ACCEPTANCE_PROFILE.md).
