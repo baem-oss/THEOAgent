@@ -1,8 +1,8 @@
 # THEOAgent – Abnahmeprofil für die erste Ausbaustufe
 
-**Version:** 1.2.0 (Review-Kandidat)  
+**Version:** 1.2.0  
 **Stand:** 10.11.2026  
-**Status:** Spezifikation von Prüffällen und Messverfahren, **keine** dokumentierte Testdurchführung und **keine** Produktfreigabe.  
+**Status:** Als Bestandteil der Requirements-Baseline v1.2.0 freigegebenes Test- und Messkonzept; **keine** dokumentierte Testdurchführung und **keine** Implementierungs- oder Qualitätsabnahme.  
 **Bezugsdokumente:** [Requirements-Baseline](BASELINE.md), [Traceability](TRACEABILITY.md), [technische Bestandsaufnahme](../architecture/COMPONENT_INVENTORY.md).
 
 ## 1. Abnahmegrundsatz
