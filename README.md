@@ -2,10 +2,11 @@
 
 THEOAgent ist ein theologischer Arbeitsassistent für Bibelauslegung, Predigtarbeit, Liturgie, Katechese, Kirchenrecht, Quellenrecherche und kritische Textprüfung.
 
-## Anforderungsspezifikation
+## Dokumentation
 
 - [Requirements-Baseline v1.1.0](docs/requirements/BASELINE.md)
 - [Traceability-Matrix: User Stories → funktionale Anforderungen](docs/requirements/TRACEABILITY.md)
+- [Technische Bestandsaufnahme und offene Nachweise](docs/architecture/COMPONENT_INVENTORY.md)
 
 | Kategorie | Anzahl |
 |---|---:|
