@@ -1,11 +1,11 @@
 # THEOAgent
 
-**THEOAgent** ist das eigenständige Requirements- und Entwicklungsprojekt für einen theologischen Arbeitsassistenten. Die fachliche Ausgangsbasis wurde aus dem THEOBald-Aufgabenprofil, dem Fachstandard und den gemeinsam analysierten Arbeitsdialogen abgeleitet.
+THEOAgent ist ein theologischer Arbeitsassistent für Bibelauslegung, Predigtarbeit, Liturgie, Katechese, Kirchenrecht, Quellenrecherche und kritische Textprüfung.
 
-## Fachliche Baseline
+## Anforderungsspezifikation
 
-- [Requirements-Baseline v1.0.0](docs/requirements/BASELINE.md) – vollständiger fachlicher Anforderungskatalog
-- [Traceability-Matrix US → FANF](docs/requirements/TRACEABILITY.md) – eindeutige Zuordnung der User Stories zu Funktionen
+- [Requirements-Baseline v1.1.0](docs/requirements/BASELINE.md)
+- [Traceability-Matrix: User Stories → funktionale Anforderungen](docs/requirements/TRACEABILITY.md)
 
 | Kategorie | Anzahl |
 |---|---:|
@@ -13,14 +13,12 @@
 | Funktionale Anforderungen (FANF) | 33 |
 | Nichtfunktionale Anforderungen (NFANF) | 12 |
 | Randbedingungen (RANF) | 5 |
-| Fachliche Regeln (GR) | 18 |
-| Security/Privacy (SP) | 5 |
+| Fachregeln (GR) | 18 |
+| Sicherheits- und Datenschutzanforderungen (SP) | 5 |
 | Datenanforderungen (DAT) | 4 |
 
-**Rolle:** durchgängig „Nutzer von THEOAgent“; Predigtarbeit, Liturgie, Katechese und weitere fachliche Kontexte sind Anwendungsfälle, keine unterschiedlichen Systemrollen.
+**Rolle:** Nutzer von THEOAgent.
 
-**Status:** Fachlicher Katalog finalisiert am 10.11.2026. Dies ist **keine Implementierungsfreigabe**; Architektur, konkrete Akzeptanzkriterien und Realtests folgen gesondert.
+**Anforderungsformulierung:** Funktionale Anforderungen nach SOPHIST-FunktionsMASTER, nichtfunktionale Anforderungen nach EigenschaftsMASTER. Fehlende Grenzwerte sind als offen gekennzeichnet.
 
-**Grundsatz:** Der theologische Auftrag steuert die Arbeit. Quellenkontrolle unterstützt überprüfbare Aussagen, darf die fachliche Arbeit aber nicht durch willkürliche technische Grenzen ersetzen.
-
-**Quellen:** Nutzerabsprachen vom 10.11.2026 sowie die Instructions und der Fachstandard des installierten privaten THEOBald-Plugins 1.2.1. Private Fachbibliotheksinhalte und vertrauliche Gespräche werden hier nicht veröffentlicht.
+**Status:** Fachliche Spezifikation v1.1.0. Implementierung und Realtests sind noch nicht abgenommen.
