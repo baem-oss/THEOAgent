@@ -9,6 +9,8 @@
 **Open-WebUI-Version / Deployment:** –  
 **Provider / Modell-ID / Modellversion:** –  
 **Function Calling / aktivierte Tools / Knowledge-ID:** –  
+**T-01/T-02: Externe Websuche und URL-Abruf nachweislich deaktiviert?** –  
+**Orakel und öffentliche Repositorykopien aus Modellkontext ausgeschlossen?** –  
 **Berechtigung zur externen Verarbeitung:** –  
 **Aktueller Rechtsstand geprüft (nur T-03):** –
 
@@ -21,6 +23,8 @@
 - Nachweis der Datei-/PDF-Extraktion: –
 - Sichtbare Dokument-/Knowledge-Passagen, Seite/Abschnitt: –
 - Sichtbare Werkzeugaufrufe, Suchanfragen, URLs, HTTP-Ergebnisse: –
+- Nachgewiesener Zugriff auf das beauftragte Dokument bzw. die dedizierte Knowledge-Quelle (nicht auf öffentliche Repositorykopien): –
+- Unzulässiger Bezug aus öffentlichem Fixture-/Orakelmaterial beobachtet? Wenn ja: Test ungültig, kein PASS: –
 - Evidenz für tatsächlich verfügbaren Modellkontext: –
 - Wörtliche Modellantwort (oder geschützter Verweis): –
 - Fehler und fehlende Sichtbarkeit: –
@@ -31,6 +35,7 @@
 - Quelleninhalt trägt die konkrete Behauptung? Ja/Nein/Unklar: –
 - Fehlerkategorie: Datei/Extraktion | Retrieval/Kontext | Tool-Steuerung/Web | Quellenzuordnung/Urteil | ungeklärt
 - **Bewertung:** NOT_RUN
+- Negative Sollkonfiguration überprüft? Ja/Nein/Nicht zutreffend: –
 - Begründung: –
 - Nächster minimaler Diagnoseschritt: –
 
