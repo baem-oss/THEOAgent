@@ -13,8 +13,6 @@
 | 2026-11-10 | Requirements-Baseline v1.1.0 (THEOAgent) | `b3d901c` | Nicht freigabefähig als Architektur- und Abnahmegrundlage; freigabefähig als fachlicher Anforderungsumfang | 3 / 9 / 6 | Durch [Nachreview zu v1.2.0](2026-11-10-nachreview-requirements-v1.2.0-ab1b0aa.md) fortgeschrieben |
 | 2026-11-10 | [Requirements-Nachreview v1.2.0](2026-11-10-nachreview-requirements-v1.2.0-ab1b0aa.md) | `ab1b0aa` | Freigabefähig als Requirements-Grundlage mit Hinweisen; keine Implementierungs-/Qualitätsabnahme | 0 / 1 / 2 **neue** Findings; 13 CLOSED, 2 PARTIAL, 3 OPEN aus Erstbericht | Durch [Nachprüfung N-01/F-14](2026-11-10-review-nachpruefung-n01-f14-v1.2.0-9c020fe.md) fortgeschrieben |
 | 2026-11-10 | [Nachprüfung N-01 und F-14](2026-11-10-review-nachpruefung-n01-f14-v1.2.0-9c020fe.md) | `9c020fe` | Beide Findings CLOSED; Requirements-Freigabe empfohlen, keine Implementierungs-/Qualitätsabnahme | N-01 CLOSED / F-14 CLOSED | Archiviert; PO-Freigabe am 10.11.2026 erteilt |
-
-
 | 2026-11-11 | [T-01–T-03 Diagnosekonzept](2026-11-11-review-t01-t03-diagnostics-fec545c.md) | `fec545c` | Freigabefähig mit Hinweisen; 6 MINOR, 0 MAJOR, 0 BLOCKER; keine E2E-Tests ausgeführt | 0 / 0 / 6 | Bericht archiviert, [SE-Disposition](../testing/T01-T03_QE_FINDINGS_DISPOSITION.md) dokumentiert; PO-Freigabe 11.11.2026 |
 
 ## Freigabe der Requirements-Baseline v1.2.0
