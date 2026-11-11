@@ -13,7 +13,7 @@
 | 2026-11-10 | Requirements-Baseline v1.1.0 (THEOAgent) | `b3d901c` | Nicht freigabefähig als Architektur- und Abnahmegrundlage; freigabefähig als fachlicher Anforderungsumfang | 3 / 9 / 6 | Durch [Nachreview zu v1.2.0](2026-11-10-nachreview-requirements-v1.2.0-ab1b0aa.md) fortgeschrieben |
 | 2026-11-10 | [Requirements-Nachreview v1.2.0](2026-11-10-nachreview-requirements-v1.2.0-ab1b0aa.md) | `ab1b0aa` | Freigabefähig als Requirements-Grundlage mit Hinweisen; keine Implementierungs-/Qualitätsabnahme | 0 / 1 / 2 **neue** Findings; 13 CLOSED, 2 PARTIAL, 3 OPEN aus Erstbericht | Durch [Nachprüfung N-01/F-14](2026-11-10-review-nachpruefung-n01-f14-v1.2.0-9c020fe.md) fortgeschrieben |
 | 2026-11-10 | [Nachprüfung N-01 und F-14](2026-11-10-review-nachpruefung-n01-f14-v1.2.0-9c020fe.md) | `9c020fe` | Beide Findings CLOSED; Requirements-Freigabe empfohlen, keine Implementierungs-/Qualitätsabnahme | N-01 CLOSED / F-14 CLOSED | Archiviert; PO-Freigabe am 10.11.2026 erteilt |
-
+| 2026-11-11 | [T-01–T-03 Diagnosekonzept](2026-11-11-review-t01-t03-diagnostics-fec545c.md) | `fec545c` | Freigabefähig mit Hinweisen; 6 MINOR, 0 MAJOR, 0 BLOCKER; keine E2E-Tests ausgeführt | 0 / 0 / 6 | Bericht archiviert, [SE-Disposition](../testing/T01-T03_QE_FINDINGS_DISPOSITION.md) dokumentiert; PO-Freigabe 11.11.2026 |
 
 ## Freigabe der Requirements-Baseline v1.2.0
 
@@ -35,6 +35,14 @@ Die verbleibenden Prüfpunkte bleiben nachvollziehbar, sind aber vom Product Own
 | F-17 | OPEN – MINOR | Abgrenzung Fachregel / Qualitätsanforderung nicht explizit erläutert |
 
 **Historische Übergabeabweichung (Nachreview):** Eine vom QE mitgeteilte externe SHA-256-Prüfsumme stimmte nicht mit dem empfangenen Bericht überein. Der Bericht wurde als empfangene Fassung archiviert; sein Git-Blob lautet `4da57bb00cc479d1e9835dabe273a0ffc1c6b5be`. **Das ist keine offene Freigabesperre und keine Autorität des QE über den Repositoryinhalt.** Maßgeblich ist die tatsächlich in GitHub abgelegte Fassung. Der Widerspruch bleibt als Transport-/Provenienznotiz dokumentiert, nicht als Anforderung zur nachträglichen Veränderung des Berichts.
+
+## Freigabe des diagnostischen Testkonzepts T-01 bis T-03
+
+**Product-Owner-Entscheidung vom 11.11.2026:** Das diagnostische Testkonzept **T-01 bis T-03** einschließlich der vom Software Engineer auf dem Entwicklungsbranch vorgenommenen QE-Findings-Nachbearbeitung ist **fachlich freigegeben**. Freigabegegenstand ist der Stand `1d9436c1e899413f8ba36af2f54b690e78636d8e`, einschließlich der [SE-Disposition](../testing/T01-T03_QE_FINDINGS_DISPOSITION.md). Die operative Dokumentation steht in [T01-T03_PO_APPROVAL_2026-11-11.md](../testing/T01-T03_PO_APPROVAL_2026-11-11.md).
+
+**Abgrenzung:** Die Freigabe betrifft Testkonzept, synthetische Fixtures, Prüforakel und Protokollvorlage. Sie bestätigt **keinen** bereits ausgeführten End-to-End-Test, keine Architekturentscheidung und keine Produktqualität. T-01 bis T-03 bleiben bis zur tatsächlichen Erprobung `NOT_RUN`.
+
+Der unabhängige QE-Bericht ist als historischer Prüfbeleg **unverändert archiviert**. Seine Hinweise sind über die separate SE-Disposition nachbearbeitet; der Originalbericht bleibt ein Review des Commits `fec545c`, keine Prüfung des späteren Stands.
 
 ## Regeln für Einträge
 
