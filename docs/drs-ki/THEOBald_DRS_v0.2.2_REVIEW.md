@@ -24,7 +24,7 @@ PO-Review des Commits `eac71f2`: v0.2.1 (9.065 Zeichen) verkürzt den fachlichen
 
 ## Größe
 
-v0.2.0: **17.879 Zeichen**. v0.2.1: **9.065 Zeichen**. v0.2.2: **10104 Zeichen**; weiterhin 43.5 % kürzer als v0.2.0. Der geringe Wiederanstieg ist bewusst fachlich priorisiert.
+v0.2.0: **17.879 Zeichen**. v0.2.1: **9.065 Zeichen**. v0.2.2: **9986 Zeichen**; weiterhin 44.1 % kürzer als v0.2.0. Der geringe Wiederanstieg ist bewusst fachlich priorisiert.
 
 ## Methodische Einschränkung
 
