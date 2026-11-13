@@ -211,6 +211,22 @@ class Tools:
                 marker_found = match is not None
                 if match:
                     start = max(0, match.start() - 200)
+            if section.strip() and marker_found is False:
+                return json.dumps({
+                    "status": "SECTION_NOT_LOCATED",
+                    "technical_retrieval": True,
+                    "semantic_claim_verified": False,
+                    "section_requested": section.strip(),
+                    "section_marker_found": False,
+                    "url": final_url,
+                    "total_extracted_characters": len(full_text),
+                    "excerpt": "",
+                    "limitations": (
+                        "Die verlangte Abschnittsmarke wurde im extrahierten "
+                        "Originaltext nicht gefunden; keine Abschnittslektüre "
+                        "oder Fundstellenprüfung behaupten."
+                    ),
+                }, ensure_ascii=False)
             excerpt = full_text[start:start + self.valves.MAX_EXCERPT_CHARS]
             return json.dumps({
                 "status": "TEXT_RETRIEVED",
