@@ -156,10 +156,10 @@ def _kkk_2267_classification(section_text):
 def _kkk_2267_paragraph(text):
     # Ignore incidental mentions of 2267 in surrounding headings by requiring
     # the numeral to introduce a nonempty paragraph and bounded next 2268.
-    start = re.search(r'(?<!\\d)2267\\s*[.]?\\s+(?=[A-ZÄÖÜ])', text)
+    start = re.search(r'(?<!\d)2267\s*[.]?\s+(?=[A-ZÄÖÜ])', text)
     if not start:
         return None
-    stop = re.search(r'(?<!\\d)2268\\s*[.]?\\s+(?=[A-ZÄÖÜ])', text[start.end():])
+    stop = re.search(r'(?<!\d)2268\s*[.]?\s+(?=[A-ZÄÖÜ])', text[start.end():])
     candidate = text[start.start():start.end()+stop.start()] if stop else text[start.start():]
     return candidate[:16000]
 
@@ -252,7 +252,16 @@ class Tools:
             # if 2268 cannot be observed in that excerpt.
             excerpt = retrieved.get("excerpt", "")
             paragraph = _kkk_2267_paragraph(excerpt)
-            boundary = bool(re.search(r'(?<!\\d)2268\\s*[.]?\\s+(?=[A-ZÄÖÜ])', excerpt))
+            next_number_seen = bool(re.search(
+                r'(?<!\d)2268\s*[.]?\s+(?=[A-ZÄÖÜ])', excerpt
+            ))
+            # A standalone 2018 revision notice has no following 2268.
+            standalone_notice = (
+                role == "current_candidate"
+                and "/20180801_catechismo-penadimorte_" in retrieved["url"]
+                and retrieved.get("truncated") is False
+            )
+            boundary = next_number_seen or standalone_notice
             classification = _kkk_2267_classification(paragraph or "")
             output["comparisons"].append({
                 "role": role,
@@ -260,6 +269,7 @@ class Tools:
                 "evidence_id": retrieved.get("evidence_id"),
                 "classification": classification,
                 "paragraph_boundary_observed": boundary,
+                "boundary_method": "next_paragraph" if next_number_seen else ("complete_revision_notice" if standalone_notice else "unknown"),
                 "text": paragraph if boundary else "",
                 "excerpt_truncated": retrieved.get("truncated"),
             })
