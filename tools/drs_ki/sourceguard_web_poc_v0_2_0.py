@@ -156,7 +156,7 @@ def _kkk_2267_classification(section_text):
 def _kkk_2267_paragraph(text):
     # Ignore incidental mentions of 2267 in surrounding headings by requiring
     # the numeral to introduce a nonempty paragraph and bounded next 2268.
-    start = re.search(r'(?<!\d)2267\s*[.]?\s+(?=[A-ZÄÖÜ])', text)
+    start = re.search(r'(?<!\d)2267\s*[.]?\s+(?=Lange Zeit|Soweit unblutige Mittel|Die überlieferte Lehre|Unter der Voraussetzung)', text, flags=re.IGNORECASE)
     if not start:
         return None
     stop = re.search(r'(?<!\d)2268\s*[.]?\s+(?=[A-ZÄÖÜ])', text[start.end():])
