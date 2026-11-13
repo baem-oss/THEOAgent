@@ -43,4 +43,6 @@ Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlos
 
 ## Fortsetzung
 
+**PoC-Erweiterung:** [P-02: Vergleich der vorhandenen DRS:KI-Werkzeuge mit SourceGuard Web](POC_P-02_DRS_TOOLS_VERGLEICH.md). Zuerst DRS-Faster an KKK 2267, CIC can. 767 § 1 und Soziallehre Nr. 160–163 testen, Outline/MediaWiki/TYPO3 nur bei einschlägiger Quelle. Der eigene [Webadapter](../../tools/drs_ki/sourceguard_web_poc_v0_1_0.py) dient als gezielter Vergleich für einen sicheren Originalabruf, nicht als Ersatz der technischen Antwortdurchsetzung. Die [Offline-Regressionsfälle](../../tests/drs_ki/test_sourceguard_web_poc.py) sind hinzugefügt, aber noch nicht als ausgeführt bestätigt.
+
 **Aktueller nächster Schritt (PO-Priorisierung):** [Schneller PoC P-01](POC_P-01_SCHNELLTEST.md) mit dem bestehenden DRS-Prompt v0.2.3 und bereits funktionierenden Werkzeugen. Eine allgemeine Tool-/Berechtigungsinventur ist **keine** Voraussetzung. Der [P0-Machbarkeits- und Findingsplan](P0_MACHBARKEIT_UND_FINDINGS.md) bleibt für gezielte technische Nachprüfungen und die spätere SourceGuard-Integration verfügbar. Der PoC belegt ausdrücklich noch keine technisch erzwungene Quellenverifikation.
