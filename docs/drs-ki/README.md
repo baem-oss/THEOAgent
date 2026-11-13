@@ -43,4 +43,4 @@ Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlos
 
 ## Fortsetzung
 
-Zuerst den [P0-Machbarkeitstest](P0_MACHBARKEIT_UND_FINDINGS.md) durchführen. Erst danach Architekturentscheidungen treffen.
+**Aktueller nächster Schritt (PO-Priorisierung):** [Schneller PoC P-01](POC_P-01_SCHNELLTEST.md) mit dem bestehenden DRS-Prompt v0.2.3 und bereits funktionierenden Werkzeugen. Eine allgemeine Tool-/Berechtigungsinventur ist **keine** Voraussetzung. Der [P0-Machbarkeits- und Findingsplan](P0_MACHBARKEIT_UND_FINDINGS.md) bleibt für gezielte technische Nachprüfungen und die spätere SourceGuard-Integration verfügbar. Der PoC belegt ausdrücklich noch keine technisch erzwungene Quellenverifikation.
