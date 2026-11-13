@@ -3,6 +3,7 @@
 **Stand:** 13.11.2026  
 **Branch:** `drs-ki-test`  
 **Status:** Statischer Kompatibilitätsbefund, keine DRS:KI-Laufzeitprüfung, keine Implementierung  
+**PO-Klarstellung 13.11.2026:** Entwicklung auf **DRS:KI DEV mit Developerzugriff**; Endnutzer ruft nur das konfigurierte Modell auf. Der Werkzeugvertrag ist deshalb **entwicklungsseitig** zu prüfen, nicht auf Endnutzer-Konfigurationsrechte hin.  
 **Review:** [QE-F-C2](reviews/QE_ARCHITEKTUR_REVIEW_2026-11-13.md)  
 **Referenz:** [THEOBald SourceGuard v0.5.5-dev3](https://github.com/baem-oss/THEOBald/blob/review/sourceguard-integrated-v0.5.5-dev3/sourceguard/sourceguard.py)
 
@@ -48,8 +49,8 @@ Die tatsächliche Verfügbarkeit und das Rückgabeformat sind nicht durch die To
 
 ## 4. Minimaler Weg ohne neue Implementierung
 
-1. Prüfen, ob ein normaler DRS:KI-Account eine SourceGuard-Pipe installieren/ausführen darf (**P0 SG-01**).
-2. In der realen Open-WebUI-Umgebung protokollieren, welche `__tools__`-Namen, Aufrufparameter und Antwortformen der Pipe zur Verfügung stünden (**P0 SG-02**). Keine sensiblen Inhalte oder Zugangsdaten in Protokolle aufnehmen.
+1. Mit dem vorhandenen **Developerzugriff auf DRS:KI DEV** prüfen, ob SourceGuard als Pipe/Function integrierbar und einem bereitgestellten Modell zuweisbar ist (**P0 SG-01**).
+2. Im **DEV-Modellprofil** protokollieren, welche `__tools__`-Namen, Aufrufparameter und Antwortformen der Pipe tatsächlich zur Verfügung stehen (**P0 SG-02**). Keine sensiblen Inhalte oder Zugangsdaten in Protokolle aufnehmen.
 3. Pro Leseweg einen kontrollierten Originaltext-Test (kurzer verifizierbarer Absatz, gezielt falscher Locator, fehlgeschlagener Abruf) durchführen.
 4. Falls Werkzeuge/Callables fehlen: **Erkundungsmodus** mit transparenter Unsicherheit, **kein verifizierender SourceGuard-Betrieb**.
 5. Erst bei tatsächlicher Erreichbarkeit der Pipe und der Lesewege entscheiden, ob ein kleiner Adapter möglich ist. Abgleich mit SourceGuard-Tests und Security-Requirements ist zwingend.
@@ -60,4 +61,4 @@ Die tatsächliche Verfügbarkeit und das Rückgabeformat sind nicht durch die To
 
 ## 6. Nächster Test
 
-`SG-01`: In DRS:KI mit dem persönlichen normalen Konto klären, ob unter Workspace / Funktionen oder ähnlicher Benutzeroberfläche eine **eigene Pipe/Function** erstellt bzw. aktiviert werden darf. Nur Oberflächen- und Rechtebeleg erfassen; nichts installieren.
+`SG-01`: Auf **DRS:KI DEV** mit Developerzugriff prüfen, ob eine eigene Pipe/Function entwickelt, eingebunden und dem später ausschließlich vom Endnutzer aufzurufenden Modell zugewiesen werden kann. DEV-Berechtigungen und Bereitstellungsweg dokumentieren; zunächst keine produktive Installation.
