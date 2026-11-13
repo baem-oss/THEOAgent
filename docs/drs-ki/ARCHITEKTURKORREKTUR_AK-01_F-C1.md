@@ -4,6 +4,7 @@
 **Datum:** 13.11.2026  
 **Branch:** `drs-ki-test`  
 **Status:** Technische Findings-Disposition und Architekturkorrektur zur PO-Prüfung; **keine** Produktfreigabe  
+**PO-Klarstellung 13.11.2026:** Integration auf **DRS:KI DEV mit Developerzugriff**; Endnutzer hat ausschließlich Zugriff auf das bereitgestellte Modell. Ob der Developer konkret Pipes/Functions integrieren darf, ist gesondert festzustellen.  
 **Referenzen:** [Requirements v1.2.0](../requirements/BASELINE.md), [QE-Review](reviews/QE_ARCHITEKTUR_REVIEW_2026-11-13.md), [historischer Entwurf](ARCHITEKTURVORSCHLAG_2026-11-13.md)
 
 ## 1. Festgestellter Fehler
@@ -36,14 +37,14 @@ Der historische DRS:KI-Architekturentwurf sieht als eigene THEOBald-Komponente e
 
 | Gate | Nachweis | Status |
 |---|---|---|
-| SG-01 | Darf der normale DRS:KI-Nutzer eine Pipe/Function installieren oder zuweisen? | NICHT GEPRÜFT |
+| SG-01 | Kann der Developer auf DRS:KI DEV eine Pipe/Function entwickeln, integrieren und dem Endnutzermodell zuweisen? | NICHT GEPRÜFT |
 | SG-02 | Erhält die Pipe die benötigten `__tools__`-Callables? Welche Namen/Formate? | NICHT GEPRÜFT |
 | SG-03 | Können DRS:KI-Faster/Outline/Bibel/MediaWiki/TYPO3 die für SourceGuard benötigten Original-Leseevents bereitstellen? | NICHT GEPRÜFT |
 | SG-04 | Wird bei 0 Leseevents sowie bei Snippet/Fehlabruf ein Verifikationsanspruch tatsächlich unterbunden? | NICHT GEPRÜFT |
 | SG-05 | Sind Berechtigungen, Lizenzen, Datenflüsse und Netzwerksicherheit ausreichend geklärt? | NICHT GEPRÜFT |
 | SG-06 | Bestehender SourceGuard besteht passenden Live-, Positiv- und Negativkorpus auf DRS:KI | NICHT GEPRÜFT |
 
-**Gates zuerst:** SG-01 und SG-02. Ein negativer Befund verhindert den verifizierenden Betrieb im aktuellen Nutzerkonto; er verbietet nicht die fachlich klar begrenzte Erkundung.
+**Gates zuerst:** SG-01 und SG-02. Ein negativer Befund zur **DEV-Integration** verhindert die geplante technisch verifizierende Modellbereitstellung; die fachlich klar begrenzte Erkundung auf DEV bleibt möglich.
 
 ## 5. Abnahme und Nachweis
 
