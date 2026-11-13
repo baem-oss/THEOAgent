@@ -15,11 +15,11 @@
 
 1. [Architekturvorschlag vom 13.11.2026](ARCHITEKTURVORSCHLAG_2026-11-13.md) – nicht freigegeben; durch den QE teilweise beanstandet.
 2. [Unabhängiger QE-Architektur-Review vom 13.11.2026](reviews/QE_ARCHITEKTUR_REVIEW_2026-11-13.md) – historischer Reviewbeleg, unverändert übernommen; maßgebliche Findings F-C1 (kritisch) sowie F-A1, F-C2 bis F-C7.
-3. [Quellcode-Belege](evidence/sources/) – sieben DRS:KI-Implementierungen, davon sechs aus Nutzeruploads, eine als Chat-Abschrift. **Keine Lizenz zur Wiederverwendung daraus ableiten.**
+3. **Quellcode-Belege (separates, nicht öffentliches Reviewpaket)** – sieben DRS:KI-Implementierungen, davon sechs aus Nutzeruploads, eine als Chat-Abschrift. Sie sind wegen ungeklärter Nutzungsrechte **nicht** Bestandteil des öffentlichen GitHub-Repositories. Ursprünglicher Dateiname: `THEOBald_DRS-KI_QE_Quellcodes_2026-11-13.zip`.
 4. [Herkunft des QE-Pakets](evidence/README_QE_PAKET.md).
 5. [Findings-Disposition und P0-Plan](P0_MACHBARKEIT_UND_FINDINGS.md) – Arbeitsvorschlag, keine PO-Abnahme.
 
-Das ursprüngliche ZIP enthielt eine byte-identische Faster-Dublette; diese wurde nach Wunsch des Product Owners im Archiv ausgeschlossen. Im Repository liegt nur eine Fassung.
+Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlossen). **Keiner der fremden Quellcodes wird im öffentlichen Repository als Datei bereitgestellt.** Früher versehentlich committe Reviewkopien wurden aus dem Branch-Arbeitsbaum entfernt; da Git-Historie bestehen bleibt, bedarf eine gegebenenfalls notwendige Historienbereinigung einer gesondert abgestimmten Maßnahme.
 
 ## Fachlicher Zwischenstand
 
