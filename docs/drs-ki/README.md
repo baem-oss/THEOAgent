@@ -5,6 +5,8 @@
 **Arbeitsbranch:** `drs-ki-test`  
 **SSOT:** `baem-oss/THEOAgent`, gemäß [Projektprozess](../WORKFLOW.md).
 
+**Verbindliche Rollen-/Umgebungsklarstellung (PO, 13.11.2026):** Entwicklung und Tests finden auf **DRS:KI DEV** mit **Developerzugriff** statt. Der spätere **Endnutzer ruft ausschließlich das bereitgestellte Modell auf**; er konfiguriert weder Tools noch Skills noch Pipes. Die technische Integrationsfähigkeit ist daher mit Developerrechten zu prüfen; konkrete Installations- bzw. Deploymentbefugnisse sind damit noch nicht nachgewiesen.
+
 ## Verbindliche Grundlage
 
 - [Requirements-Baseline v1.2.0](../requirements/BASELINE.md) (PO-freigegeben am 10.11.2026).
@@ -28,7 +30,7 @@ Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlos
 - Keine der gesichteten DRS:KI-Werkzeugimplementierungen belegt allein die SourceGuard-konforme, technisch erzwungene Prüfung.
 - Das vorgeschlagene promptbasierte Verifikationsverfahren genügt **nicht** als Ersatz für den bestehenden SourceGuard (QE F-C1).
 - Auf DRS:KI ist ein **Erkundungspilot** mit als ungesichert bezeichneten Evidenzstufen denkbar. Ein **quellenverifizierter Betrieb** ist nicht freigegeben.
-- Rechte, Tool Callbacks, Funktions-/Pipe-Installation, Modellverhalten, Datenflüsse und Lizenzrechte sind noch praktisch bzw. organisatorisch zu prüfen.
+- Konkrete **Developer-/Deploymentbefugnisse**, Tool Callbacks, Funktions-/Pipe-Integration, Modellverhalten, Datenflüsse und Lizenzrechte sind noch praktisch bzw. organisatorisch zu prüfen. Endnutzer-Konfigurationsrechte sind **kein** Prüfgegenstand.
 
 ## Regeln für die Weiterarbeit
 
@@ -36,7 +38,7 @@ Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlos
 2. Keine Übernahme fremden DRS:KI-Codes in produktive Komponenten ohne Rechteklärung. Das Verzeichnis `evidence/sources/` dient ausschließlich der Prüfung.
 3. Unterscheidung von `TREFFER`, `AUSZUG` und `TECHNISCH_VERIFIZIERT`; letzteres nur bei technischem Nachweis. Eine promptbasierte Selbstdeklaration ist keine Garantie.
 4. SourceGuard nicht neu erfinden: Eignung der bestehenden Implementierung und notwendige Adapter zuerst prüfen.
-5. Kein Adminzugriff voraussetzen und keine Laufzeitergebnisse behaupten, die nicht auf DRS:KI erhoben wurden.
+5. **Developerzugriff auf DRS:KI DEV ist gegeben**; weitergehende Admin-/Installationsrechte nicht unterstellen. Keine Laufzeitergebnisse behaupten, die nicht auf DRS:KI DEV erhoben wurden.
 6. QE findet und begründet Beanstandungen; der PO entscheidet über fachliche Baselines und Freigaben. Der QE setzt keine Commit-SHAs.
 
 ## Fortsetzung
