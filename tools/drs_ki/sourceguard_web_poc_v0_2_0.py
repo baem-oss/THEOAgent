@@ -137,10 +137,11 @@ class PinnedHTTPSConnection(http.client.HTTPSConnection):
             raise
 
 
-def _decode_document(content, content_type):
-    """Bytes anhand von BOM, HTTP-Header oder HTML-Metadaten dekodieren.
+def _decode_document(content, content_type, return_details=False):
+    """HTML-Bytes dekodieren; verwendete Kodierung auf Wunsch mitmelden.
 
-    Bei unlesbaren Zeichen wird nicht stillschweigend ein Belegtext erfunden.
+    Der ISO-8859-1-Fallback bleibt für historische Webseiten erhalten. Ohne
+    eindeutige Kodierungsdeklaration ist die Interpretation aber unsicher.
     """
     header = re.search(r'charset\s*=\s*["\']?([a-z0-9_-]+)', content_type.lower())
     meta = re.search(
@@ -163,7 +164,13 @@ def _decode_document(content, content_type):
         except (UnicodeError, LookupError):
             continue
         if "\ufffd" not in result:
-            return result
+            # Der permissive Latin-1-Fallback darf nicht als sichere
+            # Originalkodierung ausgegeben werden. Ebenso kann ein deklarierter
+            # Charset inhaltlich falsch sein; diese Unsicherheit bleibt offen.
+            uncertain = charset == "iso-8859-1" and charset not in (
+                http_charset, meta_charset
+            )
+            return (result, charset, uncertain) if return_details else result
     raise RetrievalError("Zeichenkodierung nicht sicher lesbar")
 
 
@@ -278,7 +285,9 @@ def _download(url, allowed_hosts, max_bytes, timeout):
             if len(content) > max_bytes:
                 raise RetrievalError("Quelle überschreitet Downloadlimit")
             # Erst Zeichensatz korrekt dekodieren, danach HTML-Struktur entfernen.
-            raw = _decode_document(content, mime)
+            raw, charset_used, charset_uncertain = _decode_document(
+                content, mime, return_details=True
+            )
             if mime.startswith(("text/html", "application/xhtml+xml")):
                 parser = TextExtractor()
                 parser.feed(raw)
@@ -292,7 +301,7 @@ def _download(url, allowed_hosts, max_bytes, timeout):
             text = "\n".join(line for line in lines if line)
             if len(text) < 100:
                 raise RetrievalError("Kein hinreichender lesbarer Text")
-            return current, text
+            return current, text, charset_used, charset_uncertain
         finally:
             connection.close()
     raise RetrievalError("Zu viele Umleitungen")
@@ -330,6 +339,10 @@ class Tools:
             "version_verified": False, "semantic_claim_verified": False,
             "comparisons": [],
         }
+        # F-01: Ein Vergleich benötigt immer eine eindeutige Fundstelle.
+        if not isinstance(locator, str) or not locator.strip() or len(locator) > 100:
+            result["status"] = "INVALID_LOCATOR"
+            return json.dumps(result, ensure_ascii=False)
         # Jede Quelle wird mit denselben technischen Prüfungen separat gelesen.
         for role, url in (("source_a", url_a), ("source_b", url_b)):
             item = json.loads(self.read_source(url, locator))
@@ -349,7 +362,9 @@ class Tools:
         # Verglichen werden nur die lokalisierten Abschnitte, nicht das
         # gesamte Dokument und auch nicht ein beliebiger Textausschnitt davor.
         a, b = (x["section_text"] for x in result["comparisons"])
-        if any(x["section_window_truncated"] for x in result["comparisons"]):
+        if not a.strip() or not b.strip():
+            result["reason"] = "Mindestens eine gelesene Fundstellenpassage ist leer."
+        elif any(x["section_window_truncated"] for x in result["comparisons"]):
             result["reason"] = "Mindestens eine Fundstellenpassage wurde gekürzt."
         # Unterschiede bei Zeilenumbrüchen allein gelten nicht als Textabweichung.
         elif _normalize_evidence(a) == _normalize_evidence(b):
@@ -373,11 +388,14 @@ class Tools:
         # Leere und überlange Prüftexte werden nicht an die Quellensuche übergeben.
         if not isinstance(claim, str) or not claim.strip() or len(claim) > 4000:
             return json.dumps({"status": "INVALID_CLAIM", "semantic_claim_verified": False})
+        if not isinstance(locator, str) or not locator.strip() or len(locator) > 100:
+            return json.dumps({"status": "INVALID_LOCATOR", "semantic_claim_verified": False})
         item = json.loads(self.read_source(url, locator))
         result = {
             "status": "INCOMPLETE", "semantic_claim_verified": False,
             "source_status": item.get("status"), "url": item.get("url", url),
             "locator": locator, "evidence_id": item.get("evidence_id"),
+            "evidence_id_origin": "DIRECT_WEB_RETRIEVAL" if item.get("evidence_id") else None,
         }
         if item.get("status") == "TEXT_RETRIEVED":
             # Wörtliche Suche nach Normalisierung der Leerzeichen. Synonyme
@@ -488,12 +506,22 @@ class Tools:
             result["retrieval_status"] = retrieved.get("status")
             if retrieved.get("status") != "TEXT_RETRIEVED":
                 result["status"] = "SOURCE_NOT_READ"
+                result["retrieval_error"] = retrieved.get("error")
+                result["retrieval_error_type"] = retrieved.get("error_type")
                 return json.dumps(result, ensure_ascii=False)
             source_text = retrieved.get("section_text", "")
             result["source_url"] = retrieved.get("url")
             result["evidence_id"] = retrieved.get("evidence_id")
             result["source_provenance_verified"] = True
             result["source_provenance_level"] = "TECHNICALLY_RETRIEVED_URL"
+            result["evidence_id_origin"] = "DIRECT_WEB_RETRIEVAL"
+            result["charset_used"] = retrieved.get("charset_used")
+            result["charset_uncertain"] = retrieved.get("charset_uncertain")
+            result["limitations"] = (
+                "Nachgewiesen ist nur der technische Abruf der angegebenen URL, "
+                "nicht die Autorenschaft, Editions-/Normfassung oder inhaltliche "
+                "Richtigkeit. Eine Abschnittsgrenze kann unklar sein."
+            )
             result["text_window_limited"] = retrieved.get(
                 "section_window_truncated", False
             )
@@ -517,6 +545,7 @@ class Tools:
                 return json.dumps(result, ensure_ascii=False)
             source_text = evidence_text
             result["source_provenance_level"] = "MODEL_SUPPLIED_TOOL_EXCERPT"
+            result["evidence_id_origin"] = "MODEL_SUPPLIED_TOOL_EXCERPT"
             result["text_window_limited"] = None
             result["limitations"] = (
                 "Text, Werkzeugname und Fundstelle vom aufrufenden Modell "
@@ -565,12 +594,17 @@ class Tools:
             }
             if not hosts:
                 raise RetrievalError("Keine erlaubten Quellenhosts konfiguriert")
-            if not isinstance(section, str) or len(section) > 40:
+            if not isinstance(section, str) or len(section) > 100:
                 raise RetrievalError("Ungültige Abschnittsangabe")
-            final_url, full_text = _download(
+            # Der bisherige zweielementige Rückgabewert bleibt als
+            # Kompatibilitätsweg für ältere Aufrufer/Mocks möglich.
+            downloaded = _download(
                 url, hosts, self.valves.MAX_DOWNLOAD_KB * 1024,
                 self.valves.TIMEOUT_SECONDS,
             )
+            final_url, full_text = downloaded[:2]
+            charset_used = downloaded[2] if len(downloaded) > 2 else None
+            charset_uncertain = downloaded[3] if len(downloaded) > 3 else None
             # Ohne gewünschten Abschnitt wird der allgemeine Dokumentanfang
             # als Vorschau bereitgestellt. Mit Abschnitt gilt: eindeutig finden.
             marker_found = None
@@ -628,6 +662,8 @@ class Tools:
                 "section_text": section_text,
                 "section_boundary": section_boundary,
                 "section_window_truncated": section_window_truncated,
+                "charset_used": charset_used,
+                "charset_uncertain": charset_uncertain,
                 "excerpt_start_character": start,
                 "total_extracted_characters": len(full_text),
                 "truncated": start + len(excerpt) < len(full_text),
