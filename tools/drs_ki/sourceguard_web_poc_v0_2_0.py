@@ -165,6 +165,22 @@ def _locate(text, locator):
     return matches[0], "FOUND"
 
 
+def _section_text(text, locator, match, max_chars):
+    """Best-effort numbered section window without assuming any named work."""
+    if not locator.isdigit():
+        return text[match.start():match.start() + max_chars], "UNDETERMINED"
+    next_label = str(int(locator) + 1)
+    # Only the next numbered paragraph, anchored at the beginning of a line,
+    # counts as a boundary. A number inside a sentence does not.
+    following, state = _locate(text[match.end():], next_label)
+    if state == "FOUND":
+        end = match.end() + following.start()
+        return text[match.start():min(end, match.start() + max_chars)], (
+            "NEXT_NUMBER" if end - match.start() <= max_chars else "WINDOW_LIMIT"
+        )
+    return text[match.start():match.start() + max_chars], "DOCUMENT_END_OR_UNKNOWN"
+
+
 def _download(url, allowed_hosts, max_bytes, timeout):
     current = url
     for _ in range(4):
@@ -252,13 +268,13 @@ class Tools:
                 return json.dumps(result, ensure_ascii=False)
             result["comparisons"].append({
                 "role": role, "url": item["url"], "evidence_id": item["evidence_id"],
-                "excerpt": item["excerpt"], "truncated": item["truncated"],
+                "section_text": item["section_text"],
+                "section_boundary": item["section_boundary"],
+                "section_window_truncated": item["section_window_truncated"],
             })
-        a, b = (x["excerpt"] for x in result["comparisons"])
-        # Only compare if both extracts are complete: an unfinished excerpt
-        # is not a reliable basis for claiming textual identity or difference.
-        if any(x["truncated"] for x in result["comparisons"]):
-            result["reason"] = "Mindestens ein Textfenster wurde gekürzt."
+        a, b = (x["section_text"] for x in result["comparisons"])
+        if any(x["section_window_truncated"] for x in result["comparisons"]):
+            result["reason"] = "Mindestens eine Fundstellenpassage wurde gekürzt."
         elif _normalize_evidence(a) == _normalize_evidence(b):
             result["status"] = "SAME_TEXT"
         else:
@@ -287,13 +303,13 @@ class Tools:
         }
         if item.get("status") == "TEXT_RETRIEVED":
             result["exact_quote_found_in_excerpt"] = (
-                _normalize_evidence(claim) in _normalize_evidence(item["excerpt"])
+                _normalize_evidence(claim) in _normalize_evidence(item["section_text"])
             )
             result["status"] = (
                 "QUOTE_FOUND" if result["exact_quote_found_in_excerpt"]
                 else "QUOTE_NOT_FOUND_IN_EXCERPT"
             )
-            result["truncated"] = item.get("truncated")
+            result["truncated"] = item.get("section_window_truncated")
             result["limitations"] = (
                 "Wörtliche Textsuche, kein semantischer Beweis; bei gekürztem "
                 "Textfenster ist ein negativer Befund nicht abschließend."
@@ -345,6 +361,15 @@ class Tools:
                         "oder Fundstellenprüfung behaupten."
                     ),
                 }, ensure_ascii=False)
+            section_text = ""
+            section_boundary = None
+            section_window_truncated = False
+            if section.strip() and match:
+                section_text, section_boundary = _section_text(
+                    full_text, section.strip(), match,
+                    self.valves.MAX_EXCERPT_CHARS,
+                )
+                section_window_truncated = section_boundary == "WINDOW_LIMIT"
             excerpt = full_text[start:start + self.valves.MAX_EXCERPT_CHARS]
             return json.dumps({
                 "status": "TEXT_RETRIEVED",
@@ -357,6 +382,9 @@ class Tools:
                     (final_url + "\n" + full_text).encode("utf-8")
                 ).hexdigest()[:20],
                 "excerpt": excerpt,
+                "section_text": section_text,
+                "section_boundary": section_boundary,
+                "section_window_truncated": section_window_truncated,
                 "excerpt_start_character": start,
                 "total_extracted_characters": len(full_text),
                 "truncated": start + len(excerpt) < len(full_text),
