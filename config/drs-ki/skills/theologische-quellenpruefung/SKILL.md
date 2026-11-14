@@ -33,6 +33,14 @@ Wenn der Auftrag eine Analyse **anhand eines namentlich genannten Autors, Werks 
 
 Bei einer reinen sprachlichen Überarbeitung nach bereits belegter Analyse müssen nicht dieselben Originalstellen erneut abgerufen werden, sofern sie im Gespräch tatsächlich vorliegen; zusätzliche fachliche Behauptungen sind aber erneut zu prüfen.
 
+## Koordination mit anderen Fachskills
+
+Die Nutzung eines homiletischen oder exegetischen Skills **ersetzt keine Originallektüre** des vom Nutzer ausdrücklich genannten Autors oder Werks. Kategorien aus `THEOAgent - Homiletik` und `THEOAgent - Exegese Homiletischer Arbeitsgang` sind zunächst **THEOAgent-interne Kriterien** und dürfen nicht automatisch als „nach Klippert“ oder „von Klippert gefordert“ ausgegeben werden.
+
+Bei einer solchen Analyse gilt die Reihenfolge **Werkstelle lesen → konkrete Autorposition mit passender Fundstelle belegen → eigene Predigtbewertung anhand dieser belegten Position**. Gib die tatsächlich nachgelesenen Originalstellen in der Antwort an. Eine gelesene Kapitelüberschrift oder die bloße Quellenliste reicht nicht als Nachweis des Inhalts; eine `view_knowledge_file`-Ausführung ohne zugänglichen relevanten Text begründet ebenfalls keine autorbezogene Zuschreibung.
+
+Belege zu anderen Autoren oder Normtexten sind jeweils eigenständig zu prüfen. Wird eine Position nicht belegt, entferne die Zuschreibung oder kennzeichne sie als nicht überprüfbar; verweise nicht stattdessen auf einen anderen Fachskill als vermeintlichen Originalbeleg.
+
 ## Verfahren (verbindlich)
 
 1. **Quellenlage feststellen.** Wähle je nach Quellenart die zugeordnete Wissensbasis oder die zuständige offizielle Webseite und prüfe, ob das angefragte Dokument verfügbar ist. Nutze bei Bedarf `search_knowledge_files`, `query_knowledge_files` und die Dateiansicht. Wenn eine Quelle nicht verfügbar ist, benenne diese Grenze, ohne Inhalt zu erfinden.
