@@ -315,11 +315,23 @@ class Tools:
             start = 0
             if section.strip():
                 marker = section.strip()
-                expression = (
-                    r"(?<![\w\d])(?:Nr\.\s*)?" + re.escape(marker)
-                    + r"\s*[.)\]:\-](?!\d)"
-                )
-                match = re.search(expression, full_text, flags=re.IGNORECASE)
+                # The older Vatican KKK page uses "2267 Soweit ..." without
+                # punctuation; other Vatican documents use "2267. ...".
+                # For this number use the paragraph-specific anchor to avoid
+                # confusing an incidental "Nr. 2267" heading with the text.
+                if marker == "2267":
+                    match = re.search(
+                        r'(?<!\d)2267\s*[.]?\s+'
+                        r'(?=Lange Zeit|Soweit unblutige Mittel|'
+                        r'Die überlieferte Lehre|Unter der Voraussetzung)',
+                        full_text, flags=re.IGNORECASE,
+                    )
+                else:
+                    expression = (
+                        r"(?<![\w\d])(?:Nr\.\s*)?" + re.escape(marker)
+                        + r"(?:\s*[.)\]:\-]|\s+)(?=[A-ZÄÖÜ0-9])"
+                    )
+                    match = re.search(expression, full_text, flags=re.IGNORECASE)
                 marker_found = match is not None
                 if match:
                     start = max(0, match.start() - 200)
