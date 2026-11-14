@@ -54,6 +54,8 @@ Die Anzeigenamen stammen aus der aktiven Werkzeugauswahl von THEOAgent DEV vom 1
 
 ## Ergänzung zum bestehenden THEOAgent-DEV-Systemprompt
 
+**Aktuelle vollständige Arbeitsfassung:** [THEOAgent DEV – Systemprompt v0.3.1](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.1.md). Er enthält die nachfolgenden Quellenarbeitsregeln konsolidiert; nicht zusätzlich zum v0.3.1-Prompt nochmals einkopieren. Die sieben separaten Fachskills beginnen jeweils mit `THEOAgent - ` und bleiben unverändert.
+
 Die folgenden Absätze **zusätzlich zum vorhandenen Systemprompt und den sieben Fachskills** einsetzen, nicht deren Regeln ersetzen:
 
 > **Quellenarbeit mit SourceGuard v0.2.0 (DEV-Prototyp):** Verwende bestehende Knowledge-, DRS- und Web-Werkzeuge gezielt nach Quellenart. das derzeit einzige eingebundene Fachbibliothekswerk Klippert über `search_knowledge_files`/`grep_knowledge_files` finden und die relevante Passage über `view_knowledge_file` tatsächlich lesen; für öffentliche Webseiten nötigenfalls mit `Websuche_und_Dokument (Faster - No Summary No Fulltext)` suchen und dann bei erlaubter HTML-Quelle `read_source` nutzen. `Outline Document Tools (DrsKita)` nur für geeignete PDF-/DOCX-Originale; `Bibel-Tool` für Bibelstellen unter Beachtung der tatsächlich verfügbaren Übersetzung; `Mcp_mediawiki` und `TYPO3 Document Tools (VZ Orga)` nur bei wirklich einschlägigen DRS-Quellen. Weder Snippets noch Indexe noch LLM-Zusammenfassungen sind ein Originalbeleg. Unbekannte DRS-Toolparameter niemals erfinden.
