@@ -4,6 +4,14 @@
 **Status:** Entwicklungsversion, **nicht** produktiv freigegeben  
 **Bezug:** [P-03a KKK 2267](POC_P-03A_KKK2267_VERSIONSBEFUND_2026-11-13.md), [F-C1/F-C2](SCHNITTSTELLENPRUEFUNG_AK-02_F-C2.md).
 
+## DEV-Befund P-03b (14.11.2026) – erste Ausführung
+
+**Tatsächlicher Toolaufruf:** `compare_kkk_2267_versions(historical_url, current_url)` auf THEOAgent DEV. Ausgabe: `status=INCOMPLETE`, erster Unterabruf `SECTION_NOT_LOCATED`; der zweite Unterabruf wurde wegen Fail-Closed nicht gestartet. THEOAgent hat das korrekt offengelegt.
+
+**Ursache:** Die vorherige Regex in `read_source` suchte nach `2267` mit nachfolgendem Satzzeichen. Auf der amtlichen älteren KKK-Webseite lautet die Originalstelle `2267 Soweit unblutige Mittel ...` (ohne Punkt). Daher false negative bei der Lokalisierung, **kein** gesicherter Abruffehler. Korrektur am 14.11.2026 in `tools/drs_ki/sourceguard_web_poc_v0_2_0.py` (Commit `7eaab7a`), Regressionstest ergänzt (Commit `9cba78c`).
+
+**Folge:** Das zuvor auf DEV installierte Tool ist **noch nicht aktualisiert**. Die korrigierte Datei erneut vollständig in den Werkzeugeditor übernehmen, speichern, und P-03b wiederholen. Tests sind vorbereitet, aber nicht als lokal/CI ausgeführt bestätigt. **P-03b: FAIL bis erneut getestet.**
+
 ## Änderungen gegenüber v0.1.0
 
 1. `read_source(url, section)` bleibt als API bestehen. HTML/Text wird mit BOM, deklariertem HTTP-/Meta-Charset und Fallbacks in strikter Decodierung gelesen; ersetzt fehlerhafte Zeichen nicht stillschweigend durch `�`. **Die genaue Ursache der Umlaute beim Test mit IntraText ist noch nicht live verifiziert**.
