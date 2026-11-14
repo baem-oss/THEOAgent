@@ -1,8 +1,13 @@
 """
-title: THEOAgent SourceGuard Web – DEV PoC
-author: THEOAgent
-version: 0.2.0
-description: Controlled retrieval of public HTTPS source text. Not a SourceGuard Pipe.
+Name: SourceGuard Web
+Zweck: Geschützter Abruf, Fundstellensuche und technischer Belegvergleich
+       für öffentlich zugängliche HTML-/Textquellen in THEOAgent.
+Autor: BäM (PO, RE) / ChatGPT (SE) / Deepseek (QE)
+Datum: 14.11.2026
+Version: 0.2.0
+
+Hinweis: Open-WebUI-Werkzeug für DRS:KI DEV; keine SourceGuard-Pipe.
+Eine Fundstelle oder ein Zitat zu finden ist kein theologischer Wahrheitsbeweis.
 """
 
 import hashlib
@@ -19,7 +24,11 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 from pydantic import BaseModel, Field
 
 
+# Versionskennung der laufenden Werkzeugimplementierung.
 VERSION = "0.2.0"
+
+# Nur diese öffentlichen Webseiten sind ab Werk für den Abruf freigegeben.
+# Die Valves erlauben eine lokale Anpassung, jedoch keine Platzhalter-Domains.
 DEFAULT_HOSTS = (
     "www.vatican.va,vatican.va,www.dbk.de,dbk.de,"
     "www.drs.de,drs.de,amtsblatt.drs.de,"
@@ -29,18 +38,25 @@ DEFAULT_HOSTS = (
 
 
 class RetrievalError(Exception):
-    pass
+    """Erwarteter Fehler, etwa bei gesperrten URLs oder unlesbaren Dokumenten."""
 
 
 class TextExtractor(HTMLParser):
+    """HTML auf lesbaren Fließtext reduzieren, ohne Skriptinhalte zu übernehmen."""
+
     def __init__(self):
         super().__init__(convert_charrefs=True)
+        # Zähler für HTML-Bereiche, deren Inhalt nicht zur Quelle gehört.
         self.skip = 0
+        # Textteile werden gesammelt und später zu einem Dokument verbunden.
         self.parts = []
 
     def handle_starttag(self, tag, attrs):
+        # Skripte, Styles und SVG enthalten keine zu zitierenden Textabsätze.
         if tag in ("script", "style", "noscript", "svg"):
             self.skip += 1
+        # Absatz- und Überschriftentags beginnen eine neue Textzeile.
+        # Das hilft später, Abschnittsnummern am Zeilenanfang zu finden.
         if not self.skip and tag in (
             "p", "div", "article", "section", "h1", "h2", "h3",
             "h4", "h5", "h6", "li", "br", "tr"
@@ -48,22 +64,28 @@ class TextExtractor(HTMLParser):
             self.parts.append("\n")
 
     def handle_endtag(self, tag):
+        # Geschützten HTML-Bereich beenden und Absatzgrenzen erhalten.
         if tag in ("script", "style", "noscript", "svg") and self.skip:
             self.skip -= 1
         if not self.skip and tag in ("p", "div", "article", "section", "li", "tr"):
             self.parts.append("\n")
 
     def handle_data(self, data):
+        # Nur sichtbare, nichtleere Textbestandteile in die Evidenz aufnehmen.
         if not self.skip and data.strip():
             self.parts.append(data)
 
 
 def _parse_url(url, allowed_hosts):
+    """URL vor jedem Abruf und vor jeder Weiterleitung auf Zulässigkeit prüfen."""
+    # Steuerzeichen und überlange URLs werden vor dem Netzwerkzugriff verworfen.
     if not isinstance(url, str) or len(url) > 2048 or any(ord(c) <= 32 for c in url):
         raise RetrievalError("Unzulässiges URL-Format")
     try:
         u = urlsplit(url)
         host = (u.hostname or "").lower().rstrip(".")
+        # Ausschließlich HTTPS, Standardport 443 und exakt freigegebene Hosts.
+        # Benutzerinformationen in URLs sind nicht gestattet.
         if (
             u.scheme.lower() != "https" or not host
             or u.username is not None or u.password is not None
@@ -71,6 +93,7 @@ def _parse_url(url, allowed_hosts):
             or host not in allowed_hosts
         ):
             raise RetrievalError("Nur freigegebene öffentliche HTTPS-Hosts sind zulässig")
+        # Ein URL-Fragment (#...) wird nicht an den Webserver übertragen.
         if u.fragment:
             url = urlunsplit((u.scheme, u.netloc, u.path, u.query, ""))
         return host, url
@@ -79,9 +102,12 @@ def _parse_url(url, allowed_hosts):
 
 
 def _public_ip(host):
+    """DNS prüfen: alle gelieferten IPs müssen global erreichbar sein."""
     try:
         found = socket.getaddrinfo(host, 443, type=socket.SOCK_STREAM)
         addresses = list(dict.fromkeys(item[4][0] for item in found))
+        # Wichtig gegen SSRF: Bereits eine einzige private/interne IP reicht
+        # aus, um den gesamten Host-Abruf abzulehnen.
         if not addresses or not all(ipaddress.ip_address(ip).is_global for ip in addresses):
             raise RetrievalError("Nichtöffentliche oder ungültige DNS-Ziele abgewiesen")
         return addresses[0]
@@ -90,7 +116,7 @@ def _public_ip(host):
 
 
 class PinnedHTTPSConnection(http.client.HTTPSConnection):
-    """TCP connects to the DNS-validated IP; TLS verifies the requested hostname."""
+    """Verbindung zur geprüften IP; TLS-Zertifikat bleibt an Hostnamen gebunden."""
 
     def __init__(self, hostname, pinned_ip, timeout):
         super().__init__(
@@ -100,8 +126,10 @@ class PinnedHTTPSConnection(http.client.HTTPSConnection):
         self.pinned_ip = pinned_ip
 
     def connect(self):
+        # Nach der DNS-Prüfung keine zweite, ungeprüfte Namensauflösung.
         sock = socket.create_connection((self.pinned_ip, 443), self.timeout)
         try:
+            # Trotz IP-Pinning muss das HTTPS-Zertifikat zum echten Host passen.
             self.sock = self._context.wrap_socket(sock, server_hostname=self.host)
         except Exception:
             sock.close()
@@ -109,7 +137,10 @@ class PinnedHTTPSConnection(http.client.HTTPSConnection):
 
 
 def _decode_document(content, content_type):
-    """Decode HTML by BOM, HTTP charset, then HTML meta; reject unrecoverable text."""
+    """Bytes anhand von BOM, HTTP-Header oder HTML-Metadaten dekodieren.
+
+    Bei unlesbaren Zeichen wird nicht stillschweigend ein Belegtext erfunden.
+    """
     header = re.search(r'charset\s*=\s*["\']?([a-z0-9_-]+)', content_type.lower())
     meta = re.search(
         rb'<meta[^>]+charset\s*=\s*["\']?([a-z0-9_-]+)',
@@ -117,11 +148,12 @@ def _decode_document(content, content_type):
     )
     meta_charset = meta.group(1).decode("ascii").lower() if meta else None
     http_charset = header.group(1).lower() if header else None
+    # Byte Order Mark (BOM) hat Vorrang; danach deklarierte Kodierungen.
     candidates = []
     if content.startswith(b"\xef\xbb\xbf"):
         candidates.append("utf-8-sig")
-    # Explicit declarations are tested without replacement, so a wrong
-    # declaration cannot silently destroy accents.
+    # Kodierungen werden strikt getestet: defekte Umlaute dürfen nicht durch
+    # Ersatzzeichen kaschiert und anschließend als Originaltext zitiert werden.
     candidates.extend([http_charset, meta_charset, "utf-8", "windows-1252", "iso-8859-1"])
     allowed = {"utf-8", "utf-8-sig", "windows-1252", "iso-8859-1", "us-ascii", "latin1"}
     for charset in dict.fromkeys(x for x in candidates if x in allowed):
@@ -135,52 +167,68 @@ def _decode_document(content, content_type):
 
 
 def _locator_pattern(locator):
-    """Match a locator at the beginning of an extracted line, never a heading reference.
+    """Suchmuster für eine Fundstelle am Anfang einer extrahierten Zeile.
 
-    Supports numbered sections with or without a dot, and literal line headings.
-    Does not infer a missing section from a table of contents.
+    Unterstützt Nummerierungen mit/ohne Punkt sowie wörtliche Überschriften.
+    Eine bloße Nennung der Nummer innerhalb eines Satzes ist kein Treffer.
     """
     locator = locator.strip()
     if not locator or len(locator) > 100 or "\n" in locator:
         raise RetrievalError("Ungültige Fundstelle")
+    # Sonderzeichen des Locators werden als Text behandelt, nicht als Regex.
     label = re.escape(locator).replace(r"\ ", r"\s+")
     if locator.isdigit():
-        # Exclude decimal subsections (e.g. 12.1 when requesting 12).
+        # Abschnitt 12 darf nicht mit Unterabschnitt 12.1 verwechselt werden.
         return re.compile(r"(?m)^\s*" + label +
                           r"(?:[.)](?!\d)|(?=\s+))\s*(?=\S)")
     return re.compile(r"(?mi)^\s*" + label + r"(?=\s|[.:)]|$)")
 
 
 def _normalize_evidence(text):
-    """Formatting-insensitive comparison only; neither dating nor semantic proof."""
+    """Leerzeichen und Zeilenumbrüche für den rein textuellen Vergleich glätten.
+
+    Weder das Alter noch die theologische Richtigkeit einer Quelle wird geprüft.
+    """
     return " ".join(text.split())
 
 
 def _locate(text, locator):
+    """Genau einen Fundstellentreffer verlangen; Mehrdeutigkeit ist kein PASS."""
     matches = list(_locator_pattern(locator).finditer(text))
     if not matches:
         return None, "SECTION_NOT_LOCATED"
+    # Zwei gleich aussehende Nummern können z. B. in Haupttext und Anhang
+    # vorkommen. Der Adapter wählt dann nicht einfach den ersten Treffer.
     if len(matches) != 1:
         return None, "LOCATOR_AMBIGUOUS"
     return matches[0], "FOUND"
 
 
 def _section_text(text, locator, match, max_chars):
-    """Best-effort numbered section window without assuming any named work."""
+    """Textfenster ab der Fundstelle bestimmen, ohne konkrete Werke zu kennen.
+
+    Die nächste Abschnittsnummer ist ein möglicher Grenzmarker, jedoch kein
+    Beweis, dass das gesamte Dokument strukturell korrekt erschlossen wurde.
+    """
+    # Für freie Überschriften ist die folgende Absatzgrenze unbekannt.
     if not locator.isdigit():
         rest = text[match.start():]
         return rest[:max_chars], (
             "WINDOW_LIMIT" if len(rest) > max_chars else "DOCUMENT_END_OR_UNKNOWN"
         )
+    # Bei numerischen Locators wird nach der direkt folgenden Nummer gesucht.
+    # Eine Erwähnung dieser Zahl mitten im Fließtext genügt ausdrücklich nicht.
     next_label = str(int(locator) + 1)
-    # Only the next numbered paragraph, anchored at the beginning of a line,
-    # counts as a boundary. A number inside a sentence does not.
     following, state = _locate(text[match.end():], next_label)
     if state == "FOUND":
+        # Nur der Abschnitt bis vor den Anfang des nächsten Abschnitts gehört
+        # zum zurückgegebenen Fundstellentext.
         end = match.end() + following.start()
         return text[match.start():min(end, match.start() + max_chars)], (
             "NEXT_NUMBER" if end - match.start() <= max_chars else "WINDOW_LIMIT"
         )
+    # Fehlt eine eindeutige Folgenummer, endet das Fenster am Dokumentende
+    # oder am Zeichenlimit. Der Abschnitt gilt deshalb nicht als sicher komplett.
     rest = text[match.start():]
     return rest[:max_chars], (
         "WINDOW_LIMIT" if len(rest) > max_chars else "DOCUMENT_END_OR_UNKNOWN"
@@ -188,7 +236,10 @@ def _section_text(text, locator, match, max_chars):
 
 
 def _download(url, allowed_hosts, max_bytes, timeout):
+    """Öffentlichen HTML-/Textinhalt mit Limits und Redirect-Kontrolle abrufen."""
     current = url
+    # Jede Weiterleitung wird erneut auf erlaubten HTTPS-Host geprüft.
+    # Die Schleife begrenzt zugleich die maximale Zahl an Redirects.
     for _ in range(4):
         host, current = _parse_url(current, allowed_hosts)
         ip = _public_ip(host)
@@ -203,6 +254,7 @@ def _download(url, allowed_hosts, max_bytes, timeout):
                 "Connection": "close",
             })
             response = connection.getresponse()
+            # Redirects dürfen die Allowlist-/IP-Kontrolle nicht umgehen.
             if response.status in (301, 302, 303, 307, 308):
                 location = response.getheader("Location")
                 if not location:
@@ -211,20 +263,27 @@ def _download(url, allowed_hosts, max_bytes, timeout):
                 continue
             if response.status != 200:
                 raise RetrievalError("HTTP-Abruf fehlgeschlagen (Status %s)" % response.status)
+            # Andere Dateitypen (insbesondere PDFs) sind hier bewusst
+            # ausgeschlossen; sie benötigen einen eigenen, geprüften Parser.
             mime = (response.getheader("Content-Type") or "").lower()
             if not mime.startswith(("text/html", "text/plain", "application/xhtml+xml")):
                 raise RetrievalError("Dokumentformat nicht unterstützt (nur HTML/Text)")
+            # Sowohl die angekündigte Größe als auch die tatsächlich gelesenen
+            # Bytes werden begrenzt: Content-Length kann falsch oder leer sein.
             size = response.getheader("Content-Length")
             if size and size.isdigit() and int(size) > max_bytes:
                 raise RetrievalError("Quelle überschreitet Downloadlimit")
             content = response.read(max_bytes + 1)
             if len(content) > max_bytes:
                 raise RetrievalError("Quelle überschreitet Downloadlimit")
+            # Erst Zeichensatz korrekt dekodieren, danach HTML-Struktur entfernen.
             raw = _decode_document(content, mime)
             if mime.startswith(("text/html", "application/xhtml+xml")):
                 parser = TextExtractor()
                 parser.feed(raw)
                 raw = "".join(parser.parts)
+            # Uneinheitliche horizontale Leerzeichen glätten; Zeilengrenzen
+            # für die spätere Abschnittssuche bewusst erhalten.
             lines = [
                 re.sub(r"[ \t\r\f\v]+", " ", line).strip()
                 for line in raw.splitlines()
@@ -239,33 +298,41 @@ def _download(url, allowed_hosts, max_bytes, timeout):
 
 
 class Tools:
+    """Von Open WebUI erkannte Werkzeugfunktionen für THEOAgent."""
+
     class Valves(BaseModel):
+        """Einstellungen, die auf DRS:KI DEV im Werkzeugeditor sichtbar sind."""
         ALLOWED_HOSTS: str = Field(
             default=DEFAULT_HOSTS,
             description="Exact public HTTPS hostnames, comma-separated; no wildcards",
         )
+        # Begrenzung gegen sehr große oder unerwartete Webantworten.
         MAX_DOWNLOAD_KB: int = Field(default=1024, ge=32, le=2048)
+        # Maximaler Zeichenumfang je zurückgegebenem Textfenster.
         MAX_EXCERPT_CHARS: int = Field(default=12000, ge=1000, le=30000)
+        # Abbruch zu langsamer Abrufe, damit das Modell nicht endlos wartet.
         TIMEOUT_SECONDS: int = Field(default=12, ge=3, le=30)
 
     def __init__(self):
         self.valves = self.Valves()
 
     def compare_sources(self, url_a: str, url_b: str, locator: str) -> str:
-        """Compare literal evidence at the same locator in two original URLs.
+        """Zwei unabhängig abgerufene Textstellen technisch vergleichen.
 
-        :param url_a: First source URL; no version assumption.
-        :param url_b: Second source URL; no version assumption.
-        :param locator: Number or heading in the extracted text.
-        :return: Verifiable equal/different excerpt status, never an edition date.
+        :param url_a: URL der ersten Quelle, ohne Altersannahme.
+        :param url_b: URL der zweiten Quelle, ohne Altersannahme.
+        :param locator: Gesuchte Nummer oder Überschrift.
+        :return: Textgleichheit/-abweichung; keine Editionsauthentifizierung.
         """
         result = {
             "status": "INCOMPLETE", "locator": locator,
             "version_verified": False, "semantic_claim_verified": False,
             "comparisons": [],
         }
+        # Jede Quelle wird mit denselben technischen Prüfungen separat gelesen.
         for role, url in (("source_a", url_a), ("source_b", url_b)):
             item = json.loads(self.read_source(url, locator))
+            # Scheitert bereits ein Abruf, wird kein Vergleichsergebnis behauptet.
             if item.get("status") != "TEXT_RETRIEVED":
                 result["comparisons"].append({
                     "role": role, "url": url, "status": item.get("status"),
@@ -278,9 +345,12 @@ class Tools:
                 "section_boundary": item["section_boundary"],
                 "section_window_truncated": item["section_window_truncated"],
             })
+        # Verglichen werden nur die lokalisierten Abschnitte, nicht das
+        # gesamte Dokument und auch nicht ein beliebiger Textausschnitt davor.
         a, b = (x["section_text"] for x in result["comparisons"])
         if any(x["section_window_truncated"] for x in result["comparisons"]):
             result["reason"] = "Mindestens eine Fundstellenpassage wurde gekürzt."
+        # Unterschiede bei Zeilenumbrüchen allein gelten nicht als Textabweichung.
         elif _normalize_evidence(a) == _normalize_evidence(b):
             result["status"] = "SAME_TEXT"
         else:
@@ -292,13 +362,14 @@ class Tools:
         return json.dumps(result, ensure_ascii=False)
 
     def verify_evidence(self, claim: str, url: str, locator: str) -> str:
-        """Check an exact quotation, NOT the truth of a paraphrased claim.
+        """Prüfen, ob ein Zitat im abgerufenen Fundstellentext vorkommt.
 
-        :param claim: Exact quote to find, or a paraphrase requiring manual review.
-        :param url: Original page URL.
-        :param locator: Required section label.
-        :return: Literal quote-match result; semantic_claim_verified is always false.
+        :param claim: Wörtlich zu suchender Text; eine Paraphrase ist nicht prüfbar.
+        :param url: URL der Originalquelle.
+        :param locator: Fundstelle im Dokument.
+        :return: Treffer-/Nichttrefferstatus; kein semantischer Wahrheitsbeweis.
         """
+        # Leere und überlange Prüftexte werden nicht an die Quellensuche übergeben.
         if not isinstance(claim, str) or not claim.strip() or len(claim) > 4000:
             return json.dumps({"status": "INVALID_CLAIM", "semantic_claim_verified": False})
         item = json.loads(self.read_source(url, locator))
@@ -308,6 +379,8 @@ class Tools:
             "locator": locator, "evidence_id": item.get("evidence_id"),
         }
         if item.get("status") == "TEXT_RETRIEVED":
+            # Wörtliche Suche nach Normalisierung der Leerzeichen. Synonyme
+            # oder logische Folgerungen kann dieses Verfahren nicht beurteilen.
             result["exact_quote_found_in_excerpt"] = (
                 _normalize_evidence(claim) in _normalize_evidence(item["section_text"])
             )
@@ -323,13 +396,15 @@ class Tools:
         return json.dumps(result, ensure_ascii=False)
 
     def read_source(self, url: str, section: str = "") -> str:
-        """Fetch an allowed public HTTPS page and report actual text provenance.
+        """Originalquelle abrufen, Fundstelle finden und Nachweise zurückgeben.
 
-        :param url: Exact URL of the source document, discovered separately.
-        :param section: Optional section marker (e.g. '12'); not a verified locator.
-        :return: JSON with provenance, excerpt and limitations; not semantic proof.
+        :param url: Exakte URL; eine Suchmaschine muss sie zuvor ermitteln.
+        :param section: Optionale Abschnittsnummer oder wörtliche Überschrift.
+        :return: JSON mit URL, Evidenzkennung, Text und technischen Grenzen.
         """
         try:
+            # Die zugelassenen Hosts werden aus der aktuellen Valve gelesen.
+            # Die Prüfung geschieht bei jedem einzelnen Abruf erneut.
             hosts = {
                 host.strip().lower().rstrip(".")
                 for host in self.valves.ALLOWED_HOSTS.split(",") if host.strip()
@@ -342,6 +417,8 @@ class Tools:
                 url, hosts, self.valves.MAX_DOWNLOAD_KB * 1024,
                 self.valves.TIMEOUT_SECONDS,
             )
+            # Ohne gewünschten Abschnitt wird der allgemeine Dokumentanfang
+            # als Vorschau bereitgestellt. Mit Abschnitt gilt: eindeutig finden.
             marker_found = None
             location_status = None
             start = 0
@@ -351,6 +428,8 @@ class Tools:
                 marker_found = match is not None
                 if match:
                     start = max(0, match.start() - 200)
+            # Fail-closed: Eine fehlende oder mehrfach vorkommende Fundstelle
+            # darf nicht als erfolgreich gelesener Beleg ausgegeben werden.
             if section.strip() and marker_found is False:
                 return json.dumps({
                     "status": location_status,
@@ -367,6 +446,8 @@ class Tools:
                         "oder Fundstellenprüfung behaupten."
                     ),
                 }, ensure_ascii=False)
+            # section_text beginnt an der Fundstelle; excerpt beginnt für den
+            # Kontext bis zu 200 Zeichen davor. Beide Zwecke sind verschieden.
             section_text = ""
             section_boundary = None
             section_window_truncated = False
@@ -384,6 +465,8 @@ class Tools:
                 "section_requested": section.strip() or None,
                 "section_marker_found": marker_found,
                 "url": final_url,
+                # Kennung aus finaler URL und extrahiertem Gesamttext:
+                # bei Textänderungen ändert sich grundsätzlich auch die Kennung.
                 "evidence_id": hashlib.sha256(
                     (final_url + "\n" + full_text).encode("utf-8")
                 ).hexdigest()[:20],
@@ -401,6 +484,8 @@ class Tools:
                     "Keine SourceGuard-Pipe oder Antwortsperre."
                 ),
             }, ensure_ascii=False)
+        # Erwartete Sicherheits-/Quellenfehler werden strukturiert gemeldet,
+        # statt einen scheinbar belegten Text zu erzeugen.
         except RetrievalError as exc:
             return json.dumps({
                 "status": "RETRIEVAL_FAILED",
