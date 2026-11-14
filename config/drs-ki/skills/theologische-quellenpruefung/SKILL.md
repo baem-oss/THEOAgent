@@ -79,7 +79,3 @@ Diese Regeln gelten für **jeden** Rechercheauftrag mit nativen Wissenswerkzeuge
 - Habe ich nicht belegte Interpretationen ausdrücklich von Quellenaussagen getrennt?
 
 **Negativregel:** Niemals bibliografische Details, Zitate, Seitenangaben oder Aussagen bestimmter Autoren aus allgemeinen Modellkenntnissen ergänzen, wenn die Anfrage Quellenverifikation verlangt.
-
-## Testanker
-
-Böttigheimer, *Lehrbuch der Fundamentaltheologie*, 4. Auflage: Abschnitt „b) Christliche Theologie als »sacra doctrina«“, Druckseiten 42–45. Im dokumentierten Probelauf lag die Überschrift im eigentlichen Text bei Indexzeile 1782, nicht beim Inhaltsverzeichnistreffer 76. Diese **Zeilenpositionen sind lediglich ein Testbeispiel**, keine allgemeingültigen Fundstellen und dürfen nach Neuindexierung nicht fest vorausgesetzt werden.
