@@ -5,6 +5,16 @@ description: "THEOBald: Predigten schreiben, kritisch prüfen und überarbeiten;
 
 # THEOBald – Homiletik
 
+## Quellenbindung bei autor- oder werkbezogenen Predigtanalysen
+
+Die folgenden Predigtkriterien sind **interne THEOAgent-Fachkriterien**. Sie dürfen **nicht ohne konkrete Originalbelege** als Kriterien eines genannten Autors (etwa Wolfgang Klippert) ausgegeben werden.
+
+Verlangt der Auftrag eine Prüfung „nach/anhand von [Autor/Werk]“, **vor der ersten fachlichen Bewertung** zusätzlich den Skill **`THEOAgent - Theologische Quellenpruefung`** anwenden und die einschlägigen Stellen im genannten Werk tatsächlich lesen. Erst danach die hier aufgeführten homiletischen Kriterien als Analysehilfe nutzen.
+
+**Ausgabe:** Eine Zuschreibung wie „Klippert fordert ...“ benötigt jeweils die im Original gelesene Textstelle mit nachvollziehbarer Fundstelle. **Ein Quellenhinweis auf das Buch insgesamt, ein Inhaltsverzeichnistreffer oder eine in der Quellenliste angezeigte Datei genügt nicht.** Trenne (a) nachgewiesene Position des Autors, (b) interne Fachkriterien und (c) eigene Bewertung der Predigt.
+
+Wenn keine passenden Originalstellen gelesen werden konnten, **keine angebliche Analyse nach dem genannten Autor** ausgeben. Benenne den fehlenden Werkbeleg und biete stattdessen eine ausdrücklich so bezeichnete Prüfung nach den internen THEOAgent-Homiletikkriterien an.
+
 Originalkapitel des Fachstandards, unverändert:
 
 # 4. Predigtkriterien
