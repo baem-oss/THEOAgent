@@ -54,7 +54,7 @@ Die Anzeigenamen stammen aus der aktiven Werkzeugauswahl von THEOAgent DEV vom 1
 
 ## Systemprompt für THEOAgent DEV
 
-**Vollständige Arbeitsfassung:** [THEOAgent DEV – Systemprompt v0.3.1](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.1.md).
+**Vollständige Arbeitsfassung:** [THEOAgent DEV – Systemprompt v0.3.2](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.2.md).
 
 Zur Einrichtung den Systemprompt **ab der Überschrift „SYSTEMPROMPT – ab hier vollständig in THEOAgent DEV verwenden“** als zusammenhängenden Text einsetzen. **Keine zusätzlichen älteren SourceGuard-Ergänzungsblöcke einkopieren** – die Quellenarbeitsregeln sind bereits enthalten.
 
@@ -62,7 +62,7 @@ Die sieben eigenständigen, bestehenden Fachskills mit Anzeigenamenspräfix `THE
 
 ## Einstieg in den produktiven DEV-Arbeitsprototyp
 
-**Einrichten (nur DEV):** Werkzeugcode [SourceGuard v0.2.0](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py) im bestehenden DEV-Tool aktualisieren, `review_evidence` erscheint als neue Funktion. Dem Modell `THEOAgent DEV` zuweisen; vorhandene Knowledge-Werkzeuge und fachlich relevante DRS-Werkzeuge beibehalten. den vollständigen konsolidierten Systemprompt v0.3.1 einsetzen; keine ältere Zusatzpassage anhängen. Endnutzer muss **kein** Werkzeug konfigurieren.
+**Einrichten (nur DEV):** Werkzeugcode [SourceGuard v0.2.0](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py) im bestehenden DEV-Tool aktualisieren, `review_evidence` erscheint als neue Funktion. Dem Modell `THEOAgent DEV` zuweisen; vorhandene Knowledge-Werkzeuge und fachlich relevante DRS-Werkzeuge beibehalten. den vollständigen konsolidierten Systemprompt v0.3.2 einsetzen; keine ältere Zusatzpassage anhängen. Endnutzer muss **kein** Werkzeug konfigurieren.
 
 **Praktisch nutzen:** Normale Arbeitsaufgaben stellen (Predigtanalyse anhand Klippert, Exegese anhand Dei Verbum, Liturgierecht, DRS-Ordnungen). Auf tatsächliche Toolaufrufe und Quellenbelege achten; Fehlverhalten knapp dokumentieren. **Auf PO-Wunsch werden jetzt keine weiteren Testdateien, Testmatrizen oder Regressionstests verfasst.**
 
