@@ -1,14 +1,14 @@
 """
-Name: SourceGuard Web
+Name: THEOAgent SourceGuard
 Zweck: Quellenübergreifende Evidenzaufbereitung und Belegprüfung für THEOAgent:
-       Web-Originaltexte sowie gelesene Passagen aus der Fachbibliothek.
+       Web-Originaltexte, Fachbibliothek und geeignete DRS-Werkzeugauszüge.
 Autor: BäM (PO, RE) / ChatGPT (SE) / Deepseek (QE)
 Datum: 14.11.2026
 Version: 0.2.0
 
 Hinweis: Open-WebUI-Werkzeug für DRS:KI DEV; keine SourceGuard-Pipe.
-Knowledge-Inhalte stammen aus den vorhandenen OpenWebUI-Knowledge-Werkzeugen.
-SourceGuard authentifiziert übergebene Knowledge-Auszüge nicht selbst.
+Knowledge- und DRS-Tool-Inhalte stammen aus vorhandenen Werkzeugaufrufen.
+SourceGuard authentifiziert übergebene Werkzeugauszüge nicht selbst.
 """
 
 import hashlib
@@ -405,19 +405,22 @@ class Tools:
         evidence_text: str = "",
         source_url: str = "",
         evidence_reference: str = "",
+        source_tool: str = "",
+        evidence_kind: str = "original_excerpt",
     ) -> str:
-        """Eine Aussage anhand einer Web- oder Knowledge-Textstelle vorbereiten.
+        """Eine Aussage anhand von Web-/Knowledge-/DRS-Werkzeugevidenz prüfen.
 
         :param claim: Die genau zu überprüfende Aussage oder das Zitat.
-        :param source_type: "web", "knowledge" oder "document".
+        :param source_type: "web", "knowledge", "document" oder "tool_excerpt".
         :param source_title: Name des Werks oder Dokuments.
         :param locator: Abschnitt, Kapitel oder vom Knowledge-Tool gemeldete Stelle.
         :param evidence_text: Gelesene Passage aus view_knowledge_file bzw.
                               einem anderen bestehenden Dokumentwerkzeug.
                               Für "web" wird sie NICHT als Beleg akzeptiert.
         :param source_url: Original-URL, nur für source_type="web".
-        :param evidence_reference: Rückverweis auf Knowledge-Datei oder Tool-
-                                   Fundstelle (kein unabhängiger Herkunftsbeweis).
+        :param evidence_reference: Rückverweis auf einen tatsächlichen Tool-Leseaufruf.
+        :param source_tool: Name des ausliefernden Knowledge-/DRS-Werkzeugs.
+        :param evidence_kind: "original_excerpt", "search_snippet" oder "summary".
         :return: Strukturierte Evidenz und Prüfbeschränkungen als JSON.
         """
         # Alle Quellenarten erhalten dasselbe Prüfschema. Der technische Weg,
@@ -429,6 +432,8 @@ class Tools:
             "locator": locator,
             "source_url": source_url or None,
             "evidence_reference": evidence_reference or None,
+            "source_tool": source_tool or None,
+            "evidence_kind": evidence_kind,
             "claim": claim,
             "semantic_claim_verified": False,
             "source_provenance_verified": False,
@@ -447,15 +452,31 @@ class Tools:
             or not isinstance(evidence_text, str) or len(evidence_text) > 30000
             or not isinstance(evidence_reference, str)
             or len(evidence_reference) > 2000
+            or not isinstance(source_tool, str) or len(source_tool) > 160
+            or not isinstance(evidence_kind, str)
         ):
             result["status"] = "INVALID_INPUT"
             return json.dumps(result, ensure_ascii=False)
 
         kind = source_type.strip().lower()
-        if kind not in ("web", "knowledge", "document"):
+        if kind not in ("web", "knowledge", "document", "tool_excerpt"):
             result["status"] = "UNSUPPORTED_SOURCE_TYPE"
             return json.dumps(result, ensure_ascii=False)
         result["source_type"] = kind
+        if evidence_kind not in ("original_excerpt", "search_snippet", "summary"):
+            result["status"] = "UNSUPPORTED_EVIDENCE_KIND"
+            return json.dumps(result, ensure_ascii=False)
+
+        # Suchtreffer und KI-Zusammenfassungen genügen nicht als Originalbeleg.
+        # Die modellseitige Einstufung ist kein unabhängiger Tool-Nachweis.
+        if kind != "web" and evidence_kind != "original_excerpt":
+            result["status"] = "INSUFFICIENT_EVIDENCE"
+            result["limitations"] = (
+                "Nur Such-Snippet oder Zusammenfassung übergeben. "
+                "Eine einschlägige Originalpassage muss zunächst mit einem "
+                "geeigneten Werkzeug geöffnet werden."
+            )
+            return json.dumps(result, ensure_ascii=False)
 
         if kind == "web":
             # Webquellen werden tatsächlich neu abgerufen. Ein vom Modell
@@ -478,27 +499,30 @@ class Tools:
             )
             result["section_boundary"] = retrieved.get("section_boundary")
         else:
-            # Knowledge/Document: Die bestehenden OpenWebUI-Werkzeuge haben
-            # die Passage bereits geliefert. Dieses Tool kann weder die
-            # Knowledge-Datenbank noch deren Metadaten direkt nachprüfen.
+            # Knowledge, Dokumente und DRS-Originalauszüge: Vorhandene
+            # Werkzeuge liefern die Passage. SourceGuard besitzt weder
+            # direkten Knowledge-Zugriff noch den technischen Kontext anderer
+            # DRS-Toolaufrufe und kann deren Text nicht unabhängig bestätigen.
             # Deshalb ist eine Referenz auf den Lesevorgang verpflichtend.
             if (
                 not source_title.strip() or not locator.strip()
                 or not evidence_reference.strip() or not evidence_text.strip()
+                or not source_tool.strip()
             ):
                 result["status"] = "MISSING_SOURCE_REFERENCE"
                 result["required"] = (
-                    "source_title, locator, evidence_reference, evidence_text "
-                    "aus einem tatsächlich ausgeführten Knowledge-/Dokumentaufruf"
+                    "source_title, locator, evidence_reference, source_tool, "
+                    "evidence_text aus einem tatsächlich ausgeführten Werkzeugaufruf"
                 )
                 return json.dumps(result, ensure_ascii=False)
             source_text = evidence_text
             result["source_provenance_level"] = "MODEL_SUPPLIED_TOOL_EXCERPT"
             result["text_window_limited"] = None
             result["limitations"] = (
-                "Text und Fundstelle vom aufrufenden Modell übergeben. "
-                "Keine unabhängige Prüfung des Knowledge-Tools, der "
-                "Originaldatei oder ihrer Metadaten."
+                "Text, Werkzeugname und Fundstelle vom aufrufenden Modell "
+                "übergeben. Keine unabhängige Authentifizierung des "
+                "Knowledge-/DRS-Toolaufrufs oder des Originaldokuments. "
+                "Die Quellenautorität ist gesondert fachlich zu beurteilen."
             )
 
         if not source_text.strip():
