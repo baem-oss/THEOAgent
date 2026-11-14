@@ -168,7 +168,10 @@ def _locate(text, locator):
 def _section_text(text, locator, match, max_chars):
     """Best-effort numbered section window without assuming any named work."""
     if not locator.isdigit():
-        return text[match.start():match.start() + max_chars], "UNDETERMINED"
+        rest = text[match.start():]
+        return rest[:max_chars], (
+            "WINDOW_LIMIT" if len(rest) > max_chars else "DOCUMENT_END_OR_UNKNOWN"
+        )
     next_label = str(int(locator) + 1)
     # Only the next numbered paragraph, anchored at the beginning of a line,
     # counts as a boundary. A number inside a sentence does not.
@@ -178,7 +181,10 @@ def _section_text(text, locator, match, max_chars):
         return text[match.start():min(end, match.start() + max_chars)], (
             "NEXT_NUMBER" if end - match.start() <= max_chars else "WINDOW_LIMIT"
         )
-    return text[match.start():match.start() + max_chars], "DOCUMENT_END_OR_UNKNOWN"
+    rest = text[match.start():]
+    return rest[:max_chars], (
+        "WINDOW_LIMIT" if len(rest) > max_chars else "DOCUMENT_END_OR_UNKNOWN"
+    )
 
 
 def _download(url, allowed_hosts, max_bytes, timeout):
