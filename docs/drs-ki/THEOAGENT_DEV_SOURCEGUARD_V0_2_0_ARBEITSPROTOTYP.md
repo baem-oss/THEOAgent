@@ -24,6 +24,16 @@ SourceGuard ist ein Open-WebUI-Tool, **keine** Pipe. Es erzwingt keine Toolaufru
 
 Die Anzeigenamen stammen aus der aktiven Werkzeugauswahl von THEOAgent DEV vom 14.11.2026. Die im [historischen P-02-Vergleich](POC_P-02_DRS_TOOLS_VERGLEICH.md) genannten Versionsbezeichnungen sind **nicht** als Identitätsnachweis für diese DEV-Werkzeuge zu verstehen. Insbesondere ist **`Bibel-Tool` nicht nachweislich identisch mit `Single Domain Web Search v2.0.1`**. Das dortige Finding F-A1 darf nur nach technischer Identitätsprüfung auf das aktivierte Bibel-Tool übertragen werden. Aktivierung ist kein End-to-End-Ausführungsnachweis.
 
+## OpenWebUI-Anzeige (DEV)
+
+**Titel:** `THEOAgent – SourceGuard`
+
+**Untertitel / Beschreibung:**
+
+> Quellenübergreifende Evidenzaufbereitung für THEOAgent: kontrollierter Abruf öffentlicher Webquellen, Verarbeitung von Originalauszügen aus der Fachbibliothek und DRS-Werkzeugen sowie technische Prüfung von Fundstellen, Zitaten und Textübereinstimmungen. Keine eigenständige semantische Verifikation.
+
+**Interne Werkzeugkennung:** `theoagent_sourceguard_web_dev_poc_0_2_0` unverändert beibehalten; die OpenWebUI-Anzeigefelder sind im Zielsystem separat einzutragen. Die Änderung ist rein beschreibend und verändert weder API noch Toolverhalten noch Versionsnummer.
+
 ## SourceGuard-Schnittstelle
 
 **Bestehende Funktionen:** `read_source(url, section)`, `compare_sources(url_a, url_b, locator)`, `verify_evidence(claim, url, locator)`.
