@@ -134,34 +134,35 @@ def _decode_document(content, content_type):
     raise RetrievalError("Zeichenkodierung nicht sicher lesbar")
 
 
-def _kkk_2267_classification(section_text):
-    """Recognize two substantive phrasings, never infer an edition year."""
-    clean = " ".join(section_text.lower().split())
-    new = "todesstrafe unzulässig" in clean or (
-        "todesstrafe" in clean and "unantastbarkeit und würde" in clean
-        and "abschaffung" in clean
-    )
-    old = (
-        "soweit unblutige mittel" in clean
-        or "einzig gangbare weg" in clean
-        or "nur dann gerechtfertigt" in clean
-    )
-    if new and not old:
-        return "POST_2018_WORDING"
-    if old and not new:
-        return "PRE_2018_WORDING"
-    return "UNCLASSIFIED"
+def _locator_pattern(locator):
+    """Match a locator at the beginning of an extracted line, never a heading reference.
+
+    Supports numbered sections with or without a dot, and literal line headings.
+    Does not infer a missing section from a table of contents.
+    """
+    locator = locator.strip()
+    if not locator or len(locator) > 100 or "\n" in locator:
+        raise RetrievalError("Ungültige Fundstelle")
+    label = re.escape(locator).replace(r"\ ", r"\s+")
+    if locator.isdigit():
+        # Exclude decimal subsections (e.g. 12.1 when requesting 12).
+        return re.compile(r"(?m)^\s*" + label +
+                          r"(?:[.)](?!\d)|(?=\s+))\s*(?=\S)")
+    return re.compile(r"(?mi)^\s*" + label + r"(?=\s|[.:)]|$)")
 
 
-def _kkk_2267_paragraph(text):
-    # Ignore incidental mentions of 2267 in surrounding headings by requiring
-    # the numeral to introduce a nonempty paragraph and bounded next 2268.
-    start = re.search(r'(?<!\d)2267\s*[.]?\s+(?=Lange Zeit|Soweit unblutige Mittel|Die überlieferte Lehre|Unter der Voraussetzung)', text, flags=re.IGNORECASE)
-    if not start:
-        return None
-    stop = re.search(r'(?<!\d)2268\s*[.]?\s+(?=[A-ZÄÖÜ])', text[start.end():])
-    candidate = text[start.start():start.end()+stop.start()] if stop else text[start.start():]
-    return candidate[:16000]
+def _normalize_evidence(text):
+    """Formatting-insensitive comparison only; neither dating nor semantic proof."""
+    return " ".join(text.split())
+
+
+def _locate(text, locator):
+    matches = list(_locator_pattern(locator).finditer(text))
+    if not matches:
+        return None, "SECTION_NOT_LOCATED"
+    if len(matches) != 1:
+        return None, "LOCATOR_AMBIGUOUS"
+    return matches[0], "FOUND"
 
 
 def _download(url, allowed_hosts, max_bytes, timeout):
@@ -176,7 +177,7 @@ def _download(url, allowed_hosts, max_bytes, timeout):
             connection.request("GET", path, headers={
                 "Accept": "text/html,text/plain,application/xhtml+xml",
                 "Accept-Encoding": "identity",
-                "User-Agent": "THEOAgent-SourceGuard-PoC/0.1",
+                "User-Agent": "THEOAgent-SourceGuard-PoC/0.2",
                 "Connection": "close",
             })
             response = connection.getresponse()
@@ -228,70 +229,76 @@ class Tools:
     def __init__(self):
         self.valves = self.Valves()
 
-    def compare_kkk_2267_versions(self, historical_url: str, current_url: str) -> str:
-        """Compare independently fetched KKK 2267 passages; flag version conflicts.
+    def compare_sources(self, url_a: str, url_b: str, locator: str) -> str:
+        """Compare literal evidence at the same locator in two original URLs.
 
-        :param historical_url: Historical candidate URL, not trusted as a date proof.
-        :param current_url: Current KKK candidate URL.
-        :return: JSON with text-classification evidence and explicit limits.
+        :param url_a: First source URL; no version assumption.
+        :param url_b: Second source URL; no version assumption.
+        :param locator: Number or heading in the extracted text.
+        :return: Verifiable equal/different excerpt status, never an edition date.
         """
-        output = {"status": "UNVERIFIED", "version_verified": False,
-                  "semantic_claim_verified": False, "comparisons": []}
-        urls = (("historical_candidate", historical_url), ("current_candidate", current_url))
-        for role, url in urls:
-            retrieved = json.loads(self.read_source(url, "2267"))
-            if retrieved.get("status") != "TEXT_RETRIEVED":
-                output["status"] = "INCOMPLETE"
-                output["comparisons"].append({
-                    "role": role, "url": url,
-                    "status": retrieved.get("status"),
-                    "error": retrieved.get("error"),
+        result = {
+            "status": "INCOMPLETE", "locator": locator,
+            "version_verified": False, "semantic_claim_verified": False,
+            "comparisons": [],
+        }
+        for role, url in (("source_a", url_a), ("source_b", url_b)):
+            item = json.loads(self.read_source(url, locator))
+            if item.get("status") != "TEXT_RETRIEVED":
+                result["comparisons"].append({
+                    "role": role, "url": url, "status": item.get("status"),
+                    "error": item.get("error"),
                 })
-                return json.dumps(output, ensure_ascii=False)
-            # Use the supplied excerpt only; never claim paragraph completeness
-            # if 2268 cannot be observed in that excerpt.
-            excerpt = retrieved.get("excerpt", "")
-            paragraph = _kkk_2267_paragraph(excerpt)
-            next_number_seen = bool(re.search(
-                r'(?<!\d)2268\s*[.]?\s+(?=[A-ZÄÖÜ])', excerpt
-            ))
-            # A standalone 2018 revision notice has no following 2268.
-            standalone_notice = (
-                role == "current_candidate"
-                and urlsplit(retrieved["url"]).path.endswith(
-                    "/rc_con_cfaith_doc_20180801_catechismo-penadimorte_ge.html"
-                )
-                and retrieved.get("truncated") is False
-            )
-            boundary = next_number_seen or standalone_notice
-            classification = _kkk_2267_classification(paragraph or "")
-            output["comparisons"].append({
-                "role": role,
-                "url": retrieved["url"],
-                "evidence_id": retrieved.get("evidence_id"),
-                "classification": classification,
-                "paragraph_boundary_observed": boundary,
-                "boundary_method": "next_paragraph" if next_number_seen else ("complete_revision_notice" if standalone_notice else "unknown"),
-                "text": paragraph if boundary else "",
-                "excerpt_truncated": retrieved.get("truncated"),
+                return json.dumps(result, ensure_ascii=False)
+            result["comparisons"].append({
+                "role": role, "url": item["url"], "evidence_id": item["evidence_id"],
+                "excerpt": item["excerpt"], "truncated": item["truncated"],
             })
-        old, new = (item["classification"] for item in output["comparisons"])
-        if old == "POST_2018_WORDING" and new == "POST_2018_WORDING":
-            output["status"] = "VERSION_CONFLICT"
-            output["reason"] = "Als historisch bezeichnete URL enthält ebenfalls den Text von 2018."
-        elif old == "PRE_2018_WORDING" and new == "POST_2018_WORDING":
-            output["status"] = "DISTINCT_WORDINGS_OBSERVED"
-            output["reason"] = (
-                "Unterschiedliche Textformulierungen gelesen; das konkrete "
-                "Editionsjahr und die historische Originalausgabe bleiben unbelegt."
-            )
+        a, b = (x["excerpt"] for x in result["comparisons"])
+        # Only compare if both extracts are complete: an unfinished excerpt
+        # is not a reliable basis for claiming textual identity or difference.
+        if any(x["truncated"] for x in result["comparisons"]):
+            result["reason"] = "Mindestens ein Textfenster wurde gekürzt."
+        elif _normalize_evidence(a) == _normalize_evidence(b):
+            result["status"] = "SAME_TEXT"
         else:
-            output["status"] = "VERSION_UNDETERMINED"
-            output["reason"] = "Wortlaut kann nicht sicher zugeordnet werden."
-        if not all(x.get("paragraph_boundary_observed") for x in output["comparisons"]):
-            output["status"] = "INCOMPLETE"
-            output["reason"] = "Mindestens eine Absatzgrenze oder vollständige Passage fehlt."
-        return json.dumps(output, ensure_ascii=False)
+            result["status"] = "DIFFERENT_TEXT"
+        result["limitations"] = (
+            "Textvergleich nach Whitespace-Normalisierung. Fundstelleninhalt "
+            "und historische Edition nicht semantisch oder chronologisch geprüft."
+        )
+        return json.dumps(result, ensure_ascii=False)
+
+    def verify_evidence(self, claim: str, url: str, locator: str) -> str:
+        """Check an exact quotation, NOT the truth of a paraphrased claim.
+
+        :param claim: Exact quote to find, or a paraphrase requiring manual review.
+        :param url: Original page URL.
+        :param locator: Required section label.
+        :return: Literal quote-match result; semantic_claim_verified is always false.
+        """
+        if not isinstance(claim, str) or not claim.strip() or len(claim) > 4000:
+            return json.dumps({"status": "INVALID_CLAIM", "semantic_claim_verified": False})
+        item = json.loads(self.read_source(url, locator))
+        result = {
+            "status": "INCOMPLETE", "semantic_claim_verified": False,
+            "source_status": item.get("status"), "url": item.get("url", url),
+            "locator": locator, "evidence_id": item.get("evidence_id"),
+        }
+        if item.get("status") == "TEXT_RETRIEVED":
+            result["exact_quote_found_in_excerpt"] = (
+                _normalize_evidence(claim) in _normalize_evidence(item["excerpt"])
+            )
+            result["status"] = (
+                "QUOTE_FOUND" if result["exact_quote_found_in_excerpt"]
+                else "QUOTE_NOT_FOUND_IN_EXCERPT"
+            )
+            result["truncated"] = item.get("truncated")
+            result["limitations"] = (
+                "Wörtliche Textsuche, kein semantischer Beweis; bei gekürztem "
+                "Textfenster ist ein negativer Befund nicht abschließend."
+            )
+        return json.dumps(result, ensure_ascii=False)
 
     def read_source(self, url: str, section: str = "") -> str:
         """Fetch an allowed public HTTPS page and report actual text provenance.
@@ -314,32 +321,17 @@ class Tools:
                 self.valves.TIMEOUT_SECONDS,
             )
             marker_found = None
+            location_status = None
             start = 0
             if section.strip():
                 marker = section.strip()
-                # The older Vatican KKK page uses "2267 Soweit ..." without
-                # punctuation; other Vatican documents use "2267. ...".
-                # For this number use the paragraph-specific anchor to avoid
-                # confusing an incidental "Nr. 2267" heading with the text.
-                if marker == "2267":
-                    match = re.search(
-                        r'(?<!\d)2267\s*[.]?\s+'
-                        r'(?=Lange Zeit|Soweit unblutige Mittel|'
-                        r'Die überlieferte Lehre|Unter der Voraussetzung)',
-                        full_text, flags=re.IGNORECASE,
-                    )
-                else:
-                    expression = (
-                        r"(?<![\w\d])(?:Nr\.\s*)?" + re.escape(marker)
-                        + r"(?:\s*[.)\]:\-]|\s+)(?=[A-ZÄÖÜ0-9])"
-                    )
-                    match = re.search(expression, full_text, flags=re.IGNORECASE)
+                match, location_status = _locate(full_text, marker)
                 marker_found = match is not None
                 if match:
                     start = max(0, match.start() - 200)
             if section.strip() and marker_found is False:
                 return json.dumps({
-                    "status": "SECTION_NOT_LOCATED",
+                    "status": location_status,
                     "technical_retrieval": True,
                     "semantic_claim_verified": False,
                     "section_requested": section.strip(),
