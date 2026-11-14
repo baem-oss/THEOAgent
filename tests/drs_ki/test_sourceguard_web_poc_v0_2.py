@@ -99,6 +99,11 @@ class SourceGuardWebPoCTests(unittest.TestCase):
                 "https://www.vatican.va/roman_curia/congregations/cfaith/documents/rc_con_cfaith_doc_20180801_catechismo-penadimorte_ge.html",
             ))
         self.assertEqual(result["status"], "DISTINCT_WORDINGS_OBSERVED")
+        self.assertEqual(
+            result["comparisons"][1]["boundary_method"], "complete_revision_notice"
+        )
+        self.assertTrue(result["comparisons"][1]["paragraph_boundary_observed"])
+        self.assertIn("2267.", result["comparisons"][1]["text"])
         self.assertFalse(result["version_verified"])
 
     def test_url_allowlist_and_schemes(self):
