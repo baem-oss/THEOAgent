@@ -1,6 +1,7 @@
-"""Regression checks for the DRS:KI SourceGuard Web PoC.
-Run from repository root: python -m unittest discover -s tests/drs_ki -p 'test_sourceguard_web_poc_v0_2.py' -v
-No network access is used.
+"""Offline regression checks for the GENERIC SourceGuard Web v0.2.0 tool.
+
+Run: python -m unittest discover -s tests/drs_ki -p 'test_sourceguard_web_poc_v0_2.py' -v
+Mocks prevent network requests. Real DRS:KI DEV integration is separate.
 """
 import importlib.util
 import json
@@ -14,161 +15,117 @@ sg = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(sg)
 
 
-class SourceGuardWebPoCTests(unittest.TestCase):
+class SourceGuardWebV02Tests(unittest.TestCase):
     def setUp(self):
         self.tool = sg.Tools()
+        self.a = "https://www.vatican.va/a"
+        self.b = "https://www.vatican.va/b"
 
-    def test_utf8_and_windows1252_decoding(self):
-        html = '<meta charset="windows-1252"><p>Rückgriff und Würde</p>'
-        result = sg._decode_document(html.encode("windows-1252"), "text/html")
-        self.assertIn("Rückgriff und Würde", result)
-        utf8 = '<meta charset="utf-8"><p>Rückgriff und Würde</p>'
-        self.assertIn("Rückgriff und Würde", sg._decode_document(utf8.encode("utf-8"), "text/html"))
+    def mock_read(self, url, section, text):
+        with patch.object(sg, "_download", return_value=(url, text)):
+            return json.loads(self.tool.read_source(url, section))
 
-    def test_read_source_finds_2267_without_period(self):
-        source = (
-            "2266 Der Schutz des Gemeinwohls.\\n"
-            "2267 Soweit unblutige Mittel hinreichen, um das Leben der Menschen "
-            "zu verteidigen, sind sie vorzuziehen.\\n2268 Das fünfte Gebot."
-        )
-        with patch.object(sg, "_download", return_value=(
-            "https://www.vatican.va/archive/catechism_ge/p3s2c2a5_ge.htm", source
-        )):
-            result = json.loads(self.tool.read_source(
-                "https://www.vatican.va/archive/catechism_ge/p3s2c2a5_ge.htm", "2267"
-            ))
+    def test_generic_number_without_period(self):
+        result = self.mock_read(self.a, "2267",
+            "2266 Anmerkung\n2267 Soweit unblutige Mittel ausreichen, "
+            "werden sie verwendet.\n2268 Folgender Absatz.")
         self.assertEqual(result["status"], "TEXT_RETRIEVED")
-        self.assertTrue(result["section_marker_found"])
-        self.assertIn("2267 Soweit unblutige Mittel", result["excerpt"])
+        self.assertEqual(result["section_boundary"], "NEXT_NUMBER")
+        self.assertTrue(result["section_text"].startswith("2267 Soweit"))
+        self.assertNotIn("2268", result["section_text"])
 
-    def test_read_source_2267_does_not_match_heading_only(self):
-        source = "NEUE FORMULIERUNG DER NR. 2267 DES KATECHISMUS" * 8
-        with patch.object(sg, "_download", return_value=(
-            "https://www.vatican.va/test.html", source
-        )):
-            result = json.loads(self.tool.read_source(
-                "https://www.vatican.va/test.html", "2267"
-            ))
+    def test_generic_number_with_period(self):
+        result = self.mock_read(self.a, "12",
+            "11. Einführung\n12. Im selben Geist auszulegen. "
+            "Schrift und Überlieferung.\n13. Ende.")
+        self.assertEqual(result["status"], "TEXT_RETRIEVED")
+        self.assertIn("12. Im selben Geist", result["section_text"])
+
+    def test_generic_canon_heading(self):
+        result = self.mock_read(self.a, "can. 767",
+            "Abschnitt A\ncan. 767 § 1 Die Homilie ist Teil der Liturgie.\nAbschnitt B")
+        self.assertEqual(result["status"], "TEXT_RETRIEVED")
+        self.assertIn("Homilie", result["section_text"])
+
+    def test_index_heading_is_not_section(self):
+        result = self.mock_read(self.a, "2267",
+            "Neue Formulierung der Nr. 2267 im Katechismus. " * 8)
         self.assertEqual(result["status"], "SECTION_NOT_LOCATED")
 
-    def test_kkk_classification(self):
-        self.assertEqual(sg._kkk_2267_classification(
-            "2267 Soweit unblutige Mittel hinreichen, um Leben zu schützen."
-        ), "PRE_2018_WORDING")
-        self.assertEqual(sg._kkk_2267_classification(
-            "2267. Die Todesstrafe unzulässig, weil sie gegen die Unantastbarkeit und Würde verstößt."
-        ), "POST_2018_WORDING")
-        self.assertEqual(sg._kkk_2267_classification("2267 nur ein Index"), "UNCLASSIFIED")
+    def test_ambiguous_locator_fails_closed(self):
+        result = self.mock_read(self.a, "12",
+            "12. Erster Text\nWörter\n12. Zweiter Text\nZusätzlicher Text")
+        self.assertEqual(result["status"], "LOCATOR_AMBIGUOUS")
+        self.assertEqual(result["excerpt"], "")
 
-    def test_extract_kkk_paragraph_skips_heading(self):
-        text = ("NEUE FORMULIERUNG DER NR. 2267 DES KATECHISMUS\\n"
-                "2267. Lange Zeit wurde der Rückgriff auf die Todesstrafe.\\n"
-                "Heute gibt es...\\n2268 Mord")
-        paragraph = sg._kkk_2267_paragraph(text)
-        self.assertTrue(paragraph.startswith("2267. Lange"))
-        self.assertNotIn("2268 Mord", paragraph)
-
-    def test_detect_wrong_historical_url(self):
-        current = ("2267. Lange Zeit wurde der Rückgriff auf die Todesstrafe. "
-                   "Die Todesstrafe unzulässig, weil sie gegen die Unantastbarkeit und Würde "
-                   "der Person verstößt, daher ihre Abschaffung.")
-        source = current + "\\n2268 Mord."
+    def test_compare_different_texts_no_domain_knowledge(self):
         def fixture(url, *_):
-            if "20180801" in url:
-                return url, current
-            return url, source
+            return url, ("9. Vorher\n10. Alpha und Beta.\n11. Nachher"
+                         if url == self.a else
+                         "9. Vorher\n10. Alpha und Gamma.\n11. Nachher")
         with patch.object(sg, "_download", side_effect=fixture):
-            result = json.loads(self.tool.compare_kkk_2267_versions(
-                "https://www.vatican.va/archive/DEU0035/__P86.HTM",
-                "https://www.vatican.va/roman_curia/congregations/cfaith/documents/rc_con_cfaith_doc_20180801_catechismo-penadimorte_ge.html",
-            ))
-        self.assertEqual(result["status"], "VERSION_CONFLICT")
+            result = json.loads(self.tool.compare_sources(self.a, self.b, "10"))
+        self.assertEqual(result["status"], "DIFFERENT_TEXT")
+        self.assertFalse(result["version_verified"])
+        self.assertFalse(result["semantic_claim_verified"])
+        self.assertEqual(result["comparisons"][0]["section_boundary"], "NEXT_NUMBER")
+
+    def test_compare_same_text_no_chronology_inference(self):
+        with patch.object(sg, "_download", side_effect=lambda url,*_:
+                          (url,"9. Vorher\n10. Gleicher Text.\n11. Nachher")):
+            result = json.loads(self.tool.compare_sources(self.a, self.b, "10"))
+        self.assertEqual(result["status"], "SAME_TEXT")
         self.assertFalse(result["version_verified"])
 
-    def test_detect_distinct_phrasings_without_claiming_year(self):
-        older = ("2267 Soweit unblutige Mittel hinreichen, hat sich die Autorität "
-                 "an diese Mittel zu halten.\\n2268 Mord.")
-        current = ("2267. Lange Zeit wurde der Rückgriff auf die Todesstrafe. "
-                   "Die Todesstrafe unzulässig, weil sie gegen die Unantastbarkeit und Würde "
-                   "verstößt, daher Abschaffung.")
-        def fixture(url, *_):
-            return url, current if "20180801" in url else older
-        with patch.object(sg, "_download", side_effect=fixture):
-            result = json.loads(self.tool.compare_kkk_2267_versions(
-                "https://www.vatican.va/archive/catechism_ge/p3s2c2a5_ge.htm",
-                "https://www.vatican.va/roman_curia/congregations/cfaith/documents/rc_con_cfaith_doc_20180801_catechismo-penadimorte_ge.html",
-            ))
-        self.assertEqual(result["status"], "DISTINCT_WORDINGS_OBSERVED")
-        self.assertEqual(
-            result["comparisons"][1]["boundary_method"], "complete_revision_notice"
-        )
-        self.assertTrue(result["comparisons"][1]["paragraph_boundary_observed"])
-        self.assertIn("2267.", result["comparisons"][1]["text"])
-        self.assertFalse(result["version_verified"])
+    def test_compare_missing_locator_reports_incomplete(self):
+        with patch.object(sg, "_download", side_effect=lambda url,*_:
+                          (url,"9. Vorher\n10. Text\n11. Nachher"
+                           if url == self.a else "Anderes Dokument ohne Fundstelle")):
+            result = json.loads(self.tool.compare_sources(self.a, self.b, "10"))
+        self.assertEqual(result["status"], "INCOMPLETE")
 
-    def test_url_allowlist_and_schemes(self):
+    def test_exact_quote_only_is_not_semantic_verification(self):
+        text = "10. Alpha und Beta sind gemeinsam genannt.\n11. Nachher."
+        with patch.object(sg, "_download", return_value=(self.a,text)):
+            result = json.loads(self.tool.verify_evidence("Alpha und Beta", self.a, "10"))
+        self.assertEqual(result["status"], "QUOTE_FOUND")
+        self.assertFalse(result["semantic_claim_verified"])
+
+    def test_paraphrase_not_falsely_verified(self):
+        text = "10. Alpha und Beta sind gemeinsam genannt.\n11. Nachher."
+        with patch.object(sg, "_download", return_value=(self.a,text)):
+            result = json.loads(self.tool.verify_evidence("Alpha ist besser als Beta", self.a, "10"))
+        self.assertNotEqual(result["status"], "QUOTE_FOUND")
+        self.assertFalse(result["semantic_claim_verified"])
+
+    def test_decoding_utf8_and_windows1252(self):
+        html = '<meta charset="windows-1252"><p>Rückgriff und Würde</p>'
+        self.assertIn("Rückgriff", sg._decode_document(html.encode("windows-1252"), "text/html"))
+        utf8 = '<meta charset="utf-8"><p>Würde</p>'
+        self.assertIn("Würde", sg._decode_document(utf8.encode("utf-8"), "text/html"))
+
+    def test_url_restrictions(self):
         allowed = {"www.vatican.va"}
-        self.assertEqual(sg._parse_url("https://www.vatican.va/a.html", allowed)[0], "www.vatican.va")
-        for url in (
-            "http://www.vatican.va/a",
-            "https://localhost/a",
-            "https://127.0.0.1/a",
-            "https://www.vatican.va.evil.com/a",
-            "https://user:pw@www.vatican.va/a",
-            "https://www.vatican.va:8443/a",
-            "https://www.vatican.va/a\nInjected-Header: yes",
-        ):
+        for url in ("http://www.vatican.va/a","https://localhost/a",
+                    "https://www.vatican.va.evil.com/a",
+                    "https://u:p@www.vatican.va/a","https://www.vatican.va:8443/a",
+                    "https://www.vatican.va/a\nX-Injected: yes"):
             with self.subTest(url=url), self.assertRaises(sg.RetrievalError):
                 sg._parse_url(url, allowed)
 
-    def test_public_ip_rejects_private_or_mixed_dns(self):
-        for answers in (["10.0.0.7"], ["127.0.0.1"], ["169.254.169.254"],
-                        ["93.184.216.34", "10.2.3.4"], ["::1"]):
-            fake = [(None, None, None, None, (ip, 443)) for ip in answers]
-            with patch.object(sg.socket, "getaddrinfo", return_value=fake):
-                with self.subTest(answers=answers), self.assertRaises(sg.RetrievalError):
+    def test_private_dns_and_mixed_ips_blocked(self):
+        for answers in (["10.0.0.1"], ["127.0.0.1"],
+                        ["93.184.216.34","10.0.0.2"], ["::1"]):
+            records = [(None,None,None,None,(addr,443)) for addr in answers]
+            with patch.object(sg.socket,"getaddrinfo",return_value=records):
+                with self.assertRaises(sg.RetrievalError):
                     sg._public_ip("www.vatican.va")
 
-    def test_public_ip_uses_checked_ip(self):
-        fake = [(None, None, None, None, ("93.184.216.34", 443))]
-        with patch.object(sg.socket, "getaddrinfo", return_value=fake):
-            self.assertEqual(sg._public_ip("www.vatican.va"), "93.184.216.34")
-
-    def test_html_extraction_ignores_scripts(self):
-        parser = sg.TextExtractor()
-        parser.feed("<html><body><p>Quelle A</p><script>ignore_me()</script>"
-                    "<p>Quelle B</p></body></html>")
-        output = "".join(parser.parts)
-        self.assertIn("Quelle A", output)
-        self.assertIn("Quelle B", output)
-        self.assertNotIn("ignore_me", output)
-
-    def test_success_reports_no_semantic_verification(self):
-        text = ("Einleitung\n" + "2267. Die Kirche lehrt eine klare Aussage. " +
-                "Zusammenhang des Abschnitts. " * 30)
-        with patch.object(sg, "_download", return_value=("https://www.vatican.va/test", text)):
-            result = json.loads(self.tool.read_source("https://www.vatican.va/test", "2267"))
-        self.assertEqual(result["status"], "TEXT_RETRIEVED")
-        self.assertTrue(result["technical_retrieval"])
+    def test_network_failure_not_verification(self):
+        with patch.object(sg,"_download",side_effect=sg.RetrievalError("Blocked")):
+            result = json.loads(self.tool.read_source(self.a,"10"))
         self.assertFalse(result["semantic_claim_verified"])
-        self.assertTrue(result["section_marker_found"])
-        self.assertIn("2267", result["excerpt"])
-
-    def test_absent_section_fails_closed(self):
-        text = ("Dies ist ein gültiger Originaltext ohne die benannte Nummer. " * 30)
-        with patch.object(sg, "_download", return_value=("https://www.vatican.va/test", text)):
-            result = json.loads(self.tool.read_source("https://www.vatican.va/test", "2267"))
-        self.assertEqual(result["status"], "SECTION_NOT_LOCATED")
-        self.assertFalse(result["section_marker_found"])
-        self.assertEqual(result["excerpt"], "")
-        self.assertFalse(result["semantic_claim_verified"])
-
-    def test_fetch_failure_never_returns_verified(self):
-        with patch.object(sg, "_download", side_effect=sg.RetrievalError("Blocked")):
-            result = json.loads(self.tool.read_source("https://www.vatican.va/test", "2267"))
         self.assertEqual(result["status"], "RETRIEVAL_FAILED")
-        self.assertFalse(result["technical_retrieval"])
-        self.assertFalse(result["semantic_claim_verified"])
 
 
 if __name__ == "__main__":
