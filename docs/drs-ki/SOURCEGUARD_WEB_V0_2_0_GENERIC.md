@@ -1,6 +1,6 @@
-# SourceGuard Web v0.2.0-dev – generischer Quellenadapter
+# Entwicklungshistorie: SourceGuard Web v0.2.0 – zunächst nur Webquellen
 
-**Stand:** 14.11.2026 · **Branch:** `drs-ki-test`  
+**Achtung:** Durch den aktuellen PO-Auftrag **überholt**: SourceGuard v0.2.0 unterstützt jetzt auch die Evidenzaufbereitung für die Fachbibliothek und geeignete DRS-Werkzeugauszüge. Gültiges Arbeitsprofil: [THEOAgent DEV – SourceGuard v0.2.0](THEOAGENT_DEV_SOURCEGUARD_V0_2_0_ARBEITSPROTOTYP.md). Die nachfolgenden früheren Aussagen zu ausschließlichem Webzugriff und Regressionen beschreiben den bisherigen Stand. Auf PO-Wunsch werden keine weiteren Tests erstellt.\n\n**Stand:** 14.11.2026 · **Branch:** `drs-ki-test`  
 **Status:** Implementation im Repository, noch keine bestandenen Tests dieser generischen Revision auf DRS:KI DEV. **Keine Produktfreigabe.**
 
 ## Architekturentscheidung des PO
