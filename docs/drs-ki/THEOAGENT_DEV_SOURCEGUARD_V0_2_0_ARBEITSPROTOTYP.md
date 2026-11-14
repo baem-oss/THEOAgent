@@ -52,19 +52,17 @@ Die Anzeigenamen stammen aus der aktiven Werkzeugauswahl von THEOAgent DEV vom 1
    - `evidence_kind="original_excerpt"`.
 4. THEOAgent urteilt **selbst anhand der Passage**: *belegt / widerlegt / nicht überprüfbar*, begründet und unterscheidet Klippert-Text von eigener homiletischer Bewertung.
 
-## Ergänzung zum bestehenden THEOAgent-DEV-Systemprompt
+## Systemprompt für THEOAgent DEV
 
-**Aktuelle vollständige Arbeitsfassung:** [THEOAgent DEV – Systemprompt v0.3.1](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.1.md). Er enthält die nachfolgenden Quellenarbeitsregeln konsolidiert; nicht zusätzlich zum v0.3.1-Prompt nochmals einkopieren. Die sieben separaten Fachskills beginnen jeweils mit `THEOAgent - ` und bleiben unverändert.
+**Vollständige Arbeitsfassung:** [THEOAgent DEV – Systemprompt v0.3.1](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.1.md).
 
-Die folgenden Absätze **zusätzlich zum vorhandenen Systemprompt und den sieben Fachskills** einsetzen, nicht deren Regeln ersetzen:
+Zur Einrichtung den Systemprompt **ab der Überschrift „SYSTEMPROMPT – ab hier vollständig in THEOAgent DEV verwenden“** als zusammenhängenden Text einsetzen. **Keine zusätzlichen älteren SourceGuard-Ergänzungsblöcke einkopieren** – die Quellenarbeitsregeln sind bereits enthalten.
 
-> **Quellenarbeit mit SourceGuard v0.2.0 (DEV-Prototyp):** Verwende bestehende Knowledge-, DRS- und Web-Werkzeuge gezielt nach Quellenart. das derzeit einzige eingebundene Fachbibliothekswerk Klippert über `search_knowledge_files`/`grep_knowledge_files` finden und die relevante Passage über `view_knowledge_file` tatsächlich lesen; für öffentliche Webseiten nötigenfalls mit `Websuche_und_Dokument (Faster - No Summary No Fulltext)` suchen und dann bei erlaubter HTML-Quelle `read_source` nutzen. `Outline Document Tools (DrsKita)` nur für geeignete PDF-/DOCX-Originale; `Bibel-Tool` für Bibelstellen unter Beachtung der tatsächlich verfügbaren Übersetzung; `Mcp_mediawiki` und `TYPO3 Document Tools (VZ Orga)` nur bei wirklich einschlägigen DRS-Quellen. Weder Snippets noch Indexe noch LLM-Zusammenfassungen sind ein Originalbeleg. Unbekannte DRS-Toolparameter niemals erfinden.
->
-> Wenn eine konkrete Autorposition, Norm oder Textbehauptung entscheidend ist, übergib den **tatsächlich gelesenen** Auszug mit Werk, Fundstelle, Werkzeugname und vorhandener Toolreferenz an `review_evidence`. Bei Webquellen verwende die Original-URL statt vom Modell eingefügter Webzitate. `EVIDENCE_READY_FOR_REVIEW` bedeutet nur, dass Evidenz für **dein fachliches Urteil** vorliegt; es ist **keine** technische Bestätigung von Inhalt, Autorenschaft oder Editionsjahr. Bewerte die vollständige Aussage als *belegt*, *widerlegt* oder *nicht überprüfbar*, mit begründeter Fundstelle, und kennzeichne Grenzen. Behaupte niemals einen durch SourceGuard erzwungenen Prüfprozess. Keine doppelten oder aussichtslosen Werkzeugaufrufe. Für einfache, nicht belegpflichtige Formulierungen unnötige Prüfung vermeiden.
+Die sieben eigenständigen, bestehenden Fachskills mit Anzeigenamenspräfix `THEOAgent - ` bleiben aktiviert und unverändert.
 
 ## Einstieg in den produktiven DEV-Arbeitsprototyp
 
-**Einrichten (nur DEV):** Werkzeugcode [SourceGuard v0.2.0](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py) im bestehenden DEV-Tool aktualisieren, `review_evidence` erscheint als neue Funktion. Dem Modell `THEOAgent DEV` zuweisen; vorhandene Knowledge-Werkzeuge und fachlich relevante DRS-Werkzeuge beibehalten. Ergänzung zum Systemprompt eintragen. Endnutzer muss **kein** Werkzeug konfigurieren.
+**Einrichten (nur DEV):** Werkzeugcode [SourceGuard v0.2.0](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py) im bestehenden DEV-Tool aktualisieren, `review_evidence` erscheint als neue Funktion. Dem Modell `THEOAgent DEV` zuweisen; vorhandene Knowledge-Werkzeuge und fachlich relevante DRS-Werkzeuge beibehalten. den vollständigen konsolidierten Systemprompt v0.3.1 einsetzen; keine ältere Zusatzpassage anhängen. Endnutzer muss **kein** Werkzeug konfigurieren.
 
 **Praktisch nutzen:** Normale Arbeitsaufgaben stellen (Predigtanalyse anhand Klippert, Exegese anhand Dei Verbum, Liturgierecht, DRS-Ordnungen). Auf tatsächliche Toolaufrufe und Quellenbelege achten; Fehlverhalten knapp dokumentieren. **Auf PO-Wunsch werden jetzt keine weiteren Testdateien, Testmatrizen oder Regressionstests verfasst.**
 
