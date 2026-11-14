@@ -43,7 +43,7 @@ Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlos
 
 ## Fortsetzung
 
-**Neuer vorbereiteter DEV-Stand:** [SourceGuard Web v0.2.0 – Installation und Versionsvergleich KKK 2267](POC_P-03B_SOURCEGUARD_WEB_V0_2.md); [Python-Werkzeug](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py), [noch nicht ausgeführte Regressionstests](../../tests/drs_ki/test_sourceguard_web_poc_v0_2.py). Die auf DEV laufende v0.1.0 wurde nicht verändert; Live-Test und Freigabe offen.
+**Aktueller Entwicklungsstand (PO-Entscheid 14.11.2026):** SourceGuard Web **v0.2.0 generisch**, [Implementierung](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py), [Tests](../../tests/drs_ki/test_sourceguard_web_poc_v0_2.py), [API und DEV-Testplan](SOURCEGUARD_WEB_V0_2_0_GENERIC.md). KKK-spezifischer Versionscode ist aus v0.2.0 entfernt; die vorherige P-03b-Anleitung ist historisch. Lokale und DEV-Regressionen dieser Revision noch offen.
 
 **PoC-Erweiterung:** [P-02: Vergleich der vorhandenen DRS:KI-Werkzeuge mit SourceGuard Web](POC_P-02_DRS_TOOLS_VERGLEICH.md). Zuerst DRS-Faster an KKK 2267, CIC can. 767 § 1 und Soziallehre Nr. 160–163 testen, Outline/MediaWiki/TYPO3 nur bei einschlägiger Quelle. Der eigene [Webadapter](../../tools/drs_ki/sourceguard_web_poc_v0_1_0.py) dient als gezielter Vergleich für einen sicheren Originalabruf, nicht als Ersatz der technischen Antwortdurchsetzung. Die [Offline-Regressionsfälle](../../tests/drs_ki/test_sourceguard_web_poc.py) sind hinzugefügt, aber noch nicht als ausgeführt bestätigt.
 
