@@ -1,5 +1,5 @@
 """Regression checks for the DRS:KI SourceGuard Web PoC.
-Run from repository root: python -m unittest discover -s tests/drs_ki -p 'test_sourceguard_web_poc.py' -v
+Run from repository root: python -m unittest discover -s tests/drs_ki -p 'test_sourceguard_web_poc_v0_2.py' -v
 No network access is used.
 """
 import importlib.util
@@ -24,6 +24,32 @@ class SourceGuardWebPoCTests(unittest.TestCase):
         self.assertIn("Rückgriff und Würde", result)
         utf8 = '<meta charset="utf-8"><p>Rückgriff und Würde</p>'
         self.assertIn("Rückgriff und Würde", sg._decode_document(utf8.encode("utf-8"), "text/html"))
+
+    def test_read_source_finds_2267_without_period(self):
+        source = (
+            "2266 Der Schutz des Gemeinwohls.\\n"
+            "2267 Soweit unblutige Mittel hinreichen, um das Leben der Menschen "
+            "zu verteidigen, sind sie vorzuziehen.\\n2268 Das fünfte Gebot."
+        )
+        with patch.object(sg, "_download", return_value=(
+            "https://www.vatican.va/archive/catechism_ge/p3s2c2a5_ge.htm", source
+        )):
+            result = json.loads(self.tool.read_source(
+                "https://www.vatican.va/archive/catechism_ge/p3s2c2a5_ge.htm", "2267"
+            ))
+        self.assertEqual(result["status"], "TEXT_RETRIEVED")
+        self.assertTrue(result["section_marker_found"])
+        self.assertIn("2267 Soweit unblutige Mittel", result["excerpt"])
+
+    def test_read_source_2267_does_not_match_heading_only(self):
+        source = "NEUE FORMULIERUNG DER NR. 2267 DES KATECHISMUS" * 8
+        with patch.object(sg, "_download", return_value=(
+            "https://www.vatican.va/test.html", source
+        )):
+            result = json.loads(self.tool.read_source(
+                "https://www.vatican.va/test.html", "2267"
+            ))
+        self.assertEqual(result["status"], "SECTION_NOT_LOCATED")
 
     def test_kkk_classification(self):
         self.assertEqual(sg._kkk_2267_classification(
