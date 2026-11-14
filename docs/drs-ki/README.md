@@ -1,11 +1,25 @@
 # DRS:KI-Erprobung – THEOAgent
 
-**Stand:** 13.11.2026  
-**Status:** Übernommener Arbeitsstand zur weiteren Erprobung, **keine Architektur- oder Produktfreigabe**  
+**Stand:** 14.11.2026  
+**Status:** **Praktische DEV-Erprobung (PO-Entscheidung vom 14.11.2026)**, Konfigurations-/Code-Freeze für den Prototyp; **keine Architektur-, Produkt- oder Quellenverifikationsfreigabe**  
 **Arbeitsbranch:** `drs-ki-test`  
 **SSOT:** `baem-oss/THEOAgent`, gemäß [Projektprozess](../WORKFLOW.md).
 
 **Verbindliche Rollen-/Umgebungsklarstellung (PO, 13.11.2026):** Entwicklung und Tests finden auf **DRS:KI DEV** mit **Developerzugriff** statt. Der spätere **Endnutzer ruft ausschließlich das bereitgestellte Modell auf**; er konfiguriert weder Tools noch Skills noch Pipes. Die technische Integrationsfähigkeit ist daher mit Developerrechten zu prüfen; konkrete Installations- bzw. Deploymentbefugnisse sind damit noch nicht nachgewiesen.
+
+## Aktueller Arbeitsmodus – praktische DEV-Erprobung (PO, 14.11.2026)
+
+**PO-Entscheidung:** THEOAgent Dev jetzt als theologischen **Arbeitsprototyp** in realen Aufgaben einsetzen. Die bisherigen isolierten Tests werden nicht als fortlaufende Testkampagne weitergeführt. Entwicklung erfolgt **befundgetrieben** nach KISS; Änderungen nur bei belegtem, hinreichend relevantem Bedarf. Dies ist **keine** Produkt-/Release-Abnahme und kein Merge nach `main`.
+
+**Vorläufig eingefrorene DEV-Konfiguration im Repository:** [Systemprompt v0.3.2](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.2.md), sieben THEOAgent-Fachskills (mit der [Mehrkriterien-Abbruchregel](../../config/drs-ki/skills/theologische-quellenpruefung/SKILL.md) aus Commit `2e05e94`), [SourceGuard v0.2.0](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py). Der auf DEV eingesetzte exakte Versions-/Artefaktstand ist nicht unabhängig mit Serverlogs belegt. Keine weiteren Prompt-, Skill- oder Codeänderungen ohne konkreten Praxisbefund.
+
+**Praxisfelder:** Exegese, Predigtvorbereitung und -kritik, liturgische Texte, theologische Fachrecherche sowie kirchliche Quellen- und Normenfragen. Die Anfragen sollen **normal formuliert** werden, nicht mit vorgegebenen Toolsequenzen; so wird die eigenständige Nutzbarkeit beobachtet.
+
+**Qualitätssicherung im Gebrauch:** Nur neue, relevante Beobachtungen dokumentieren. Bagatellen direkt im Dialog verbessern. Wiederkehrende Fehler oder schwerwiegende Einzelereignisse mit tatsächlichem Werkzeugprotokoll als Finding unter `drs-ki-test` festhalten und ggf. gezielt an QE übergeben. Quellenbelege bei fachlich oder rechtlich folgenreichen Aussagen am Original kontrollieren. Keine Behauptung technisch authentifizierter Quellen allein aus modellgenerierten Antworten oder `EVIDENCE_READY_FOR_REVIEW`.
+
+**Offenes Risiko:** [T-1 Praxisbefund F-T1-01 – MAJOR / OPEN](T1_KLIPPERT_SOURCEGUARD_PRAXISBEFUND_2026-11-14.md). Im Test wurde der vierte SourceGuard-Werkzeugnachweis vom Modell zunächst simuliert, nach Nutzerintervention korrekt nachgeholt. Toolaktivierung, Originallektüre und SourceGuard-Aufrufe wurden grundsätzlich gezeigt; die Integrität modellseitig wiedergegebener Tool-Rückgaben ist nicht technisch garantiert (F-C1). QE-Nachreview bestätigt MAJOR; DEV-Erprobung bleibt vertretbar, **quellenverifizierter Einsatz nicht freigegeben**.
+
+**Änderungsauslöser:** (1) belegtes Verhalten, (2) fachliche/operative Relevanz, (3) realistisch wirksame minimale Abhilfe. Bei neuer Änderung: SSOT-Commit im Branch, darauf begrenzte Nachprüfung, Entscheidung durch PO. Keine zusätzlichen Testkataloge.
 
 ## Verbindliche Grundlage
 
@@ -51,4 +65,4 @@ Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlos
 
 **PoC-Erweiterung:** [P-02: Vergleich der vorhandenen DRS:KI-Werkzeuge mit SourceGuard Web](POC_P-02_DRS_TOOLS_VERGLEICH.md). Zuerst DRS-Faster an KKK 2267, CIC can. 767 § 1 und Soziallehre Nr. 160–163 testen, Outline/MediaWiki/TYPO3 nur bei einschlägiger Quelle. Der eigene [Webadapter](../../tools/drs_ki/sourceguard_web_poc_v0_1_0.py) dient als gezielter Vergleich für einen sicheren Originalabruf, nicht als Ersatz der technischen Antwortdurchsetzung. Die [Offline-Regressionsfälle](../../tests/drs_ki/test_sourceguard_web_poc.py) sind hinzugefügt, aber noch nicht als ausgeführt bestätigt.
 
-**Aktueller nächster Schritt (PO-Priorisierung):** [Schneller PoC P-01](POC_P-01_SCHNELLTEST.md) mit dem bestehenden DRS-Prompt v0.2.3 und bereits funktionierenden Werkzeugen. Eine allgemeine Tool-/Berechtigungsinventur ist **keine** Voraussetzung. Der [P0-Machbarkeits- und Findingsplan](P0_MACHBARKEIT_UND_FINDINGS.md) bleibt für gezielte technische Nachprüfungen und die spätere SourceGuard-Integration verfügbar. Der PoC belegt ausdrücklich noch keine technisch erzwungene Quellenverifikation.
+**Historische PO-Priorisierung (durch die praktische DEV-Erprobung vom 14.11.2026 abgelöst):** [Schneller PoC P-01](POC_P-01_SCHNELLTEST.md) mit dem bestehenden DRS-Prompt v0.2.3 und bereits funktionierenden Werkzeugen. Eine allgemeine Tool-/Berechtigungsinventur ist **keine** Voraussetzung. Der [P0-Machbarkeits- und Findingsplan](P0_MACHBARKEIT_UND_FINDINGS.md) bleibt für gezielte technische Nachprüfungen und die spätere SourceGuard-Integration verfügbar. Der PoC belegt ausdrücklich noch keine technisch erzwungene Quellenverifikation.
