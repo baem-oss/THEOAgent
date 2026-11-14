@@ -1,7 +1,11 @@
 """
-Name: THEOAgent SourceGuard
-Zweck: Quellenübergreifende Evidenzaufbereitung und Belegprüfung für THEOAgent:
-       Web-Originaltexte, Fachbibliothek und geeignete DRS-Werkzeugauszüge.
+Name: THEOAgent – SourceGuard
+Zweck: Quellenübergreifende Evidenzaufbereitung für THEOAgent: kontrollierter
+       Abruf öffentlicher Webquellen, Verarbeitung von Originalauszügen aus
+       Fachbibliothek und DRS-Werkzeugen sowie technische Prüfung von
+       Fundstellen, Zitaten und Textübereinstimmungen.
+Grenze: Keine eigenständige semantische Verifikation; fachliche Belegprüfung
+        erfolgt durch THEOAgent anhand der bereitgestellten Originalpassage.
 Autor: BäM (PO, RE) / ChatGPT (SE) / Deepseek (QE)
 Datum: 14.11.2026
 Version: 0.2.0
