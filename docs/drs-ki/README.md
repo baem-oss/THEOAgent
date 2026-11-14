@@ -43,6 +43,8 @@ Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlos
 
 ## Fortsetzung
 
+**Systemprompt für den aktuellen DEV-Prototyp:** [THEOAgent DEV v0.3.1 mit SourceGuard v0.2.0](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.1.md). Sieben vorhandene Skills mit Namenspräfix `THEOAgent - ` bleiben separat; die aktuelle v0.3.0 war im Repo nicht als vollständiger Wortlaut archiviert, deshalb ist dies eine konsolidierte Neufassung und kein behaupteter exakter Diff.
+
 **Aktueller PO-Auftrag (14.11.2026):** Ein **arbeitsfähiger THEOAgent-DEV-Prototyp** mit **SourceGuard v0.2.0 als gemeinsamer Belegaufbereitung** für Web, Fachbibliothek und geeignete DRS-Werkzeugauszüge. [Konfiguration, konkrete DRS-Werkzeugauswahl und Systemprompt-Ergänzung](THEOAGENT_DEV_SOURCEGUARD_V0_2_0_ARBEITSPROTOTYP.md). Keine neuen Tests beauftragt. Die ältere Bezeichnung `SourceGuard Web` und ältere KKK-Tests sind Entwicklungshistorie; das aktuelle Tool bleibt unter demselben Python-Dateipfad.
 
 **Aktueller Entwicklungsstand (PO-Entscheid 14.11.2026):** SourceGuard Web **v0.2.0 generisch**, [Implementierung](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py), [Tests](../../tests/drs_ki/test_sourceguard_web_poc_v0_2.py), [API und DEV-Testplan](SOURCEGUARD_WEB_V0_2_0_GENERIC.md). KKK-spezifischer Versionscode ist aus v0.2.0 entfernt; die vorherige P-03b-Anleitung ist historisch. Lokale und DEV-Regressionen dieser Revision noch offen.
