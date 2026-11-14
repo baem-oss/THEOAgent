@@ -12,16 +12,17 @@ SourceGuard ist ein Open-WebUI-Tool, **keine** Pipe. Es erzwingt keine Toolaufru
 
 [DRS-Toolvergleich P-02](POC_P-02_DRS_TOOLS_VERGLEICH.md) bleibt Referenz für Auswahl und Grenzen. **Kein zusätzlicher DRS-Werkzeugadapter**, solange vorhandene Funktionen den Leseweg erfüllen.
 
-| Weg | Werkzeug | Wann geeignet | Belegstatus |
+| Weg | Aktiviertes Werkzeug / vorhandene Funktion | Wann geeignet | Belegstatus |
 |---|---|---|---|
-| Fachbibliothek | `search_knowledge_files`, `grep_knowledge_files`, `view_knowledge_file` | Klippert, Böttigheimer und andere indexierte Werke; möglichst direkte Passage mit `view_knowledge_file` lesen | `knowledge`, `original_excerpt` nach beobachteter Originallektüre |
-| Öffentliche Webrecherche | **Faster – No Summary v2.1.0** | Quelle finden, URL und Anfangsauszug gewinnen | Suchtreffer oder gekürztes `PAGE_EXCERPT` nicht als vollständige Originallektüre |
-| Öffentliche Weboriginale | `SourceGuard.read_source` | Zugelassenes HTML/Text-Dokument mit genauer URL und Fundstelle | `web`, tatsächlicher HTTPS-Abruf |
-| PDF/DOCX | **Outline Document Tools v0.1.0** | Falls konkretes öffentliches Dokument abrufbar und Host erlaubt | `document` oder `tool_excerpt`, nur tatsächlich gelesener Kontext; PDF-Seite ≠ Druckseite |
-| DRS-Wiki | **MediaWiki MCP v1.5.0** | Nur wenn eine entsprechende interne DRS-Wikiseite fachlich einschlägig ist | `tool_excerpt`, Wiki nicht als amtlich verbindlichen Normtext behandeln |
-| TYPO3-Dateien | **TYPO3 Document Tools v0.3.2** | Nur bei konkreter DRS-Quelle und vorhandenen Leserechten; ggf. `vzorgaoauth_ReadTable` | `document` oder `tool_excerpt`, tatsächlicher Auszug statt Dateidump |
-| Synthese | **Fast – Summary v2.1.0** | Bei Bedarf für Orientierung | `summary`, ausdrücklich **kein** Originalbeleg |
-| Single-Domain-Suche | **Single Domain Web Search v2.0.1** | Nicht im Belegpfad, solange Redirect-SSRF-Finding F-A1 offen | Kein gesicherter Originalbeleg |
+| Fachbibliothek | `search_knowledge_files`, `grep_knowledge_files`, `view_knowledge_file` | **Derzeit nur Wolfgang Klippert, *Vom Text zur Predigt***; tatsächlich gelesene Passage über `view_knowledge_file` | `knowledge`, `original_excerpt`; Herkunft des übergebenen Textes nicht unabhängig authentifiziert |
+| Webrecherche | **`Websuche_und_Dokument (Faster - No Summary No Fulltext)`** | URL finden, Treffer und gegebenenfalls Auszüge für Navigation | Treffer/Snippets nicht als vollständige Originallektüre |
+| Weboriginal (SourceGuard) | **`read_source`** | Freigegebene öffentliche HTML-/Textquelle mit konkreter URL und Fundstelle | Direkter URL-Abruf, keine semantische Behauptungsprüfung |
+| PDF/DOCX | **`Outline Document Tools (DrsKita)`** | Nur bei zugänglicher und tatsächlich gelesener Dokumentpassage | `document`/`tool_excerpt`; PDF-Seite ist keine Druckseite |
+| Bibel | **`Bibel-Tool`** | Biblische Passagen, genaue Übersetzung und Fundstelle gesondert prüfen | `tool_excerpt`; Anzeigename beweist nicht die interne Implementierung oder Fassung |
+| DRS-Wiki | **`Mcp_mediawiki`** | Einschlägige Wiki-Informationen | `tool_excerpt`; Wiki nicht automatisch amtlicher Normtext |
+| DRS-TYPO3 | **`TYPO3 Document Tools (VZ Orga)`** | Konkrete DRS-Dokumente bei vorhandenen Rechten | `document`/`tool_excerpt`, nur tatsächlich gelesene Inhalte |
+
+Die Anzeigenamen stammen aus der aktiven Werkzeugauswahl von THEOAgent DEV vom 14.11.2026. Die im [historischen P-02-Vergleich](POC_P-02_DRS_TOOLS_VERGLEICH.md) genannten Versionsbezeichnungen sind **nicht** als Identitätsnachweis für diese DEV-Werkzeuge zu verstehen. Insbesondere ist **`Bibel-Tool` nicht nachweislich identisch mit `Single Domain Web Search v2.0.1`**. Das dortige Finding F-A1 darf nur nach technischer Identitätsprüfung auf das aktivierte Bibel-Tool übertragen werden. Aktivierung ist kein End-to-End-Ausführungsnachweis.
 
 ## SourceGuard-Schnittstelle
 
@@ -55,7 +56,7 @@ SourceGuard ist ein Open-WebUI-Tool, **keine** Pipe. Es erzwingt keine Toolaufru
 
 Die folgenden Absätze **zusätzlich zum vorhandenen Systemprompt und den sieben Fachskills** einsetzen, nicht deren Regeln ersetzen:
 
-> **Quellenarbeit mit SourceGuard v0.2.0 (DEV-Prototyp):** Verwende bestehende Knowledge-, DRS- und Web-Werkzeuge gezielt nach Quellenart. Klippert und andere Fachbibliothekswerke über `search_knowledge_files`/`grep_knowledge_files` finden und die relevante Passage über `view_knowledge_file` tatsächlich lesen; für öffentliche Webseiten zuerst nötigenfalls mit Faster suchen und dann bei erlaubter HTML-Quelle `read_source` nutzen. Outline nur für geeignete PDF-/DOCX-Originale; MediaWiki und TYPO3 nur bei wirklich einschlägigen DRS-Quellen. Weder Snippets noch Indexe noch LLM-Zusammenfassungen sind ein Originalbeleg. Unbekannte DRS-Toolparameter niemals erfinden.
+> **Quellenarbeit mit SourceGuard v0.2.0 (DEV-Prototyp):** Verwende bestehende Knowledge-, DRS- und Web-Werkzeuge gezielt nach Quellenart. das derzeit einzige eingebundene Fachbibliothekswerk Klippert über `search_knowledge_files`/`grep_knowledge_files` finden und die relevante Passage über `view_knowledge_file` tatsächlich lesen; für öffentliche Webseiten nötigenfalls mit `Websuche_und_Dokument (Faster - No Summary No Fulltext)` suchen und dann bei erlaubter HTML-Quelle `read_source` nutzen. `Outline Document Tools (DrsKita)` nur für geeignete PDF-/DOCX-Originale; `Bibel-Tool` für Bibelstellen unter Beachtung der tatsächlich verfügbaren Übersetzung; `Mcp_mediawiki` und `TYPO3 Document Tools (VZ Orga)` nur bei wirklich einschlägigen DRS-Quellen. Weder Snippets noch Indexe noch LLM-Zusammenfassungen sind ein Originalbeleg. Unbekannte DRS-Toolparameter niemals erfinden.
 >
 > Wenn eine konkrete Autorposition, Norm oder Textbehauptung entscheidend ist, übergib den **tatsächlich gelesenen** Auszug mit Werk, Fundstelle, Werkzeugname und vorhandener Toolreferenz an `review_evidence`. Bei Webquellen verwende die Original-URL statt vom Modell eingefügter Webzitate. `EVIDENCE_READY_FOR_REVIEW` bedeutet nur, dass Evidenz für **dein fachliches Urteil** vorliegt; es ist **keine** technische Bestätigung von Inhalt, Autorenschaft oder Editionsjahr. Bewerte die vollständige Aussage als *belegt*, *widerlegt* oder *nicht überprüfbar*, mit begründeter Fundstelle, und kennzeichne Grenzen. Behaupte niemals einen durch SourceGuard erzwungenen Prüfprozess. Keine doppelten oder aussichtslosen Werkzeugaufrufe. Für einfache, nicht belegpflichtige Formulierungen unnötige Prüfung vermeiden.
 
@@ -65,4 +66,4 @@ Die folgenden Absätze **zusätzlich zum vorhandenen Systemprompt und den sieben
 
 **Praktisch nutzen:** Normale Arbeitsaufgaben stellen (Predigtanalyse anhand Klippert, Exegese anhand Dei Verbum, Liturgierecht, DRS-Ordnungen). Auf tatsächliche Toolaufrufe und Quellenbelege achten; Fehlverhalten knapp dokumentieren. **Auf PO-Wunsch werden jetzt keine weiteren Testdateien, Testmatrizen oder Regressionstests verfasst.**
 
-**Status:** Implementiert und dokumentiert; die neue gemeinsame Funktion und die aktualisierte Konfiguration sind auf DRS:KI DEV noch **nicht** live bestätigt. Keine Behauptung einer unabhängigen Knowledge-Provenienz oder einer technischen SourceGuard-Gate-Funktion. QE kann den Prototyp später am konkreten Repo-Stand prüfen; der PO entscheidet über Freigabe.
+**Status:** QE-Nachbesserungen F-01/02/03/04/06/07 im Branch eingearbeitet; F-05 sachlich zurückgewiesen. Implementiert und dokumentiert; die neue gemeinsame Funktion und die aktualisierte Konfiguration sind auf DRS:KI DEV noch **nicht** live bestätigt. Keine Behauptung einer unabhängigen Knowledge-Provenienz oder einer technischen SourceGuard-Gate-Funktion. QE kann den Prototyp später am konkreten Repo-Stand prüfen; der PO entscheidet über Freigabe.
