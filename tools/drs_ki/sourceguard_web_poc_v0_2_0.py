@@ -258,7 +258,9 @@ class Tools:
             # A standalone 2018 revision notice has no following 2268.
             standalone_notice = (
                 role == "current_candidate"
-                and "/20180801_catechismo-penadimorte_" in retrieved["url"]
+                and urlsplit(retrieved["url"]).path.endswith(
+                    "/rc_con_cfaith_doc_20180801_catechismo-penadimorte_ge.html"
+                )
                 and retrieved.get("truncated") is False
             )
             boundary = next_number_seen or standalone_notice
