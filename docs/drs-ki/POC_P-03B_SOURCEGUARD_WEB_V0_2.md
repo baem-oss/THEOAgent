@@ -1,4 +1,6 @@
-# SourceGuard Web v0.2.0-dev – Installation und Abnahme auf DRS:KI DEV
+# HISTORISCH: SourceGuard Web v0.2.0 – frühere KKK-spezifische Testplanung
+
+**Achtung (14.11.2026): Dieses Dokument beschreibt die inzwischen verworfene KKK-spezifische v0.2.0 und darf nicht mehr als aktuelle Installationsanleitung verwendet werden. Gültig ist [SourceGuard Web v0.2.0 – generisch](SOURCEGUARD_WEB_V0_2_0_GENERIC.md).**
 
 **Datum:** 13.11.2026 · **Branch:** `drs-ki-test`  
 **Status:** Entwicklungsversion, **nicht** produktiv freigegeben  
