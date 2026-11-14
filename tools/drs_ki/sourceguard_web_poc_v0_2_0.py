@@ -1,13 +1,14 @@
 """
 Name: SourceGuard Web
-Zweck: Geschützter Abruf, Fundstellensuche und technischer Belegvergleich
-       für öffentlich zugängliche HTML-/Textquellen in THEOAgent.
+Zweck: Quellenübergreifende Evidenzaufbereitung und Belegprüfung für THEOAgent:
+       Web-Originaltexte sowie gelesene Passagen aus der Fachbibliothek.
 Autor: BäM (PO, RE) / ChatGPT (SE) / Deepseek (QE)
 Datum: 14.11.2026
 Version: 0.2.0
 
 Hinweis: Open-WebUI-Werkzeug für DRS:KI DEV; keine SourceGuard-Pipe.
-Eine Fundstelle oder ein Zitat zu finden ist kein theologischer Wahrheitsbeweis.
+Knowledge-Inhalte stammen aus den vorhandenen OpenWebUI-Knowledge-Werkzeugen.
+SourceGuard authentifiziert übergebene Knowledge-Auszüge nicht selbst.
 """
 
 import hashlib
@@ -393,6 +394,135 @@ class Tools:
                 "Wörtliche Textsuche, kein semantischer Beweis; bei gekürztem "
                 "Textfenster ist ein negativer Befund nicht abschließend."
             )
+        return json.dumps(result, ensure_ascii=False)
+
+    def review_evidence(
+        self,
+        claim: str,
+        source_type: str,
+        source_title: str,
+        locator: str,
+        evidence_text: str = "",
+        source_url: str = "",
+        evidence_reference: str = "",
+    ) -> str:
+        """Eine Aussage anhand einer Web- oder Knowledge-Textstelle vorbereiten.
+
+        :param claim: Die genau zu überprüfende Aussage oder das Zitat.
+        :param source_type: "web", "knowledge" oder "document".
+        :param source_title: Name des Werks oder Dokuments.
+        :param locator: Abschnitt, Kapitel oder vom Knowledge-Tool gemeldete Stelle.
+        :param evidence_text: Gelesene Passage aus view_knowledge_file bzw.
+                              einem anderen bestehenden Dokumentwerkzeug.
+                              Für "web" wird sie NICHT als Beleg akzeptiert.
+        :param source_url: Original-URL, nur für source_type="web".
+        :param evidence_reference: Rückverweis auf Knowledge-Datei oder Tool-
+                                   Fundstelle (kein unabhängiger Herkunftsbeweis).
+        :return: Strukturierte Evidenz und Prüfbeschränkungen als JSON.
+        """
+        # Alle Quellenarten erhalten dasselbe Prüfschema. Der technische Weg,
+        # auf dem der Text zur Verfügung gestellt wird, bleibt aber sichtbar.
+        result = {
+            "status": "INCOMPLETE",
+            "source_type": source_type,
+            "source_title": source_title,
+            "locator": locator,
+            "source_url": source_url or None,
+            "evidence_reference": evidence_reference or None,
+            "claim": claim,
+            "semantic_claim_verified": False,
+            "source_provenance_verified": False,
+            "claim_assessment": "NOT_ASSESSED",
+            "exact_wording_found": False,
+            "evidence_text": "",
+        }
+
+        # Keine leeren oder überlangen Eingaben unkontrolliert an das Modell
+        # zurückgeben. Besonders Knowledge-Passagen können sehr lang sein.
+        if (
+            not isinstance(claim, str) or not claim.strip() or len(claim) > 4000
+            or not isinstance(source_type, str)
+            or not isinstance(source_title, str) or len(source_title) > 500
+            or not isinstance(locator, str) or len(locator) > 200
+            or not isinstance(evidence_text, str) or len(evidence_text) > 30000
+            or not isinstance(evidence_reference, str)
+            or len(evidence_reference) > 2000
+        ):
+            result["status"] = "INVALID_INPUT"
+            return json.dumps(result, ensure_ascii=False)
+
+        kind = source_type.strip().lower()
+        if kind not in ("web", "knowledge", "document"):
+            result["status"] = "UNSUPPORTED_SOURCE_TYPE"
+            return json.dumps(result, ensure_ascii=False)
+        result["source_type"] = kind
+
+        if kind == "web":
+            # Webquellen werden tatsächlich neu abgerufen. Ein vom Modell
+            # mitgelieferter Text kann den Originalabruf nicht ersetzen.
+            if not source_url or not locator.strip():
+                result["status"] = "MISSING_SOURCE_REFERENCE"
+                return json.dumps(result, ensure_ascii=False)
+            retrieved = json.loads(self.read_source(source_url, locator))
+            result["retrieval_status"] = retrieved.get("status")
+            if retrieved.get("status") != "TEXT_RETRIEVED":
+                result["status"] = "SOURCE_NOT_READ"
+                return json.dumps(result, ensure_ascii=False)
+            source_text = retrieved.get("section_text", "")
+            result["source_url"] = retrieved.get("url")
+            result["evidence_id"] = retrieved.get("evidence_id")
+            result["source_provenance_verified"] = True
+            result["source_provenance_level"] = "TECHNICALLY_RETRIEVED_URL"
+            result["text_window_limited"] = retrieved.get(
+                "section_window_truncated", False
+            )
+            result["section_boundary"] = retrieved.get("section_boundary")
+        else:
+            # Knowledge/Document: Die bestehenden OpenWebUI-Werkzeuge haben
+            # die Passage bereits geliefert. Dieses Tool kann weder die
+            # Knowledge-Datenbank noch deren Metadaten direkt nachprüfen.
+            # Deshalb ist eine Referenz auf den Lesevorgang verpflichtend.
+            if (
+                not source_title.strip() or not locator.strip()
+                or not evidence_reference.strip() or not evidence_text.strip()
+            ):
+                result["status"] = "MISSING_SOURCE_REFERENCE"
+                result["required"] = (
+                    "source_title, locator, evidence_reference, evidence_text "
+                    "aus einem tatsächlich ausgeführten Knowledge-/Dokumentaufruf"
+                )
+                return json.dumps(result, ensure_ascii=False)
+            source_text = evidence_text
+            result["source_provenance_level"] = "MODEL_SUPPLIED_TOOL_EXCERPT"
+            result["text_window_limited"] = None
+            result["limitations"] = (
+                "Text und Fundstelle vom aufrufenden Modell übergeben. "
+                "Keine unabhängige Prüfung des Knowledge-Tools, der "
+                "Originaldatei oder ihrer Metadaten."
+            )
+
+        if not source_text.strip():
+            result["status"] = "EMPTY_EVIDENCE"
+            return json.dumps(result, ensure_ascii=False)
+
+        # Lexikalische Übereinstimmung ist ein nützlicher erster Hinweis:
+        # Sie kann ein exaktes Zitat belegen, aber KEINE Paraphrase beurteilen.
+        result["evidence_text"] = source_text
+        result["exact_wording_found"] = (
+            _normalize_evidence(claim).casefold()
+            in _normalize_evidence(source_text).casefold()
+        )
+        result["evidence_id"] = result.get("evidence_id") or hashlib.sha256(
+            (source_title + "\n" + locator + "\n" + source_text).encode("utf-8")
+        ).hexdigest()[:20]
+        result["status"] = "EVIDENCE_READY_FOR_REVIEW"
+        result["claim_assessment"] = "REQUIRES_MODEL_JUDGEMENT"
+        result["review_instruction"] = (
+            "Prüfe anhand des tatsächlich gelesenen Belegtextes, ob die "
+            "Behauptung gestützt, widerlegt oder nicht überprüfbar ist. "
+            "Zitiere die Fundstelle und trenne Textbefund von Interpretation. "
+            "Ein wörtlicher Treffer allein ist keine semantische Verifikation."
+        )
         return json.dumps(result, ensure_ascii=False)
 
     def read_source(self, url: str, section: str = "") -> str:
