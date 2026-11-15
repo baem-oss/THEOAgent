@@ -29,7 +29,7 @@ Die verbleibenden Prüfpunkte bleiben nachvollziehbar, sind aber vom Product Own
 | N-02 | MINOR – neu | „Vorlagen“ in US-23 nicht ausdrücklich als Arbeitsfassung eingeordnet |
 | N-03 | MINOR – neu | RANF-06 vermischt Formatumfang mit dem Verbot fingierter Volldokumentlektüre |
 | F-01 | PARTIAL | Elf Qualitätsgrenzwerte und Testkorpora bleiben bis zur PO-Entscheidung offen |
-| F-18 | PARTIAL | Verbindliche Fachstandardfassung und Herkunftsnachweis noch zu entscheiden |
+| F-18 | PARTIAL | [Ausgangsreferenz aus THEOBald](../requirements/THEOBald_Fachstandard.md) abgelegt und gegen die SHA-256-Angabe in RANF-04 geprüft. Die verbindliche Übernahme als THEOAgent-Standard steht zur PO-Entscheidung aus. |
 | F-14 | CLOSED | Kontextbezogene Lesepflicht in FANF-05 und Negativtest T-02 |
 | F-16 | OPEN – MINOR | Formulierung der Datenanforderungen „zuordnen können“ |
 | F-17 | OPEN – MINOR | Abgrenzung Fachregel / Qualitätsanforderung nicht explizit erläutert |
@@ -40,7 +40,7 @@ Die verbleibenden Prüfpunkte bleiben nachvollziehbar, sind aber vom Product Own
 
 **Product-Owner-Entscheidung vom 11.11.2026:** Das diagnostische Testkonzept **T-01 bis T-03** einschließlich der vom Software Engineer auf dem Entwicklungsbranch vorgenommenen QE-Findings-Nachbearbeitung ist **fachlich freigegeben**. Freigabegegenstand ist der Stand `1d9436c1e899413f8ba36af2f54b690e78636d8e`, einschließlich der [SE-Disposition](../testing/T01-T03_QE_FINDINGS_DISPOSITION.md). Die operative Dokumentation steht in [T01-T03_PO_APPROVAL_2026-11-11.md](../testing/T01-T03_PO_APPROVAL_2026-11-11.md).
 
-**Abgrenzung:** Die Freigabe betrifft Testkonzept, synthetische Fixtures, Prüforakel und Protokollvorlage. Sie bestätigt **keinen** bereits ausgeführten End-to-End-Test, keine Architekturentscheidung und keine Produktqualität. T-01 bis T-03 bleiben bis zur tatsächlichen Erprobung `NOT_RUN`.
+**Abgrenzung:** Die Freigabe betrifft Testkonzept, synthetische Fixtures, Prüforakel und Protokollvorlage. Sie bestätigt **keinen** bereits ausgeführten End-to-End-Test, keine Architekturentscheidung und keine Produktqualität. Zum Zeitpunkt der Konzeptfreigabe war der Status `NOT_RUN`. Den späteren PO-Abschluss der T-02-Diagnose dokumentiert [T-02](../testing/T02_PO_CLOSURE_2026-11-11.md). Ergebnisse der DRS:KI-Erprobung stehen auf [`drs-ki-test`](https://github.com/baem-oss/THEOAgent/blob/drs-ki-test/docs/drs-ki/README.md).
 
 Der unabhängige QE-Bericht ist als historischer Prüfbeleg **unverändert archiviert**. Seine Hinweise sind über die separate SE-Disposition nachbearbeitet; der Originalbericht bleibt ein Review des Commits `fec545c`, keine Prüfung des späteren Stands.
 
