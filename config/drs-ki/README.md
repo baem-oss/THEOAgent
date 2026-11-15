@@ -1,11 +1,15 @@
-# THEOAgent DRS:KI – Systemprompt und Skills getrennt
+# THEOAgent DRS:KI – Systemprompt und Fachskills
 
-**Stand:** 13.11.2026 · **Status:** PoC-Konfiguration, keine Abnahme  
-**Ziel:** DRS:KI DEV, Developerzugriff; Endnutzer ruft nur das fertig konfigurierte Modell auf.
+**Stand 15.11.2026.** Die Anleitung gilt für DRS:KI DEV mit Developerzugriff. Endnutzer rufen das bereitgestellte Modell auf.
 
-## Dateien
+## Dokumentierte DEV-Konfiguration
 
-- [Systemprompt v0.3.0](SYSTEMPROMPT_v0.3.0.md): eigenständiger, kompakter Orchestrierungs- und Sicherheits-Prompt.
+- [Systemprompt v0.3.2](../../docs/drs-ki/THEOAGENT_DEV_SYSTEMPROMPT_v0.3.2.md)
+- [SourceGuard v0.2.0 und die Werkzeuge des DEV-Profils](../../docs/drs-ki/THEOAGENT_DEV_SOURCEGUARD_V0_2_0_ARBEITSPROTOTYP.md)
+- [Erprobungsstatus und Konfigurationsstand](../../docs/drs-ki/README.md)
+
+## Fachskills
+
 - [Theologische Grundlagen](skills/theologische-grundlagen/SKILL.md)
 - [Theologische Quellenprüfung](skills/theologische-quellenpruefung/SKILL.md)
 - [Exegese–homiletischer Arbeitsgang](skills/exegese-homiletischer-arbeitsgang/SKILL.md)
@@ -14,20 +18,14 @@
 - [Pastorale Sensibilität](skills/pastorale-sensibilitaet/SKILL.md)
 - [Qualitätskontrolle](skills/qualitaetskontrolle/SKILL.md)
 
-## Herkunft und Kompatibilität
+Die Skills gehen auf `baem-oss/THEOBald`, Branch `review/sourceguard-integrated-v0.5.5-dev3`, zurück. Für die Erprobung gilt der auf `drs-ki-test` dokumentierte Stand der sieben Skills, einschließlich der [Mehrkriterien-Abbruchregel](skills/theologische-quellenpruefung/SKILL.md). Die DEV-Anzeigenamen tragen das Präfix `THEOAgent - `.
 
-Die sieben SKILL.md-Dateien wurden **unverändert** aus `baem-oss/THEOBald` Branch `review/sourceguard-integrated-v0.5.5-dev3` nach `baem-oss/THEOAgent` übernommen. Deshalb nennen manche Dateien weiterhin **THEOBald**; es handelt sich um die dokumentierte Herkunft der Fachstandards. Der Systemprompt ist dagegen eine neue, für THEOAgent auf DRS:KI geschriebene Fassung.
+## DEV-Konfiguration abgleichen
 
-**Wichtiger offener Punkt:** Der Originalskill `theologische-quellenpruefung` enthält konkrete native Open-WebUI-Toolnamen (`grep_knowledge_files`, `view_knowledge_file`), Lesezeilen- und Aufrufbudgets und lokal dokumentierte Testanker. Dies setzt **keine** entsprechende Funktion auf DRS:KI voraus. Vor produktivem Einsatz ist die Anpassung an die tatsächlich zugewiesenen DRS:KI-Werkzeuge und die bestehende SourceGuard-Evidenzprüfung erforderlich. Keine Änderung der Fachregeln aus stillschweigender Toolkompatibilität ableiten.
+1. Den im [Systemprompt v0.3.2](../../docs/drs-ki/THEOAGENT_DEV_SYSTEMPROMPT_v0.3.2.md) bezeichneten Prompt-Abschnitt als zusammenhängende Arbeitsfassung verwenden.
+2. Die sieben Fachskills im Modellprofil separat zuweisen. Ältere Werkzeugnamen in den Skilltexten mit den tatsächlich verfügbaren DEV-Werkzeugen abgleichen.
+3. Die Modellzuordnung der Knowledge-, Such- und Dokumentwerkzeuge sowie von SourceGuard anhand des [Arbeitsprofils](../../docs/drs-ki/THEOAGENT_DEV_SOURCEGUARD_V0_2_0_ARBEITSPROTOTYP.md) prüfen.
 
-Die SKILL-Dateien werden **nicht** dadurch ausgeführt, dass sie im Repository liegen oder im Systemprompt erwähnt werden. Sie müssen im DEV-System als Skills tatsächlich verfügbar gemacht und dem Modell zugewiesen werden. Eine Verfügbarkeit von separatem Skill-Management ist noch nicht getestet. Falls diese Funktion im DRS:KI DEV fehlt, muss die konkrete Alternative **bewusst** geplant werden – nicht behaupten, sieben Skills seien installiert.
+Der exakt auf DEV eingetragene Stand ist nicht unabhängig bestätigt. SourceGuard bereitet Evidenz auf. Die fachliche Beurteilung der Behauptung erfolgt durch THEOAgent. Der [THEOBald-Fachstandard](../../docs/requirements/THEOBald_Fachstandard.md) ist die Ausgangsreferenz aus RANF-04.
 
-## Einrichtung in DEV
-
-1. Eigenständiges Modell `THEOAgent DEV` anlegen.
-2. Inhalt von `SYSTEMPROMPT_v0.3.0.md` (ohne den Markdown-Dokumenttitel) als Systemprompt setzen.
-3. Sieben `SKILL.md` **separat** importieren und zuweisen, falls die DRS:KI-Skillverwaltung dies unterstützt.
-4. Vorhandene Knowledge- und Such-/Dokumentwerkzeuge modellgebunden konfigurieren.
-5. Mit einem testbaren Quellenauftrag starten und tatsächliche Skill- sowie Toolaufrufe dokumentieren.
-
-**PoC-Grenze:** Ohne wirksam integrierten SourceGuard keine technisch durchgesetzte Belegverifikation behaupten. Der unveränderte historische Prompt v0.2.3 ist ein anderer, integrierter Ansatz und soll nicht zusätzlich als zweiter Systemprompt geladen werden.
+Der [Systemprompt v0.3.0](SYSTEMPROMPT_v0.3.0.md) dokumentiert den früheren PoC-Stand.

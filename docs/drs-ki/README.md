@@ -25,6 +25,8 @@
 
 - [Requirements-Baseline v1.2.0](../requirements/BASELINE.md) (PO-freigegeben am 10.11.2026).
 - [Traceability](../requirements/TRACEABILITY.md), [Abnahmeprofil](../requirements/ACCEPTANCE_PROFILE.md).
+- [THEOBald-Fachstandard](../requirements/THEOBald_Fachstandard.md) als prüfsummengleiche Ausgangsreferenz zu RANF-04.
+- [DEV-Konfiguration und Fachskills](../../config/drs-ki/README.md).
 - Die bestehenden THEOBald-Komponenten, insbesondere der experimentelle SourceGuard, sind **Referenzimplementierungen** im Repository [baem-oss/THEOBald](https://github.com/baem-oss/THEOBald). Die dortige Branch-/Pipe-Situation ist getrennt von der THEOAgent-Requirements-SSOT zu behandeln.
 
 ## Übernommene Unterlagen
