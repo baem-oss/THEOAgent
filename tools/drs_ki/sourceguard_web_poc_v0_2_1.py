@@ -198,9 +198,9 @@ def _locator_pattern(locator):
 
 
 def _normalize_evidence(text):
-    """Leerzeichen und Zeilenumbrüche für den rein textuellen Vergleich glätten.
+    """Unicode NFC, weiche Trennzeichen und typografische Varianten glätten.
 
-    Weder das Alter noch die theologische Richtigkeit einer Quelle wird geprüft.
+    Kein semantischer Vergleich; Groß-/Kleinschreibung bleibt zunächst erhalten.
     """
     normalized = unicodedata.normalize("NFC", text).replace("\u00ad", "")
     normalized = normalized.translate(str.maketrans({
@@ -208,7 +208,7 @@ def _normalize_evidence(text):
         "“": '"', "”": '"', "„": '"',
         "‐": "-", "‑": "-", "‒": "-", "–": "-", "—": "-",
     }))
-    return " ".join(normalized.split()).casefold()
+    return " ".join(normalized.split())
 
 
 def _section_scope_confirmed(item):
@@ -249,15 +249,21 @@ def _section_text(text, locator, match, max_chars):
     Die nächste Abschnittsnummer ist ein möglicher Grenzmarker, jedoch kein
     Beweis, dass das gesamte Dokument strukturell korrekt erschlossen wurde.
     """
-    # Für freie Überschriften ist die folgende Absatzgrenze unbekannt.
-    if not locator.isdigit():
+    # Nur klar aufeinanderfolgende numerische Marker lassen eine sichere
+    # Abschnittsabgrenzung erkennen. Auch Dezimalabschnitte (12.1 -> 12.2).
+    # Bei anderen Locators (z. B. can. 1055 § 1, Joh 3,16) bleibt die
+    # Grenze bewusst unbestätigt, statt nachfolgende Kapitel zuzuordnen.
+    if locator.isdigit():
+        next_label = str(int(locator) + 1)
+    elif re.fullmatch(r"\\d+(?:\\.\\d+)+", locator):
+        parts = locator.split(".")
+        parts[-1] = str(int(parts[-1]) + 1)
+        next_label = ".".join(parts)
+    else:
         rest = text[match.start():]
         return rest[:max_chars], (
             "WINDOW_LIMIT" if len(rest) > max_chars else "DOCUMENT_END_OR_UNKNOWN"
         )
-    # Bei numerischen Locators wird nach der direkt folgenden Nummer gesucht.
-    # Eine Erwähnung dieser Zahl mitten im Fließtext genügt ausdrücklich nicht.
-    next_label = str(int(locator) + 1)
     following, state = _locate(text[match.end():], next_label)
     if state == "FOUND":
         # Nur der Abschnitt bis vor den Anfang des nächsten Abschnitts gehört
@@ -433,7 +439,7 @@ class Tools:
             # Wörtliche Suche nach Normalisierung der Leerzeichen. Synonyme
             # oder logische Folgerungen kann dieses Verfahren nicht beurteilen.
             result["exact_quote_found_in_excerpt"] = (
-                _normalize_evidence(claim) in _normalize_evidence(item["section_text"])
+                _normalize_evidence(claim).casefold() in _normalize_evidence(item["section_text"]).casefold()
             )
             result["section_scope_confirmed"] = _section_scope_confirmed(item)
             result["status"] = (
@@ -607,8 +613,8 @@ class Tools:
         # Sie kann ein exaktes Zitat belegen, aber KEINE Paraphrase beurteilen.
         result["evidence_text"] = source_text
         result["exact_wording_found"] = (
-            _normalize_evidence(claim)
-            in _normalize_evidence(source_text)
+            _normalize_evidence(claim).casefold()
+            in _normalize_evidence(source_text).casefold()
         )
         result["evidence_id"] = result.get("evidence_id") or hashlib.sha256(
             (source_title + "\n" + locator + "\n" + source_text).encode("utf-8")
