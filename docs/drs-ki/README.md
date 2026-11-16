@@ -1,6 +1,6 @@
 # DRS:KI-Erprobung – THEOAgent
 
-**Stand:** 14.11.2026  
+**Stand:** 16.11.2026  
 **Status:** **Praktische DEV-Erprobung (PO-Entscheidung vom 14.11.2026)**, Konfigurations-/Code-Freeze für den Prototyp; **keine Architektur-, Produkt- oder Quellenverifikationsfreigabe**  
 **Arbeitsbranch:** `drs-ki-test`  
 **SSOT:** `baem-oss/THEOAgent`, gemäß [Projektprozess](../WORKFLOW.md).
@@ -11,7 +11,7 @@
 
 **PO-Entscheidung:** THEOAgent Dev jetzt als theologischen **Arbeitsprototyp** in realen Aufgaben einsetzen. Die bisherigen isolierten Tests werden nicht als fortlaufende Testkampagne weitergeführt. Entwicklung erfolgt **befundgetrieben** nach KISS; Änderungen nur bei belegtem, hinreichend relevantem Bedarf. Dies ist **keine** Produkt-/Release-Abnahme und kein Merge nach `main`.
 
-**Vorläufig eingefrorene DEV-Konfiguration im Repository:** [Systemprompt v0.3.2](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.2.md), sieben THEOAgent-Fachskills (mit der [Mehrkriterien-Abbruchregel](../../config/drs-ki/skills/theologische-quellenpruefung/SKILL.md) aus Commit `2e05e94`), [SourceGuard v0.2.0](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py). Der auf DEV eingesetzte exakte Versions-/Artefaktstand ist nicht unabhängig mit Serverlogs belegt. Keine weiteren Prompt-, Skill- oder Codeänderungen ohne konkreten Praxisbefund.
+**Vorläufig eingefrorene DEV-Konfiguration im Repository:** [Systemprompt v0.3.3](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.3.md), sieben THEOAgent-Fachskills (mit der [Mehrkriterien-Abbruchregel](../../config/drs-ki/skills/theologische-quellenpruefung/SKILL.md) aus Commit `2e05e94`), [SourceGuard v0.2.0](../../tools/drs_ki/sourceguard_web_poc_v0_2_0.py). Der auf DEV eingesetzte exakte Versions-/Artefaktstand ist nicht unabhängig mit Serverlogs belegt. Keine weiteren Prompt-, Skill- oder Codeänderungen ohne konkreten Praxisbefund.
 
 **Praxisfelder:** Exegese, Predigtvorbereitung und -kritik, liturgische Texte, theologische Fachrecherche sowie kirchliche Quellen- und Normenfragen. Die Anfragen sollen **normal formuliert** werden, nicht mit vorgegebenen Toolsequenzen; so wird die eigenständige Nutzbarkeit beobachtet.
 
@@ -59,7 +59,7 @@ Das Review-ZIP enthält nur eine Faster-Fassung (identische Dublette ausgeschlos
 
 ## Fortsetzung
 
-**Systemprompt für den aktuellen DEV-Prototyp:** [THEOAgent DEV v0.3.2 mit SourceGuard v0.2.0](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.2.md). Sieben vorhandene Skills mit Namenspräfix `THEOAgent - ` bleiben separat; die aktuelle v0.3.0 war im Repo nicht als vollständiger Wortlaut archiviert, deshalb ist dies eine konsolidierte Neufassung und kein behaupteter exakter Diff.
+**Systemprompt für den aktuellen DEV-Prototyp:** [THEOAgent DEV v0.3.3 mit Skill-Orchestrierungs-Workaround und SourceGuard v0.2.0](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.3.md). Sieben vorhandene Skills mit Namenspräfix `THEOAgent - ` bleiben separat; die aktuelle v0.3.0 war im Repo nicht als vollständiger Wortlaut archiviert, deshalb ist dies eine konsolidierte Neufassung und kein behaupteter exakter Diff.
 
 **Aktueller PO-Auftrag (14.11.2026):** Ein **arbeitsfähiger THEOAgent-DEV-Prototyp** mit **SourceGuard v0.2.0 als gemeinsamer Belegaufbereitung** für Web, Fachbibliothek und geeignete DRS-Werkzeugauszüge. [Konfiguration, konkrete DRS-Werkzeugauswahl und Systemprompt-Ergänzung](THEOAGENT_DEV_SOURCEGUARD_V0_2_0_ARBEITSPROTOTYP.md). Keine neuen Tests beauftragt. Die ältere Bezeichnung `SourceGuard Web` und ältere KKK-Tests sind Entwicklungshistorie; das aktuelle Tool bleibt unter demselben Python-Dateipfad.
 
