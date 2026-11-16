@@ -255,7 +255,7 @@ def _section_text(text, locator, match, max_chars):
     # Grenze bewusst unbestätigt, statt nachfolgende Kapitel zuzuordnen.
     if locator.isdigit():
         next_label = str(int(locator) + 1)
-    elif re.fullmatch(r"\\d+(?:\\.\\d+)+", locator):
+    elif re.fullmatch(r"\d+(?:\.\d+)+", locator):
         parts = locator.split(".")
         parts[-1] = str(int(parts[-1]) + 1)
         next_label = ".".join(parts)
