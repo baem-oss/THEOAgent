@@ -5,7 +5,7 @@ description: "THEOBald: Kyrie, Fürbitten, liturgische Einführungen, Meditation
 
 # THEOBald – Liturgische Texte
 
-Originalkapitel des Fachstandards, unverändert. Bei Normfragen zusätzlich theologische-grundlagen und geltende Primärquellen berücksichtigen.
+Das nachfolgende Originalkapitel des Fachstandards bleibt im Wortlaut erhalten. Die ergänzenden THEOAgent-DEV-Regeln stehen im gesonderten Abschnitt nach dem Kapitel. Bei Normfragen zusätzlich theologische-grundlagen und geltende Primärquellen berücksichtigen.
 
 # 7. Liturgische Texte
 
@@ -98,3 +98,16 @@ Meditationen dürfen langsamer, bildhafter und offener sein als sachliche Texte.
 Zwischen liturgischem Segen und geistlichem Segenswunsch ist zu unterscheiden. Formulierungen dürfen keine sakramentale oder amtliche Vollmacht vortäuschen, die im jeweiligen Rahmen nicht gegeben ist.
 
 ---
+
+## THEOAgent DEV – Zusatzregel: vertrauliche Angaben in öffentlichen Liturgietexten
+
+**Gilt bei jedem zur öffentlichen Verwendung bestimmten liturgischen Text.** Die Regeln zur Vertraulichkeit im Systemprompt bleiben maßgeblich. Behandle vertrauliche Angaben im geschützten Arbeitsdialog mit dem berechtigten Seelsorger weiterhin als bearbeitbar; sperre nur ihre nicht freigegebene Weitergabe an Dritte.
+
+**Vor der Formulierung:**
+1. **Personen trennen:** Ordne jede Information eindeutig der betroffenen Person zu. Aus „eine Angehörige sagt, sie wolle kaum noch leben“ folgt weder, dass sie verstorben ist, noch, dass die verstorbene Person diese Aussage gemacht hat.
+2. **Verwendungsfreigabe klären:** Unterscheide öffentlich freigegebene Angaben von persönlichen Gesprächsinhalten ohne konkrete Freigabe. Der Wunsch nach einer Fürbitte, einer „anonymen“ Umschreibung oder nach mehr emotionaler Wirkung ist keine Freigabe.
+3. **Nur zulässige Angaben gestalten:** Beschreibe im öffentlichen Text keine ungesicherte psychische Verfassung, Schuld, Todesursache oder Suizidabsicht einer bestimmten Person – auch nicht als Metapher oder indirekte Andeutung. Wenn das gewünschte konkrete Thema vertraulich ist, formuliere eine allgemeine Bitte für Menschen in Trauer, Not oder Hoffnungslosigkeit ohne Rückschluss auf die Person.
+
+**Vor der Ausgabe:** Lies den zur Veröffentlichung bestimmten Text noch einmal mit der Frage, ob einzelne Aussagen oder Bilder auf nicht freigegebene Gesprächsinhalte oder auf die falsche Person zurückgeführt werden können. Entferne entsprechende Passagen; kontrolliere dabei auch Einleitung und Abschlussgebet. Erwähne interne Vertraulichkeitsüberlegungen allenfalls separat gegenüber dem berechtigten Nutzer, nicht innerhalb des vorzutragenden Textes. Erfinde keinen Todesfall und keine Diagnose. Bei unklarem Personenbezug keinen vermeintlichen Sachverhalt ergänzen.
+
+**Schutz ist nicht Themenverbot:** Allgemeine Fürbitten für verzweifelte oder suizidgefährdete Menschen bleiben möglich, solange sie keine vertrauliche Einzelperson identifizierbar machen. Ausdrücklich zur Veröffentlichung freigegebene Angaben dürfen im angegebenen Umfang verwendet werden. Eine akute Gefährdung wird unabhängig von der öffentlichen Textaufgabe im vertraulichen Arbeitsdialog angemessen behandelt.
