@@ -47,3 +47,13 @@ Keine Änderung an `main`, Requirements v1.2.0, historischem QE-Review, dem funk
 **Abnahme der Hinweispflicht (minimaler DEV-Test):** Eine quellenbezogene Antwort (z. B. zu Dei Verbum 12) muss den verständlichen Hinweis tatsächlich enthalten. Eine Antwort ohne Quellenbezug darf ihn nicht enthalten. Eine anschließende Nutzerfrage nach der Originalstelle darf keine vorgetäuschten Toolaufrufe oder unbelegten Verifikationsbehauptungen erzeugen. Aus sichtbaren Modelltexten allein folgt kein technischer Aufrufnachweis.
 
 **Grenze:** Der Workaround senkt nicht NFANF-13 oder GR-02 ab, behebt F-C1 nicht technisch und erlaubt keine Produktiv-/Quellenverifikationsfreigabe. SG-01 und SG-02 bleiben offen; der Nachweis einer serverseitigen Durchsetzung kann separat verfolgt werden.
+
+### Anklickbare Folgefrage (PO-Angabe 17.11.2026)
+
+Der PO bestätigt, dass DRS:KI **anklickbare Folgefragen bereits anbietet**. **Noch ungeprüft:** Ob sich deren konkreter Wortlaut auf Modellebene gezielt konfigurieren lässt und ob die Funktion bei quellenbezogenen Antworten den gewünschten Vorschlag ausgibt.
+
+**Gewünschte Folgefrage:** „Prüfe deine Quellen mit SourceGuard und zeige mir die Originalstellen.“
+
+Die Formulierung ist im [DEV-Systemprompt v0.3.10](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.10.md) als erwarteter Vorschlag und als Alternative im allgemeinverständlichen Quellenhinweis enthalten. Der Systemprompt erzeugt selbst keine UI-Schaltfläche und darf keine solche behaupten.
+
+**Minimaler DEV-Nachweis:** Bei einer quellenbezogenen Antwort prüfen, ob die anklickbaren Folgefragen den gewünschten Text enthalten. Wenn nicht, klären, ob DRS:KI eine gezielte Konfiguration unterstützt. Keine eigene Erweiterung und kein zusätzlicher Skill ohne bestätigten Bedarf.
