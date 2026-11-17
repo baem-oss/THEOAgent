@@ -37,3 +37,13 @@ Eine vertrauenswürdige, außerhalb des Modellausgabetextes laufende Kontrollins
 ## Änderungsgrenzen
 
 Keine Änderung an `main`, Requirements v1.2.0, historischem QE-Review, dem funktionierenden SourceGuard-Tool oder dem aktuellen Systemprompt. Diese Notiz ist eine technische Gate-Vorbereitung, **kein implementierter Fix**.
+
+## DEV-Workaround mit Nutzerprüfung (PO-Entscheidung 17.11.2026)
+
+**Entscheidung:** Bis eine technische Antwortkontrolle verfügbar und nachgewiesen ist, soll THEOAgent bei Antworten mit konkreten Quellen, Zitaten oder Fundstellen einen kurzen, für Laien verständlichen Hinweis zur eigenständigen Quellenprüfung durch den Nutzer ausgeben. Der Nutzer kann sich die Originalquelle zeigen lassen und die entscheidende Textstelle selbst mit der Aussage vergleichen.
+
+**Umsetzung:** [Systemprompt v0.3.9](THEOAGENT_DEV_SYSTEMPROMPT_v0.3.9.md), Abschnitt 4.1. Keine Änderung an den Quellenprüfungs-Skills oder am SourceGuard-Werkzeug. Der Hinweis wird bei reinen Textentwürfen ohne Quellenbezug nicht ausgegeben.
+
+**Abnahme der Hinweispflicht (minimaler DEV-Test):** Eine quellenbezogene Antwort (z. B. zu Dei Verbum 12) muss den verständlichen Hinweis tatsächlich enthalten. Eine Antwort ohne Quellenbezug darf ihn nicht enthalten. Eine anschließende Nutzerfrage nach der Originalstelle darf keine vorgetäuschten Toolaufrufe oder unbelegten Verifikationsbehauptungen erzeugen. Aus sichtbaren Modelltexten allein folgt kein technischer Aufrufnachweis.
+
+**Grenze:** Der Workaround senkt nicht NFANF-13 oder GR-02 ab, behebt F-C1 nicht technisch und erlaubt keine Produktiv-/Quellenverifikationsfreigabe. SG-01 und SG-02 bleiben offen; der Nachweis einer serverseitigen Durchsetzung kann separat verfolgt werden.
