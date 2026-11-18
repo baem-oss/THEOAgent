@@ -95,3 +95,11 @@
 **Testevidenz:** Drei vollständige PO-Uploads am 18.11.2026 (jeweils Testprompt, sichtbare `view_skill`-/Web-Schnittstelle und Modellantwort), ausgewertet im SE-Chat. Die Uploads sind kein Bestandteil dieses GitHub-Commits und werden nicht als Repository-Artefakte ausgegeben.
 
 **Dokumentationsstatus:** Ergebnisprotokoll; fachliche Findings dokumentiert, keine Implementierung und keine Nachtests vorgenommen.
+
+## 8. Formeller Abschluss durch den Product Owner
+
+**PO-Entscheidung vom 18.11.2026:** Die Praxistestreihe **Eheschließung E-01 bis E-03 ist abgeschlossen**. Es sind keine weiteren Tests innerhalb dieser Testreihe vorgesehen.
+
+**Abschlussstatus:** Testdurchführung und Ergebnisdokumentation **CLOSED**. Die Einzelbewertungen bleiben **E-01 PARTIAL, E-02 FAIL, E-03 PARTIAL**; der Abschluss ist ausdrücklich **keine fachliche Abnahme, Fehlerbehebung, Produktfreigabe oder Schließung der Findings**. Insbesondere **F-C1 (CRITICAL / OPEN)** und die kirchenrechtlichen Findings bleiben für die getrennte weitere Bearbeitung bestehen.
+
+**Umfang dieser Änderung:** Ausschließlich formale Abschlussdokumentation im Branch `drs-ki-test`; keine Änderung am Testinhalt, den historischen Ergebnissen, am Systemprompt, an Skills, Werkzeugen, Requirements oder `main`.
