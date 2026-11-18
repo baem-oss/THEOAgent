@@ -77,3 +77,18 @@ Verifiziert mittels vollständiger Git-Tree-Abfrage (`recursive=1`, `truncated=f
 ## 7. Einschränkung
 
 Die Analyse basiert auf direkten GitHub-Metadaten, Compare- und Tree-Rückgaben vom 18.11.2026; sie beinhaltet **keinen** lokalen Build, keinen Live-Test in DRS:KI und keine unabhängige inhaltliche Abnahme jedes historischen Testdokuments.
+
+## 8. Vollzug der fünf freigegebenen Branchlöschungen (18.11.2026)
+
+**PO-Freigabe:** Der PO gab die Löschung der fünf in Abschnitt 6 beschriebenen redundanten Branches ausdrücklich frei. **Ausführung:** Der PO führte einen authentifizierten `git push https://github.com/baem-oss/THEOAgent.git --delete ...` aus. Die Terminalausgabe meldete für alle fünf Branches `[deleted]`.
+
+**Unabhängige Nachprüfung durch den SE:** Eine anschließende GitHub-API-Abfrage `GET /repos/baem-oss/THEOAgent/branches?per_page=100` ergab **exakt vier** verbleibende Branches:
+
+- `main` (HEAD `15326fe465275c2b774ab864a8da02799be9bf5c`)
+- `drs-ki-test` (HEAD vor diesem Dokumentationsnachtrag `3ec3aec2e978d2631ce7afde850fb7c6c8267283`)
+- `test/t01-execution-2026-11-11` (HEAD `8ec76687ca3c22ecf85e93f1f144612d3cb02e9a`)
+- `test/t03-execution-plan-2026-11-11` (HEAD `24a6a74bb5fe87e988933ae6c7e2e6012d5e0418`)
+
+**Tatsächlich gelöscht:** `docs/drs-ki-repo-pflege`, `docs/fachstandard-repo-pflege`, `review/requirements-v1.2.0-qs`, `test/t01-t03-diagnostics-v1`, `test/t02-execution-2026-11-11`.
+
+**Fortsetzung:** Die beiden verbliebenen Testbranches sind bis zur Sichtung/Disposition ihrer drei Sonderdateien ausdrücklich **nicht** freigegeben zur Löschung. Alle vorangehenden Tabellen bleiben als historischer Vorher-Stand erhalten. Keine Änderungen an `main` oder Requirements-Baseline.
