@@ -1,5 +1,7 @@
 # DRS:KI-Erprobung – THEOAgent
 
+> **Aktueller Einstieg (18.11.2026):** [Repository-/Branch-Konsolidierung](REPOSITORY_KONSOLIDIERUNG_2026-11-18.md) und [Test-/Übergabestand Knowledge, Websuche, SourceGuard](TESTSTAND_KNOWLEDGE_WEBSUCHE_SOURCEGUARD_2026-11-18.md). Die weiter unten dokumentierten DEV-Fassungen und Freeze-Angaben sind **historisch**; zum jüngsten vom PO mitgeteilten DEV-Teststand siehe Übergabe. `main` bleibt ohne PO-Freigabe unverändert.
+
 **Stand:** 16.11.2026  
 **Status:** **Praktische DEV-Erprobung (PO-Entscheidung vom 14.11.2026)**, Konfigurations-/Code-Freeze für den Prototyp; **keine Architektur-, Produkt- oder Quellenverifikationsfreigabe**  
 **Arbeitsbranch:** `drs-ki-test`  
