@@ -4,8 +4,10 @@ THEOAgent ist ein theologischer Arbeitsassistent für Bibelauslegung, Predigtarb
 
 ## Projektstand
 
-- `main` enthält die freigegebene Requirements-Baseline v1.2.0 und die bisherige Diagnosedokumentation. [T-02](docs/testing/T02_PO_CLOSURE_2026-11-11.md) ist als Diagnose abgeschlossen.
-- Die praktische Erprobung in DRS:KI DEV läuft auf [`drs-ki-test`](https://github.com/baem-oss/THEOAgent/blob/drs-ki-test/docs/drs-ki/README.md).
+- `main` bündelt die freigegebene Requirements-Baseline v1.2.0, die dokumentierte THEOAgent-DEV-Konfiguration und deren Entwicklungs- und Testhistorie. **Die Übernahme der DEV-Artefakte ist keine Produktiv- oder Qualitätsfreigabe.**
+- `drs-ki-test` bleibt als bisheriger DEV-Arbeitsbranch und historischer Referenzstand erhalten. Der dokumentierte DEV-Teststand stammt vom 18.11.2026.
+- **Aktueller dokumentierter DEV-Stand:** [Systemprompt v0.3.11](docs/drs-ki/THEOAGENT_DEV_SYSTEMPROMPT_v0.3.11.md), [SourceGuard v0.2.3](tools/drs_ki/sourceguard_web_poc_v0_2_3.py), [sieben Fachskills](config/drs-ki/README.md), [Test-/Übergabestand](docs/drs-ki/TESTSTAND_KNOWLEDGE_WEBSUCHE_SOURCEGUARD_2026-11-18.md).
+- [MCP-Integrationsarchitektur für DRS KI:W.E.G. v0.1.0](docs/drs-ki/MCP_INTEGRATIONSARCHITEKTUR_DRS_KI_WEG_v0.1.0.md) – technischer Diskussionsentwurf.
 
 ## Dokumentation
 
