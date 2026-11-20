@@ -1,7 +1,7 @@
 # THEOAgent – Weiterentwicklungsplan und vollständiger QE-Reviewauftrag (Entwurf)
 
 **Stand:** 20.11.2026  
-**Status:** Überarbeiteter SE-Vorschlag **nach QE-Review**; zur PO-Disposition, **keine** Entwicklungsbaseline, technische Abnahme oder Produktivfreigabe. Die ursprüngliche QE-Prüffassung bleibt als separates Dokument erhalten.  
+**Status:** **Vom PO am 20.11.2026 als Entwicklungsarbeitsgrundlage freigegeben**, nach QE-Review überarbeitet; **keine** neue Requirements-Baseline, technische Abnahme oder Produktivfreigabe. Die ursprüngliche QE-Prüffassung bleibt als separates Dokument erhalten.  
 **SSOT:** [baem-oss/THEOAgent](https://github.com/baem-oss/THEOAgent). Prüfbasis: `drs-ki-test` @ `1e959394f176370247420cb86bab76fb2c1e7ec3`; `main` war bei der Nachprüfung @ `ebb710206d8851dcb04331f3e87cb9ca1426d72b` (Merge 19.11.2026). Der DEV-Stand ist bereits teilweise in `main` integriert; **Änderungen an `main` dennoch nur nach neuer ausdrücklicher PO-Freigabe**. Neue Arbeit zunächst auf `drs-ki-test`; Dokumentverweise stets branch-/commitbezogen interpretieren.  
 **Auftraggeber/Entscheidung:** PO; **Umsetzung:** SE; **QE:** unabhängiger Reviewer ohne Freigabe-, Commit-SHA- oder Repository-Hoheit.
 
@@ -129,4 +129,4 @@ Bitte beantworte anhand der verlinkten **Originaldokumente im Repository** – n
 | F-04 (wesentlich) | **Akzeptiert.** Knowledge-Lesepfad ist nicht zuverlässig ausgelöst. | Satz berichtigt; Kranemann-Lesetest statt pauschaler Erfolgsvoraussetzung. |
 | F-05 (geringfügig) | **Teilweise akzeptiert.** US-17, FANF-28, NFANF-07 tragen die pastorale Einordnung. Eigenständiger Normtatbestand „Verbot der Drittoffenlegung im öffentlichen Text“ ist damit nicht explizit als MUSS-Bedingung definiert. | Traceability im Plan benannt. **PO entscheidet separat**, ob später eine Präzisierung der formalen Requirements-Baseline nötig ist. Keine stillschweigende Baseline-Änderung. |
 
-**PO-Disposition noch ausstehend:** Freigabe des überarbeiteten Plans als Entwicklungsarbeitsgrundlage? Gesonderte Entscheidung zur Baseline-Traceability bei R-01. **Bis dahin keine produktwirksamen Änderungen.**
+**PO-Disposition am 20.11.2026:** Der PO bestätigt den Vorschlag „Plan freigeben; Requirements-Baseline v1.2.0 zunächst unverändert lassen“ mit „ok, go“. Damit ist dieser Entwicklungsplan als **Arbeitsgrundlage freigegeben**. Der SE darf die darin vorgesehenen kleinen, überprüfbaren Entwicklungsschritte auf `drs-ki-test` durchführen; ein Merge nach `main` oder eine Produktivsetzung ist **nicht** freigegeben. Die spezifische R-01-Traceability bleibt als möglicher späterer Baseline-Änderungsbedarf offen; **keine Baseline-Änderung**.
