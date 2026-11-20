@@ -11,6 +11,9 @@ Maßgeblich ist die **PO-gewichtete Praxisbewertung**. Fachlich brauchbare Ergeb
 
 Der A/B-Vergleich ist explorativ, **kein kontrolliertes Modell-Benchmark**: Nicht alle Testeingaben waren wortgleich (beispielsweise R-17); mindestens teilweise unterschieden sich Formulierungen/Prüfschwerpunkte. Suchergebnisse, Konfigurationen und Werkzeugaufrufe können variieren. Modellbezeichnungen und technische Parameter sind hier nicht unabhängig verifiziert. Aus den Summen folgt keine statistisch belastbare allgemeine Modellüberlegenheit.
 
+
+**Testfragen und Promptabweichungen:** [A/B-Testfragenkatalog vom 20.11.2026](2026-11-20-THEOAGENT-AB-TESTFRAGENKATALOG.md). Enthält 15 belegte Modell-A-Prompts sowie belegte Modell-B-Originalformulierungen; fehlende Modell-B-Originalprompts sind ausdrücklich als Evidenzlücken gekennzeichnet.
+
 ## 2. Freigegebene Ergebnisübersicht
 
 | Bewertung | Modell A | Modell B |
