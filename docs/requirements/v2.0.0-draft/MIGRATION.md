@@ -1,6 +1,6 @@
 # Migration und Traceability v1.2.0 → v2.0.0 – Draft
 
-Stand: 27.11.2026. SE-Zuordnung zur Prüfung durch QE und PO, kein Nachweis semantischer Gleichwertigkeit. [Altstand](https://github.com/baem-oss/THEOAgent/blob/bfabf68264a3ae049a07679b3722a0a1dbe032bf/docs/requirements/BASELINE.md) · [Entwurf](BASELINE.md).
+Stand: 27.11.2026, Revision 2 nach QE-Review. SE-Zuordnung zur Prüfung durch QE und PO, kein Nachweis semantischer Gleichwertigkeit. [Altstand](https://github.com/baem-oss/THEOAgent/blob/bfabf68264a3ae049a07679b3722a0a1dbe032bf/docs/requirements/BASELINE.md) · [Entwurf](BASELINE.md).
 
 ## Vollständige Vorwärtszuordnung
 
@@ -103,10 +103,10 @@ Alle 27 User Stories und 80 Anforderungen des Altstands sind einzeln zugeordnet.
 | RANF-01 | RANF-01 | Wortlaut übernommen. |
 | RANF-02 | RANF-02 | Wortlaut übernommen. |
 | RANF-03 | RANF-03 | Wortlaut übernommen. |
-| RANF-04 | RANF-04 | Wortlaut übernommen. |
+| RANF-04 | RANF-04 | Herkunft redaktionell präzisiert; Freigabe des Fachstandards weiterhin offen. |
 | RANF-05 | RANF-05 | Wortlaut übernommen. |
 | RANF-06 | RANF-06 | Wortlaut übernommen. |
-| SP-01 | SP-01 | Wortlaut übernommen. |
+| SP-01 | SP-01 | Erweitert: Chat-Eingaben, Betreiber-Datenfluss und Anonymisierung vor Übermittlung. |
 | SP-02 | SP-02 | Wortlaut übernommen. |
 | SP-03 | SP-03 | Wortlaut übernommen. |
 | SP-04 | SP-04 | Wortlaut übernommen. |
@@ -119,8 +119,8 @@ Alle 27 User Stories und 80 Anforderungen des Altstands sind einzeln zugeordnet.
 ## Bewusste Änderungen zur PO-Entscheidung
 
 1. Recherchepflicht ist aufgabenbezogen, nicht durch Toolverfügbarkeit ausgelöst (FANF-02/03/06).
-2. Kompakte Herkunftsangabe bei gewöhnlicher Paraphrase statt zwingendem Einzelnachweis (FANF-07). Bei konkret zugeschriebener Behauptung, verlangtem Nachweis und maßgeblicher Norm bleibt die eindeutige Zuordnung zwingend. Eine Leseliste allein beweist keine Aussage. QE prüft insbesondere, ob F-05 diese Grenze hinreichend klar zieht.
-3. Nicht verifizierte Referenzhinweise sind klar gekennzeichnet möglich (GR-03). Keine falsche Verifikationsbehauptung, kein erfundenes Zitat, kein Ersatz für verlangte Originallektüre.
+2. Kompakte Herkunftsangabe bei gewöhnlicher Paraphrase statt zwingendem Einzelnachweis (FANF-07). Bei N2–N4 bleibt die eindeutige Zuordnung zwingend; siehe Nachweisstufen in F-05. Eine Leseliste allein beweist keine Aussage. QE prüft insbesondere, ob F-05 diese Grenze hinreichend klar zieht.
+3. Nicht verifizierte, begründete und nicht erfundene Referenzhinweise sind klar gekennzeichnet möglich; zugeschriebene Wortzitate nur geprüft (GR-03). Keine falsche Verifikationsbehauptung, kein erfundenes Zitat, kein Ersatz für verlangte Originallektüre.
 4. Kreative Aufträge ohne konkrete Quellenbehauptung werden ohne obligatorische Recherche bearbeitbar (GR-17).
 5. Teilantwort und gezielte Einschränkung erhalten Vorrang gegenüber vollständiger fachlicher Sperre (GR-18). Sicherheitsgrenzen bleiben unverändert.
 6. Antwortquote und fachliche Qualität werden getrennt gemessen. Schwellen sind Vorschläge, keine Freigabe. H-01–H-06, Q-04/Q-05/Q-12 und SP bleiben nicht kompensierbar.
@@ -132,5 +132,12 @@ F-06: Reaktion auf beherrschbare technische Fehler; F-07: historische Provenienz
 ## Offene Punkte
 
 - QE soll die 107 Zuordnungen auf fachlichen Erhalt, unbeabsichtigte Verluste und Mehrdeutigkeiten prüfen.
-- Begriffe und Zustandsregeln der alten Baseline sind insbesondere für Freigabe/Freeze, Arbeitskontext und Rechte maßgeblich, soweit nicht ausdrücklich geändert. Vor Ablösung muss geklärt sein, ob sie in den neuen Wortlaut übernommen werden müssen.
-- Korpus, Bewertungsraster, Effizienz- und Wartbarkeitsgrenzen, fachlicher Standard und Übermittlungsrechte bleiben Abnahmevoraussetzungen. Keine Architekturentscheidung oder Produktivfreigabe.
+- Begriffe und Zustandsregeln aus v1.2.0 sind in die Baseline übernommen; alle 27 User Stories stehen in Anhang A.
+- Korpus, Bewertungsraster, Effizienz- und Wartbarkeitsgrenzen, fachlicher Standard und Übermittlungsrechte bleiben Abnahmevoraussetzungen. RANF-07 legt für den lokalen Zyklus die obligatorische nicht restriktive Pipe fest; RANF-08 verlangt Modellqualifikation. Keine Produktivfreigabe oder behauptete DRS:KI-Deploymentfähigkeit.
+
+## Ergänzungen nach QE-Review
+
+- H-05: Akutgefährdung, professionelle Hilfe und Missbrauch; SP-06: direkte und indirekte Drittoffenlegung vertraulicher Angaben (DRS:KI R-01/V-04/V-05).
+- Q-02: Null schwere fachliche/pastorale Fehler im vereinbarten Korpus; Q-04: keine erfundenen Hinweise auch bei Unsicherheitskennzeichnung.
+- RANF-07/08: obligatorische, nicht restriktive Pipe im lokalen Entwicklungszyklus und Modellqualifikation. Probabilistische Facharbeit bleibt frei; technische Schutzgrenzen bleiben verbindlich.
+- Die 107 Altzuordnungen bleiben erhalten. QE-Nachprüfung der geänderten Passagen und semantischen Zuordnung steht aus.
