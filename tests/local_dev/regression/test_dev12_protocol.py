@@ -40,7 +40,10 @@ def call(outputs, question=Q):
 out,p = call([LIST,VIEW,READY,"Die Predigt folgt der Struktur des Textes [S1]."])
 assert "SOURCEGUARD AGENT: FREIGEGEBEN" in out, out
 assert [x["max_tokens"] for x in p] == [1024,1024,1024,4096]
-assert "Markdown" in p[-1]["messages"][0]["content"]
+assert any(m["role"] == "system" and "Fachantwort als Markdown" in m["content"]
+           for m in p[-1]["messages"]), "Missing Markdown system instruction"
+assert not any(m["role"] == "system" and "Sobald die Recherche ausreicht" in m["content"]
+               for m in p[-1]["messages"]), "Conflicting control instruction in answer phase"
 assert '"phase":"answer"' in out
 assert "Tatsächlich gelesene Originalstellen:" in out
 print("DEV12 research/Markdown integration PASS")
