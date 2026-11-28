@@ -1,12 +1,12 @@
 # THEOAgent v2 – Zielarchitektur (AP2.4)
 
-Stand 28.11.2026 | SE-Revision 2 nach Claude-Review (PO übermittelt) | Ausgangscommit e0c32023c7a70e69544cd164c3f374c31b3e9543. Keine Produktfreigabe, kein Implementierungsnachweis.
+Stand 28.11.2026 | SE-Revision 3 nach PO-Entscheidung zur vertrauenswürdigen Umgebung | Ausgangscommit e0c32023c7a70e69544cd164c3f374c31b3e9543. Keine Produktfreigabe, kein Implementierungsnachweis.
 
 ## 1. Entscheidung und Geltungsbereich
 
 Eine obligatorische SourceGuard-Pipe im vorhandenen OpenWebUI (Referenz 0.11.4). Native Modellkommunikation über generate_chat_completion, zunächst google/gemma-4-31b-it direkt über OpenRouter. Native Skill-/Knowledge-Callables; sichere Webadapter nach Schutzvalidierung. Modell und Provider austauschbar innerhalb des Plattformvertrags, Requalifikation erforderlich. Keine zweite fachliche Entscheidungsinstanz, eigene Steuerungs-JSON-Grammatik, zusätzliche Agenten/DB/Dienste, feste Recherchefolge oder globales Antwortgate. DRS:KI-Integration DEFERRED/TO_CHECK, keine Behauptung gleichwertiger Integration. Vor DRS-Deployment nachweisen, abweichende Lösung nur mit PO-Entscheidung.
 
-Verbindlich: [Baseline v2.0.0](../requirements/BASELINE.md), [Abnahmeprofil](../requirements/ACCEPTANCE_PROFILE.md), [PO-Fundstellenentscheidung](PO_FUNDSTELLENGENAUIGKEIT_2026-11-28.md). Technische Ausgestaltung [AP2.3](AP2_3_MINIMAL_PROTECTION.md); diese bleibt detaillierte Referenz. Die Review-Disposition in §8 konkretisiert und hat bei technischen Widersprüchen Vorrang; die freigegebene Baseline bleibt unverändert.
+Verbindlich: [Baseline v2.0.0](../requirements/BASELINE.md), [Abnahmeprofil](../requirements/ACCEPTANCE_PROFILE.md), [PO-Fundstellenentscheidung](PO_FUNDSTELLENGENAUIGKEIT_2026-11-28.md). Technische Ausgestaltung [AP2.3](AP2_3_MINIMAL_PROTECTION.md); diese bleibt detaillierte Referenz. Die Review-Disposition in §8 konkretisiert; die spätere PO-Entscheidung und SE-Umsetzung in §9 haben bei technischen Widersprüchen Vorrang. Die freigegebene Baseline bleibt unverändert.
 
 ## 2. Komponenten
 
@@ -104,3 +104,26 @@ Reviewquelle: vom PO im Projektchat übermittelter vollständiger Bericht zu 981
 - **QE-10 (MINOR), angenommen, offen beim PO/Betreiber:** Historische L-01/L-02: Valve aktiviert, konkrete Rechte-/Providerfreigabegrundlage nicht dokumentiert; keine rückwirkende Freigabe ableiten, keine Testergebnisse umdeuten. Vor nächstem Live-Test mit geschützten Fachtexten oder personenbezogenen Daten konkrete Zulässigkeit für Sammlung, Provider und Datenfluss klären/dokumentieren. Bis dahin nur synthetische oder tatsächlich anonymisierte, zur Übermittlung zulässige Testdaten. Formale Datenschutzklärung lokal zurückgestellt, SP-01/05 nicht aufgehoben.
 
 Alle zehn Findings disponiert, keine als technisch behoben behauptet. QE-01/02/06/07/08/09 Architekturentscheidungen für AP3a vorhanden; QE-03/04 Plattform-Spikes vor jeweiliger Implementierung; QE-05 vor Webfreischaltung; QE-10 vor nichtsynthetischem geschütztem Live-Test. Keine neue Baseline, keine weiteren Pflichtrecherchen, kein neues semantisches Gate. AP3a mit synthetischen Daten technisch aufnehmbar; keine Produktfreigabe, Schutztests NOT_RUN. Unabhängiger Nachreview dieser Revision nicht erfolgt.
+
+
+## 9. PO-Entscheidung: vertrauenswürdige Betriebsumgebung (28.11.2026)
+
+PO im Projektchat: „ich bin EINVERSTANDEN: THEIAgent arbeitet in einer vertrauenswürdigen umgebung, die wir nicht speziell absichern müssen. wir gehen davon aus, dass die zielumgebung vin drs:ki vertrauenswürdig und abgesichert ist“. THEIAgent bezeichnet im Kontext THEOAgent.
+
+**Architekturannahme:** Vertrauenswürdiger Nutzerkreis, vertrauenswürdige und betreiberseitig abgesicherte Zielplattform DRS:KI. Keine eigene Hochsicherheits-, Audit-, Manipulationsschutz- oder redundante Infrastrukturarchitektur im Produkt. Die Annahme ist kein technischer Sicherheitsnachweis, keine nachträgliche Testfreigabe, keine Bestätigung konkreter Betreiberrechte oder Nutzungsrechte. Lokale Entwicklungsumgebung und externer Modellprovider sind nicht automatisch durch DRS:KI abgesichert.
+
+**SE-Umsetzung (Vorrang vor überschießenden Maßnahmen aus §§6/8 und AP2.3):**
+
+| Finding | Verhältnismäßige Lösung |
+|---|---|
+| QE-01 | Obligatorischer Pipe-Pfad innerhalb des THEOAgent-Profils, Modellwechsel über vorhandene Konfiguration bzw. Manifold sofern nötig. Keine plattformweite Rohmodellsperre als Produktfunktion. Q-11 und RANF-07 praktisch nachweisen. |
+| QE-02 | Vorhandene Plattformkonfiguration und Betreiberfreigaben nutzen, keine pauschale Deaktivierung zugelassener Tasks/RAG/Embeddings allein aus Sicherheitsannahmen. Herkunft injizierter Kontexte korrekt kennzeichnen. Nicht freigegebene externe Datenflüsse bleiben unzulässig. |
+| QE-03 | Native Quellenanzeige und verfügbarer Chatverlauf bevorzugt. Kompakte Antwort-Herkunft aus tatsächlichem Register. Keine eigene Persistenz, HMAC, Replay- oder Manipulationsschutztests. Ein normaler Folgeturn genügt als erster Funktionsnachweis; fehlende frühere Evidenz offenlegen, keine rückwirkende Lesezusage. |
+| QE-04 | Explizite Nutzeranweisung und eindeutiger Arbeitskontext, Freigabe/Freeze getrennt; exakter Textvergleich bzw. unveränderte Übernahme bei eindeutig adressierten Passagen. Kein eigener Bestätigungsdialog oder signierte Blöcke. Bei unklarer Fassung keine behauptete geschützte Revision. Funktionstest T-05 bleibt. |
+| QE-05 | Einen vorhandenen, betreiberseitig abgesicherten Webpfad bevorzugen. Keine eigene umfassende Anti-Exfiltrationsarchitektur, URL-Herkunftszwang oder doppelte Netzwerksicherung allein auf Verdacht. Wenn eigener Direktabruf implementiert wird, SP-03-Schutz des Abrufpfads sicherstellen; ungeklärte unzulässige Datenflüsse nicht freischalten. |
+| QE-06/07/08/09 | Schlanke Fehlerbehandlung, fachliche Regeln außerhalb des Pipe-Codes, wenige konkrete technische Prüfungen, einfaches modellbezogenes Kontextbudget. Keine zusätzlichen Gates. |
+| QE-10 | Rechte- und Providerklärung organisatorisch beim PO/Betreiber, kein zusätzliches technisches Freigabesystem. Bis zur Klärung der konkreten externen Testdatenübermittlung nur zulässige synthetische bzw. tatsächlich anonymisierte Daten. |
+
+**Abgrenzung:** H-01–06, SP-01–06, Q-04/05/12 und die übrige Baseline bleiben verbindlich. Plattformseitig gewährleistete Schutzfunktionen werden nicht erneut implementiert; deren Voraussetzungen werden im Deployment geklärt, nicht als bestanden erfunden. Dokument-/Webanweisungen sind keine autoritativen Befehle; Geheimnisse, Rechte und pastorale Vertraulichkeit bleiben zu beachten. Keine zusätzliche Produkt-ACL, eigene Sicherheitsdatenbank, kryptografische Provenienz oder separate Sicherheitsagenten. Gezielte, im Abnahmeprofil bereits verbindliche Schutz-/Funktionsfälle bleiben; keine Ausweitung zu allgemeinem Penetrationstest der DRS-Infrastruktur. DRS:KI-Integration weiterhin DEFERRED/TO_CHECK. Die PO-Annahme ersetzt nicht den obligatorischen Integrationsnachweis vor DRS-Deployment.
+
+AP3a: schlanker Core mit synthetischen Tests; AP3b: nutzbarer Quellen-/Arbeitskontext statt eigener Persistenz; AP3c: vorhandenen freigegebenen Webpfad integrieren. Keine Änderung der Baseline oder historischer Testberichte. Keine neue Codeänderung, kein Live-Test. Unabhängige Nachprüfung nicht erfolgt.
