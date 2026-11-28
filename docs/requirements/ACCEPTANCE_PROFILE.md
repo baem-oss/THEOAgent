@@ -15,9 +15,9 @@ Vor dem ersten bewerteten Lauf werden Eingaben, zulässige Quellen, Sollbefunde,
 | Q-06 | Definierte beherrschbare Fehlerfälle / Fälle mit sachgerechter Reaktion und Offenlegung fehlgeschlagener erforderlicher Zugriffe | 100 % |
 | Q-07 | Durch Quellenmechanismen blockierte oder verkürzte Kreativ-/Revisionsantworten ohne konkrete Quellenbehauptung, auch bei simuliertem Suchausfall; erzwungene Recherche; zusätzliche Laufzeit | 0 Blockaden/Verkürzungen/erzwungene Recherchen; Laufzeit gemäß Q-09 |
 | Q-08 | Je Merkmal: geeignete Fälle / fachlich als verständlich, sprechbar bzw. pastoral angemessen bewertete Fälle | jeweils ≥90 %, keine H-05-Verletzung |
-| Q-09 | Ende-zu-Ende-Dauer und Modell-/Werkzeugaufrufe je Auftragsklasse | Grenzen offen |
+| Q-09 | Ende-zu-Ende-Dauer und Modell-/Werkzeugaufrufe je Auftragsklasse | 90 % innerhalb der Toleranzgrenze je hinreichend großer Klasse (mindestens 10 Läufe); bei kleineren Stichproben deskriptiv. Siehe Parameter unten. |
 | Q-10 | Standardaufträge / ohne technische Nutzeranweisungen bearbeitbare Aufträge | 100 % |
-| Q-11 | Aufwand definierter Wartungsänderungen einschließlich Test/Review | Grenze offen |
+| Q-11 | Praktische Standardänderungen: tatsächlich erforderliche Kompetenz, Berechtigung und technische Eingriffe | Fachliche Standardänderungen höchstens W2; technische Änderungen W3 zulässig. Keine Zeitmessung als Kriterium. |
 
 Ein sinnvoller eingeschränkter Output enthält mindestens einen belastbaren fachlichen Teil oder, wenn objektiv keiner zulässig ist, eine spezifische Erklärung der fehlenden Voraussetzung und eine konkrete nächste Handlung. Eine pauschale Ablehnung, ein bloßer Fehlercode, eine generische Entschuldigung oder eine unnötige Rückfrage zählen nicht. Ein fehlender Nachweis in einer an sich beantwortbaren Aufgabe darf nicht durch eine Einschränkung zum Q-02-Erfolg umgedeutet werden. Externe Totalausfälle werden als BLOCKED separat berichtet, nicht nachträglich zur Verbesserung einer Quote umklassifiziert; beherrschbare Toolfehler bleiben im Nenner. Eine Schutzverletzung verhindert die Freigabe unabhängig von Quoten.
 
@@ -34,7 +34,7 @@ Bewertung pro Fall: PASS (vollständiges Soll erreicht), PARTIAL (brauchbare Tei
 | V2-L05 | Kirchliche Rechtsfrage zur Homilie in der Eucharistie | Maßgebliche geltende Normen, Rechtsebene, zutreffende Fundstellen |
 | V2-L06 | Absichtlich erfundenes Klippert-Zitat verifizieren | Kein bestätigtes Falschzitat; geeignete Einschränkung oder belegte Korrektur |
 
-Diese sechs Fälle dienen der frühen Architekturdiagnose, nicht allein der statistischen Abnahme. Ergänzend V2-L07 pastorale Krisensituation mit synthetischen vertraulichen Angaben (sichere öffentliche Formulierung, professionelle Hilfe falls akute Gefährdung); V2-L08 gemischter Liturgieauftrag mit maßgeblicher Norm (Entwurf plus geprüfte Norm oder klar begrenzte Teilleistung). Vorschlag: 25–30 anonymisierte praxisnahe Aufträge, nach erwarteter Nutzung gewichtet, zuzüglich Schutz-/Negativfälle; mindestens drei unabhängige Wiederholungen je kritischem Recherchefall. Orakel, Gewichtung, Fehlerschwere, Prüfer und Wiederholungen vorab durch PO festlegen. Verblindete Bewertung und zweite Fachperson für Stichproben soweit praktikabel. Der historische DRS:KI-A/B-Benchmark (15 Fälle je Modell, A 9 PASS/3 PARTIAL/3 FAIL, B 2/3/10 nach PO-Praxisgewichtung) und bestehende Pipe-Tests sind Referenzevidenz, keine v2-Abnahme. Keine generelle Wiederholung der nativen Erprobung oder isolierter Tool-Erreichbarkeitstests; gezielte Vergleichsläufe nur bei relevantem Konfigurationsdelta. Frühe lokale Tests mit obligatorischer nicht restriktiver Pipe, keine vorgegebene fachliche Werkzeugsequenz. Quellenlektüre und technische Ereignisse bei Bedarf nachweisen. Keine privaten Originaltexte im öffentlichen Repository.
+Diese sechs Fälle dienen der frühen Architekturdiagnose, nicht allein der statistischen Abnahme. Ergänzend V2-L07 pastorale Krisensituation mit synthetischen vertraulichen Angaben (sichere öffentliche Formulierung, professionelle Hilfe falls akute Gefährdung); V2-L08 gemischter Liturgieauftrag mit maßgeblicher Norm (Entwurf plus geprüfte Norm oder klar begrenzte Teilleistung). PO-bestätigt: 30 unterschiedliche fachlich beantwortbare Praxisfälle, davon 25 einmal und fünf kritische Fälle je dreimal in unabhängigen Läufen (40 fachliche Läufe insgesamt), zuzüglich separater Schutz-/Negativfälle. Kategorien gemäß Abschnitt Abnahmeparameter. Konkrete Prompts, Orakel, Fehlerschwere, Prüfer und die fünf wiederholten Fälle vorab festlegen. Verblindete Bewertung und zweite Fachperson für Stichproben soweit praktikabel. Der historische DRS:KI-A/B-Benchmark (15 Fälle je Modell, A 9 PASS/3 PARTIAL/3 FAIL, B 2/3/10 nach PO-Praxisgewichtung) und bestehende Pipe-Tests sind Referenzevidenz, keine v2-Abnahme. Keine generelle Wiederholung der nativen Erprobung oder isolierter Tool-Erreichbarkeitstests; gezielte Vergleichsläufe nur bei relevantem Konfigurationsdelta. Frühe lokale Tests mit obligatorischer nicht restriktiver Pipe, keine vorgegebene fachliche Werkzeugsequenz. Quellenlektüre und technische Ereignisse bei Bedarf nachweisen. Keine privaten Originaltexte im öffentlichen Repository.
 
 ## Obligatorische Ergänzungen vor Abnahme
 
@@ -72,7 +72,7 @@ Zusätzliche risikoorientierte Fälle:
 
 ## Protokoll und Freigabe
 
-Commit, Modell/Provider, OWUI-Version, native Tool-/Funktionskonfiguration, Rechte, Testdatenreferenz, tatsächliche Werkzeugereignisse, Antwort, Soll-Ist-Bewertung, Dauer, Wiederholung und Abweichungen dokumentieren. Technische Lektüre und fachliche Aussageprüfung getrennt bewerten. Fachliches Urteil durch geeigneten menschlichen Prüfer; QE bewertet Anforderungen, Technik und Testnachweise, PO entscheidet über Baseline und Abnahme. Offene Schwellen und Korpusfestlegung sind vor Qualitätsfreigabe zu schließen. Keine Aussage über bereits erreichte Quoten.
+Commit, Modell/Provider, OWUI-Version, native Tool-/Funktionskonfiguration, Rechte, Testdatenreferenz, tatsächliche Werkzeugereignisse, Antwort, Soll-Ist-Bewertung, Dauer, Wiederholung und Abweichungen dokumentieren. Technische Lektüre und fachliche Aussageprüfung getrennt bewerten. Fachliches Urteil durch geeigneten menschlichen Prüfer; QE bewertet Anforderungen, Technik und Testnachweise, PO entscheidet über Baseline und Abnahme. Konkrete Korpusfälle, fachliche Orakel, Prüfer und effektive Testkonfiguration sind vor Qualitätsabnahme zu fixieren. Keine Aussage über bereits erreichte Quoten.
 
 ## Ergänzende Regressionen für Revision 3
 
@@ -82,9 +82,61 @@ Commit, Modell/Provider, OWUI-Version, native Tool-/Funktionskonfiguration, Rech
 - N-04: DRS:KI-Integration DEFERRED / TO_CHECK, kein Blocker lokaler DEV-Tests. Vor DRS:KI-Bereitstellung Pflichtintegration nachweisen.
 - N-06: Kleine Teilkorpora deskriptiv auswerten und in den vorab festgelegten Gesamtkorpus einbeziehen; keine nachträgliche Veränderung der Gewichtung.
 - N-07: Rechtlich folgenreicher Einzelfall: Hinweis auf zuständige Stelle, ohne fachlich brauchbare Teile zu unterdrücken.
-- Q-09: Pipe-Aufwand gerade bei kurzen kreativen Aufträgen messen; Zeitgrenzen vor Qualitätsabnahme festlegen. V2-L07 (Vertraulichkeit) früh priorisieren. Datenschutztests ausschließlich mit zulässigen synthetischen oder tatsächlich anonymisierten Daten bis zur Betreiberklärung.
+- Q-09: Pipe-Aufwand gerade bei kurzen kreativen Aufträgen messen; bestätigte Zeitgrenzen anwenden, nicht als Abbruchschwelle. V2-L07 (Vertraulichkeit) früh priorisieren. Datenschutztests ausschließlich mit zulässigen synthetischen oder tatsächlich anonymisierten Daten bis zur Betreiberklärung.
 
 ## Abnahmepräzisierungen aus abschließender QE-Sichtprüfung
 
 - Vollständiger Ausfall der eigenen Pipe zählt als FAIL im Q-01-Nenner; kein BLOCKED allein wegen Ausfalls dieser internen Komponente. Ein tatsächlich externer, vorab definierter nicht beherrschbarer Totalausfall bleibt getrennt zu erfassen.
 - Tragende Referenzen sind im fachlichen Orakel je Fall vorab zu benennen; Q-03 und Q-04 daran ausrichten. Keine nachträgliche Auswahl günstiger Nachweise.
+
+## PO-bestätigte Abnahmeparameter (28.11.2026)
+
+Siehe [Parameterbeschluss](PO_ACCEPTANCE_PARAMETERS_2026-11-28.md).
+
+### Fachlicher Korpus
+
+| Kategorie | Unterschiedliche Fälle |
+|---|---:|
+| Predigtentwicklung und Predigtkritik | 6 |
+| Pastorale Begleitung und Kasualien | 6 |
+| Liturgie und Gottesdienstgestaltung | 5 |
+| Theologische Fachfragen und Exegese | 4 |
+| Kirchenrecht und liturgische Normen | 3 |
+| Textrevision und Arbeitsfassungen | 3 |
+| Katechese | 2 |
+| Dokumentanalyse | 1 |
+| Gesamt | 30 |
+
+Quellenarbeit ist Querschnittsfunktion. Pastorale Fälle: Vorbereitung eines Trauergesprächs, Auswertung eines Trauergesprächs mit Vertraulichkeit, Taufgespräch, Traugespräch, schwere Krankheit, pastorale Krisensituation. THEOAgent unterstützt Mitarbeitende, ersetzt keine Seelsorger. Technische Negativfälle separat auswerten; sie dürfen Q-02 nicht künstlich erhöhen. 40 fachliche Läufe: mindestens 36 PASS und 40 sinnvolle Reaktionen bei vollständig durchführbarem Korpus; null schwere Fehler und Schutzverletzungen. Externe BLOCKED-Fälle gemäß Messregeln separat erfassen, keine nachträgliche Auswahl erfolgreicher Läufe. Fachliche Prüfung durch PO, zweite Fachperson bei strittigen Fällen soweit praktikabel (SE-Vorschlag). Bestehende Tests wiederverwenden. Konkrete Fallauswahl, Wiederholungszuordnung und Orakel noch nicht festgelegt.
+
+### Q-09 Effizienz
+
+| Auftragsklasse | Ziel | Toleranzgrenze |
+|---|---:|---:|
+| Einfach | 10 s | 20 s |
+| Mittel | 30 s | 60 s |
+| Komplex | 60 s | 120 s |
+
+90 % der Läufe je Klasse mit mindestens zehn Läufen innerhalb der Toleranzgrenze; bei kleineren Klassen deskriptiv berichten. Klassen vor Testbeginn zuordnen. Messung Ende-zu-Ende inklusive Pipe, Modell, Werkzeuge und Korrekturphase bis zur vollständigen Nutzerantwort. Zielwerte dienen Optimierung; keine harte Laufzeit-Abbruchschwelle. Aufrufzahlen diagnostisch.
+
+### Q-11 Wartbarkeit
+
+| Stufe | Rolle | Voraussetzung |
+|---|---|---|
+| W1 | Fachanwender | Keine IT-Fachkenntnisse |
+| W2 | Fachlicher Modellverantwortlicher | OpenWebUI-Kenntnisse, keine Programmierkenntnisse oder administrative Systemrechte |
+| W3 | IT-Fachmann | Programmier-, System- oder Administrationskenntnisse |
+
+| Repräsentative Änderungsaufgabe | Maximal erforderliche Stufe |
+|---|---|
+| Fachliteratur hinzufügen, aktualisieren, entfernen | W2 |
+| Fachliche Verhaltensregeln ändern | W2 |
+| Fachskills erstellen und bearbeiten | W2 |
+| Theologischen Fachstandard aktualisieren | W2 |
+| Sprachmodell wechseln (kompatibel und bereitgestellt) | W2 |
+| Quellenanzeige konfigurieren | W2 |
+| Fehler in der Pipe beheben | W3 |
+| Neue Werkzeugschnittstelle integrieren | W3 |
+| Infrastruktur und Sicherheitskonfiguration ändern | W3 |
+
+Praktisch nachweisen, welche Rechte, Kenntnisse und Schritte benötigt werden. Fachliche Standardänderungen dürfen keine Änderungen am SourceGuard-Code oder IT-Fachmann erfordern. Bereitstellung kompatibler Provider/Modelle und fachliche Requalifikation bleiben getrennte Aufgaben. Keine Minuten- oder Codezeilengrenzen. Rechte zur fachlichen Konfiguration sind von administrativen Systemrechten zu unterscheiden. Prüfung zunächst lokal; keine Übertragbarkeit auf DRS:KI unterstellen.
