@@ -51,3 +51,7 @@ Der unabhängige QE-Bericht ist als historischer Prüfbeleg **unverändert archi
 - Jeder Bericht kennzeichnet ausdrücklich, welche Tests **tatsächlich** ausgeführt wurden und welche PASS-Angaben nur berichtet sind.
 - Ein grüner CI-Lauf und ein positives QE-Urteil sind keine fachliche Abnahme. Die Freigabe trifft ausschließlich der Product Owner und wird im Repository nachvollziehbar dokumentiert.
 - Berichte enthalten keine Geheimnisse, keine personenbezogenen Daten und keine urheberrechtlich geschützten Volltexte.
+
+## Freigabe der Requirements-Baseline v2.0.0 (28.11.2026)
+
+Historischer Prüfstand: [`71a4c811`](https://github.com/baem-oss/THEOAgent/commit/71a4c811b1f682e2ec3b3200836411de8adb016e). QE-Sichtprüfung: freigabefähig, keine freigaberelevanten Mängel. PO-Freigabe erteilt am 28.11.2026; siehe [Freigabevermerk](../requirements/PO_APPROVAL_V2.0.0.md) und [Revision-3-Disposition](../requirements/v2.0.0-draft/QE-DISPOSITION-REV3.md). v1.2.0 ist damit historischer Stand. Keine Implementierungs- oder Produktabnahme; Originalberichte aus dem Chat noch nicht separat archiviert.
