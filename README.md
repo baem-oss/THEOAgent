@@ -5,7 +5,7 @@ THEOAgent ist ein theologischer Arbeitsassistent für Bibelauslegung, Predigtarb
 ## Projektstand
 
 - `main` bündelt die freigegebene Requirements-Baseline v2.0.0, die dokumentierte THEOAgent-DEV-Konfiguration und deren Entwicklungs- und Testhistorie. **Die Übernahme der DEV-Artefakte ist keine Produktiv- oder Qualitätsfreigabe.**
-- `dev-v2` ist der aktive Entwicklungsbranch für SourceGuard v2. AP1 und AP2 sind konzeptionell abgeschlossen; AP3a-Core v0.1.0 implementiert, synthetische Offline-Tests PASS; Live-Smoke-Test ausstehend.
+- `dev-v2` ist der aktive Entwicklungsbranch für SourceGuard v2. AP1 und AP2 sind konzeptionell abgeschlossen; AP3a-Core v0.1.0 implementiert, synthetische Offline-Tests und Live-Smoke ohne Tools PASS; AP3b folgt.
 - `local-dev` und `drs-ki-test` bleiben historische Referenzstände. Der dokumentierte DRS:KI-DEV-Teststand stammt vom 18.11.2026.
 - **Historischer dokumentierter DRS:KI-DEV-Stand:** [Systemprompt v0.3.11](docs/drs-ki/THEOAGENT_DEV_SYSTEMPROMPT_v0.3.11.md), [SourceGuard v0.2.3](tools/drs_ki/sourceguard_web_poc_v0_2_3.py), [sieben Fachskills](config/drs-ki/README.md), [Test-/Übergabestand](docs/drs-ki/TESTSTAND_KNOWLEDGE_WEBSUCHE_SOURCEGUARD_2026-11-18.md).
 - [MCP-Integrationsarchitektur für DRS KI:W.E.G. v0.1.0](docs/drs-ki/MCP_INTEGRATIONSARCHITEKTUR_DRS_KI_WEG_v0.1.0.md) – technischer Diskussionsentwurf.
@@ -19,8 +19,9 @@ THEOAgent ist ein theologischer Arbeitsassistent für Bibelauslegung, Predigtarb
 | AP2.2 – Skill-/Knowledge-Integration | Kommunikationspfad PASS; fachliche Testläufe PARTIAL, konkrete Leseprovenienz offen |
 | AP2.3 – Schutz- und Provenienzkonzept | Entwurf abgeschlossen; Schutzvalidierung NOT_RUN |
 | AP2.4 – Zielarchitektur | Revision 3, Claude-Review disponiert; PO-Entscheidung zur vertrauenswürdigen Zielumgebung berücksichtigt |
-| AP3a – Core | [Core v0.1.0](tools/local_dev/sourceguard_v2_core.py), [Offline-Teststand](tests/runs/2026-11-28-AP3A-CORE-OFFLINE.md): 10/10 PASS; Live-Smoke NOT_RUN |
-| AP3b/c – Knowledge, Arbeitskontext und Web | Geplant |
+| AP3a – Core | [Core v0.1.0](tools/local_dev/sourceguard_v2_core.py), [Offline-Teststand](tests/runs/2026-11-28-AP3A-CORE-OFFLINE.md): 10/10 PASS; [Live-Smoke ohne Tools](tests/runs/2026-11-28-AP3A-CORE-LIVE.md) PASS |
+| AP3b – Knowledge und Arbeitskontext | Nächster Schritt |
+| AP3c – Web | Geplant |
 | AP4–7 – Frühtests, Fachkonfiguration, Optimierung, Abnahme | Offen |
 
 Maßgebliche Entwicklungsreferenz: [Zielarchitektur AP2.4, Revision 3](docs/architecture/AP2_4_TARGET_ARCHITECTURE.md), insbesondere Abschnitt 9 (PO-Entscheidung). [Fundstellengenauigkeit](docs/architecture/PO_FUNDSTELLENGENAUIGKEIT_2026-11-28.md): identifizierbarer Abschnitt statt obligatorischer Buchseite. Keine eigene Sicherheitsinfrastruktur, kryptografische Provenienz, zusätzliche Datenbank oder restriktive Antwortgates; vorhandene Plattformfunktionen nutzen. Die vertrauenswürdige Zielumgebung ist eine Architekturannahme, kein Sicherheitsnachweis. Baseline unverändert; lokale externe Datenflüsse und Nutzungsrechte bleiben zu klären. Offline-Tests der Probes und praktische Schutzvalidierung NOT_RUN. Keine Produktfreigabe.
