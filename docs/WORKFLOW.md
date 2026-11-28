@@ -1,6 +1,6 @@
 # THEOAgent – Rollen, GitHub und verbindlicher Arbeitsstand
 
-**Stand:** 10.11.2026  
+**Stand:** 28.11.2026  
 **Status:** Verbindliche Projektarbeitsregel
 
 ## 1. Single Source of Truth (SSOT)
@@ -18,7 +18,7 @@
 |---|---|---|
 | **Product Owner** | Ziele, Prioritäten, fachliche Entscheidungen, Freigabe von Baselines und Releases | Keine Pflicht zur operativen Git-Pflege |
 | **Software Engineer (ChatGPT)** | Änderungen entwerfen, implementieren, dokumentieren, Tests durchführen und wahrheitsgemäß protokollieren, im Repo committen, Review-Findings bearbeiten | Keine selbst erteilte fachliche Produktfreigabe |
-| **Quality Engineer / Reviewer (DeepSeek)** | Den **tatsächlich vorliegenden Repositorystand** unabhängig prüfen, konkrete Findings und reproduzierbare Nachweise berichten, Freigabe empfehlen oder ablehnen | **Keine Hoheit über Repositoryinhalt, Git-Commit-SHAs, Git-Blob-SHAs, externe SHA-256-Vorgaben, Commits, Merges oder PO-Freigaben** |
+| **Quality Engineer / Reviewer (Claude)** | Den **tatsächlich vorliegenden Repositorystand** unabhängig prüfen, konkrete Findings und reproduzierbare Nachweise berichten, Freigabe empfehlen oder ablehnen | **Keine Hoheit über Repositoryinhalt, Git-Commit-SHAs, Git-Blob-SHAs, externe SHA-256-Vorgaben, Commits, Merges oder PO-Freigaben** |
 
 Ein Review-Urteil ist fachlicher Input für Entscheidungen des Product Owners. Es setzt die Spezifikation nicht außer Kraft und ändert das Repository nicht.
 
