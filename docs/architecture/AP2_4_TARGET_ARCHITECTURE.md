@@ -108,7 +108,7 @@ Alle zehn Findings disponiert, keine als technisch behoben behauptet. QE-01/02/0
 
 ## 9. PO-Entscheidung: vertrauenswürdige Betriebsumgebung (28.11.2026)
 
-PO im Projektchat: „ich bin einverstanden: THEOAgent arbeitet in einer vertrauenswürdigen umgebung, die wir nicht speziell absichern müssen. wir gehen davon aus, dass die zielumgebung vin drs:ki vertrauenswürdig und abgesichert ist“.
+PO im Projektchat: „ich bin einverstanden: THEOAgent arbeitet in einer vertrauenswürdigen umgebung, die wir nicht speziell absichern müssen. wir gehen davon aus, dass die zielumgebung von drs:ki vertrauenswürdig und abgesichert ist“.
 
 **Architekturannahme:** Vertrauenswürdiger Nutzerkreis, vertrauenswürdige und betreiberseitig abgesicherte Zielplattform DRS:KI. Keine eigene Hochsicherheits-, Audit-, Manipulationsschutz- oder redundante Infrastrukturarchitektur im Produkt. Die Annahme ist kein technischer Sicherheitsnachweis, keine nachträgliche Testfreigabe, keine Bestätigung konkreter Betreiberrechte oder Nutzungsrechte. Lokale Entwicklungsumgebung und externer Modellprovider sind nicht automatisch durch DRS:KI abgesichert.
 
