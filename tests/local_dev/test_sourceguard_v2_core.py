@@ -113,6 +113,59 @@ class CoreTests(unittest.IsolatedAsyncioTestCase):
     async def test_disabled_profile(self):
         self.assertIn('nicht freigegeben', await Pipe().pipe({}))
 
+    async def test_read_provenance(self):
+        async def complete(dialog, schemas, allow):
+            if not dialog:
+                return response(calls=[call()], reason='tool_calls')
+            return response('Fachantwort')
+        answer, trace = await run_core([], tools(lambda **kw: {
+            'file_id': 'a', 'filename': 'Test.md', 'start_line': 2,
+            'end_line': 5, 'content': 'synthetic passage'
+        }), complete, allow_tools=True)
+        self.assertEqual(answer, 'Fachantwort')
+        summary = core.provenance_summary(trace)
+        self.assertIn('Test.md', summary)
+        self.assertIn('Werkzeugzeilen 2–5', summary)
+        self.assertNotIn('synthetic passage', summary)
+        self.assertNotIn('synthetic passage', json.dumps(trace))
+
+    async def test_read_unknown_identity(self):
+        async def complete(dialog, schemas, allow):
+            if not dialog:
+                return response(calls=[call()], reason='tool_calls')
+            return response('Antwort')
+        _, trace = await run_core([], tools(lambda **kw: {'content': 'text'}), complete, allow_tools=True)
+        self.assertIn('Identität nicht bestätigt', core.provenance_summary(trace))
+        self.assertNotIn('Werkzeugzeilen', core.provenance_summary(trace))
+
+    async def test_no_provenance_for_error_or_oversize(self):
+        async def complete(dialog, schemas, allow):
+            if not dialog:
+                return response(calls=[call()], reason='tool_calls')
+            return response('Teilantwort')
+        for result in ({'error': 'failed', 'content': 'text'}, {'content': 'x'*500}):
+            _, trace = await run_core([], tools(lambda **kw: result), complete,
+                                      allow_tools=True, max_result_chars=100)
+            self.assertEqual(core.provenance_summary(trace), '')
+
+    async def test_unsubmitted_read_not_displayed(self):
+        async def complete(dialog, schemas, allow):
+            return response(calls=[call()], reason='tool_calls') if allow else response('Teil')
+        _, trace = await run_core([], tools(lambda **kw: {'content': 'x'*5000}),
+                                  complete, allow_tools=True, input_bytes=2000)
+        self.assertEqual(core.provenance_summary(trace), '')
+
+    async def test_followup_no_new_read(self):
+        history = [{'role': 'assistant', 'content': 'Dokumentabrufe dieser Antwort: Test.md'},
+                   {'role': 'user', 'content': 'Welche Quelle war das?'}]
+        async def complete(dialog, schemas, allow):
+            self.assertEqual(dialog, history)
+            return response('Laut bisherigem Verlauf Test.md; kein neuer Abruf.')
+        answer, trace = await run_core(history, {}, complete)
+        self.assertIn('kein neuer Abruf', answer)
+        self.assertEqual(core.provenance_summary(trace), '')
+        self.assertEqual(trace['tool_calls'], 0)
+
 
 if __name__ == '__main__':
     unittest.main()
