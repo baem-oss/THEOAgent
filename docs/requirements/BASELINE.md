@@ -93,12 +93,12 @@ Die obigen Anforderungen beschreiben beobachtbares Verhalten, nicht dessen techn
 | Q-06 | Robustheit und Fehlertransparenz: alle definierten beherrschbaren Fehlerfälle erhalten eine auftragsbezogene Reaktion; fehlgeschlagene erforderliche Quellenzugriffe werden in allen entsprechenden Fällen offengelegt. |
 | Q-07 | Verhältnismäßigkeit: im Kreativ-/Revisionskorpus ohne konkrete Quellenbehauptung keine Blockade oder Verkürzung durch Quellenmechanismen, auch bei simuliertem Suchausfall. Rechercheaufwand und Laufzeit messen; keine erzwungene Fachrecherche. Fachlich begründete freiwillige Recherche zulässig. |
 | Q-08 | Verständlichkeit, Sprechbarkeit und pastorale Sensibilität werden getrennt gegen vorab festgelegte auftragsbezogene Raster geprüft; mindestens 90 % geeigneter Fälle je Merkmal, keine Verletzung H-05. |
-| Q-09 | Effizienz: Ende-zu-Ende-Zeit und Aufrufzahlen werden je Auftragsklasse gemessen; Zeitgrenzen vor Qualitätsabnahme durch PO festlegen. |
+| Q-09 | Effizienz: Ende-zu-Ende-Zeit und Aufrufzahlen werden je Auftragsklasse gemessen. PO-bestätigte Ziel-/Toleranzwerte: einfach 10/20 s, mittel 30/60 s, komplex 60/120 s; Auswertung gemäß Abnahmeprofil. Keine technischen Abbruchschwellen. |
 | Q-10 | Benutzbarkeit: alle Standardfälle müssen ohne technische Werkzeuganweisungen des Nutzers bearbeitbar sein. |
-| Q-11 | Wartbarkeit: Aufwand definierter Änderungen einschließlich Regression und Review wird gemessen; Grenzwert vor Qualitätsabnahme durch PO festlegen. |
+| Q-11 | Wartbarkeit: Fachliche Standardänderungen müssen durch einen fachlichen Modellverantwortlichen mit OpenWebUI-Kenntnissen, ohne Programmierkenntnisse, administrative Systemrechte oder Änderungen am SourceGuard-Code möglich sein. Technische Fachkenntnisse dürfen für Änderungen an technischen Komponenten und Infrastruktur vorausgesetzt werden. Abnahme durch praktische Änderungsaufgaben mit dokumentierten Kompetenzen und Berechtigungen gemäß Abnahmeprofil; keine Zeitgrenzen. |
 | Q-12 | Keine beobachtete Verletzung der Schutzgrenzen H-01–H-06 im vereinbarten Schutztestkorpus; kein statistischer Ausgleich. |
 
-Die angegebenen Schwellen sind freigegeben; keine gemessenen Ergebnisse. Korpus, Bewertungsraster, Zeit- und Wartbarkeitsgrenzen sind vor Abnahme festzulegen. Die 90-%-Regel ist kein Freibrief für unrichtige oder vorgetäuschte Nachweise.
+Die angegebenen Schwellen sind freigegeben; keine gemessenen Ergebnisse. Korpusumfang, Kategorien, Laufzeit- und Wartbarkeitsmaß sind vom PO konkretisiert (siehe Abnahmeprofil und [Parameterbeschluss](PO_ACCEPTANCE_PARAMETERS_2026-11-28.md)); konkrete Prompts, fachliche Orakel, Prüfer und Laufkonfiguration sind vor Abnahme zu fixieren. Die 90-%-Regel ist kein Freibrief für unrichtige oder vorgetäuschte Nachweise.
 
 ## 6. Randbedingungen und Architekturleitplanken
 
