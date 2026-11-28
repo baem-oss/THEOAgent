@@ -1,6 +1,6 @@
 # Migration und Traceability v1.2.0 → v2.0.0 – Draft
 
-Stand: 27.11.2026, Revision 2 nach QE-Review. SE-Zuordnung zur Prüfung durch QE und PO, kein Nachweis semantischer Gleichwertigkeit. [Altstand](https://github.com/baem-oss/THEOAgent/blob/bfabf68264a3ae049a07679b3722a0a1dbe032bf/docs/requirements/BASELINE.md) · [Entwurf](BASELINE.md).
+Stand: 28.11.2026, Revision 3 nach QE-Nachreview. SE-Zuordnung zur Prüfung durch QE und PO, kein Nachweis semantischer Gleichwertigkeit. [Altstand](https://github.com/baem-oss/THEOAgent/blob/bfabf68264a3ae049a07679b3722a0a1dbe032bf/docs/requirements/BASELINE.md) · [Entwurf](BASELINE.md).
 
 ## Vollständige Vorwärtszuordnung
 
@@ -119,7 +119,7 @@ Alle 27 User Stories und 80 Anforderungen des Altstands sind einzeln zugeordnet.
 ## Bewusste Änderungen zur PO-Entscheidung
 
 1. Recherchepflicht ist aufgabenbezogen, nicht durch Toolverfügbarkeit ausgelöst (FANF-02/03/06).
-2. Kompakte Herkunftsangabe bei gewöhnlicher Paraphrase statt zwingendem Einzelnachweis (FANF-07). Bei N2–N4 bleibt die eindeutige Zuordnung zwingend; siehe Nachweisstufen in F-05. Eine Leseliste allein beweist keine Aussage. QE prüft insbesondere, ob F-05 diese Grenze hinreichend klar zieht.
+2. Kompakte Herkunftsangabe bei gewöhnlicher Paraphrase statt zwingendem Einzelnachweis (FANF-07). Bei N2, prüfpflichtigen N3-Aussagen und N4 bleibt die eindeutige Zuordnung zwingend; richtige präzise Referenzen ohne Prüfanspruch oder tragende Belegfunktion erfordern nicht automatisch einen Laufzeitabruf. Siehe F-05/H-02. Eine Leseliste allein beweist keine Aussage. QE prüft insbesondere, ob F-05 diese Grenze hinreichend klar zieht.
 3. Nicht verifizierte, begründete und nicht erfundene Referenzhinweise sind klar gekennzeichnet möglich; zugeschriebene Wortzitate nur geprüft (GR-03). Keine falsche Verifikationsbehauptung, kein erfundenes Zitat, kein Ersatz für verlangte Originallektüre.
 4. Kreative Aufträge ohne konkrete Quellenbehauptung werden ohne obligatorische Recherche bearbeitbar (GR-17).
 5. Teilantwort und gezielte Einschränkung erhalten Vorrang gegenüber vollständiger fachlicher Sperre (GR-18). Sicherheitsgrenzen bleiben unverändert.
@@ -141,3 +141,10 @@ F-06: Reaktion auf beherrschbare technische Fehler; F-07: historische Provenienz
 - Q-02: Null schwere fachliche/pastorale Fehler im vereinbarten Korpus; Q-04: keine erfundenen Hinweise auch bei Unsicherheitskennzeichnung.
 - RANF-07/08: obligatorische, nicht restriktive Pipe im lokalen Entwicklungszyklus und Modellqualifikation. Probabilistische Facharbeit bleibt frei; technische Schutzgrenzen bleiben verbindlich.
 - Die 107 Altzuordnungen bleiben erhalten. QE-Nachprüfung der geänderten Passagen und semantischen Zuordnung steht aus.
+
+## Präzisierungen Revision 3 (28.11.2026)
+
+- GR-03 / H-02 / F-05 / Q-04: Richtigkeit einer Referenz von behaupteter Originalprüfung trennen. Zugeschriebene Wortzitate, ausdrückliche Nachweise und tragende Belege bleiben prüfpflichtig. Freie biblische Wiedergaben in kreativen Texten sind keine beanspruchten exakten Übersetzungszitate.
+- RANF-07: begrenzter Interventionskatalog, sicherer Rückfall bei Fehlern der Qualitätsfunktionen; kein Umgehen von Schutzgrenzen. DRS:KI-Integration DEFERRED / TO_CHECK (PO 28.11.2026), kein Blocker des lokalen Refactorings.
+- §2: harte Abnahmekriterien sind nicht automatisch technische Laufzeitgates. SP-01: Betreiber-/Konfigurationsebene; keine generelle semantische Nachrichtensperre. F-13: Hinweis auf zuständige Stelle bei rechtlich folgenreichen Einzelfällen.
+- Abnahmeprofil: kleine Teilkorpora vorab poolen; neue Regressionen für N-01 bis N-07. Alle 107 Altzuordnungen bleiben erhalten.
